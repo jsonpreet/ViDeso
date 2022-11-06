@@ -3,7 +3,7 @@
 
 import useAppStore from '@store/app'
 import usePersistStore from '@store/persist'
-import { HOME, NOTIFICATIONS } from '@utils/paths'
+import { HOME } from '@utils/paths'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
@@ -11,6 +11,8 @@ import { CgBell } from 'react-icons/cg'
 
 import GlobalSearchBar from '@components/Search/GlobalSearchBar'
 import { Button } from '@components/UIElements/Button'
+import { APP } from '@app/utils/constants'
+
 
 
 const Header = ({ className }) => {
@@ -25,7 +27,7 @@ const Header = ({ className }) => {
           href={HOME}
           className="flex items-center justify-center pt-1 focus:outline-none"
         >
-        DTube
+          {APP.Name}
         </Link>
       </div>
       <div className="flex items-center justify-between w-full">

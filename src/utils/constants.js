@@ -6,6 +6,9 @@ export const ALLOWED_VIDEO_TYPES = [
   'video/quicktime'
 ]
 
-export const APP_NAME = 'Desoly'
+export const APP = {
+  Name: 'Videso',
+  URL: 'https://videso.xyz',
+  Description: 'Videso is a decentralized video-sharing social media platform built with DeSo.',
+}
 
-export const APP_URL = 'https://desoly.com'
