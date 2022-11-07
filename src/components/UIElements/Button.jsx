@@ -25,42 +25,23 @@ export const Button = forwardRef(function Button(
     <button
       ref={ref}
       className={clsx(
-        'relative inline-block disabled:opacity-50 rounded-lg md:rounded-xl group',
+        'relative inline-block disabled:opacity-50 rounded-full group',
         {
           'px-4 py-1.5 text-xs': size === 'sm',
           'px-5 md:py-2 py-1.5 text-sm': size === 'md',
           'px-6 py-3 text-base': size === 'lg',
-          'px-8 py-4 text-lg': size === 'xl'
+          'px-8 py-4 text-lg': size === 'xl',
+          'bg-blue-500 border border-blue-500 md:rounded-full':
+            variant === 'primary',
+          'bg-transparent md:rounded-full': variant === 'secondary',
+          'bg-red-500 border border-red-500 md:rounded-full':
+            variant === 'danger',
         },
         className
       )}
       disabled={loading}
       {...rest}
     >
-      <span
-        className={clsx(
-          'absolute focus:outline-none inset-0 w-full h-full transition duration-200 ease-in-out transform rounded-lg md:rounded-xl',
-          {
-            'border border-indigo-500': variant === 'primary',
-            'bg-transparent': variant === 'secondary',
-            'bg-transparent !transition-none group-hover:border group-hover:border-indigo-500':
-              variant === 'outlined',
-            'border-red-500 border': variant === 'danger',
-            'group-hover:translate-x-0.5 group-hover:translate-y-0.5':
-              !rest.disabled && variant !== 'outlined'
-          }
-        )}
-      />
-      <span
-        className={clsx('absolute inset-0 w-full h-full rounded-lg', {
-          'bg-indigo-500 border border-indigo-500 md:rounded-xl':
-            variant === 'primary',
-          'bg-transparent md:rounded-xl': variant === 'secondary',
-          'bg-red-500 border border-red-500 md:rounded-xl':
-            variant === 'danger',
-          'md:rounded-lg': size === 'sm'
-        })}
-      />
       <span
         className={clsx('relative flex items-center justify-center space-x-2', {
           'text-white': variant !== 'secondary' && variant !== 'outlined'

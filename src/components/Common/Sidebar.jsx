@@ -17,6 +17,7 @@ import { SHORTS, HISTORY, FEED, HOME, LIBRARY } from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
 import { FaDiscord } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
+import { APP } from '@app/utils/constants'
 // const MoreTrigger = dynamic(() => import('../../components/Common/MoreTrigger'))
 
 const Sidebar = () => {
@@ -32,7 +33,7 @@ const Sidebar = () => {
   return (
     <>
       {/* {!getShowFullScreen(router.pathname) && <MobileBottomNav />} */}
-      <div className="flex flex-col w-64 primaryBg h-screen p-4 items-start justify-start overflow-y-auto pt-16 text-[14px] font-light tracking-wide">
+      <div className="flex flex-col w-64 primaryBg h-screen p-4 items-start justify-start overflow-y-auto z-10 pt-16 text-[14px] font-light tracking-wide">
         <div className="flex flex-col w-full">
           <div className="flex flex-col w-full space-y-1">
             <Link
@@ -111,17 +112,49 @@ const Sidebar = () => {
             <div className='text-base'>Explore</div>
           </div>
           <div className="flex flex-col space-y-1">
-            {CREATOR_VIDEO_CATEGORIES.map((category) => (
-              <Link key={category?.tag.toLowerCase()}
-                  href={`/explore/${category?.tag.toLowerCase()}`}
+            {Object.keys(CREATOR_VIDEO_CATEGORIES).map((categories) => {
+              const category = CREATOR_VIDEO_CATEGORIES[categories];
+                console.log(category);
+                return (
+                  <Link key={category.tag.toLowerCase()}
+                    href={`/explore/${category.tag.toLowerCase()}`}
+                    className="rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]"
+                  >
+                    <div className="flex items-center">
+                      {category.icon}
+                      <p className='ml-6'>{category.name}</p>
+                    </div>
+                  </Link>
+                )
+              // return Object.keys(allCategories).map((key, index) => {
+              //   const category = allCategories[index];
+              //   console.log(category);
+              //   return (
+              //     <Link key={category.tag.toLowerCase()}
+              //       href={`/explore/${category.tag.toLowerCase()}`}
+              //       className="rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]"
+              //     >
+              //       <div className="flex items-center">
+              //         {category.icon}
+              //         <p className='ml-6'>{category.name}</p>
+              //       </div>
+              //     </Link>
+              //   )
+              // })
+            })}
+            {/* {CREATOR_VIDEO_CATEGORIES.map((category) => {
+              return (
+                <Link key={category.tag.toLowerCase()}
+                  href={`/explore/${category.tag.toLowerCase()}`}
                   className="rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]"
-              >
-                <div className="flex items-center">
-                  {category.icon}
-                  <p className='ml-6'>{category.name}</p>
-                </div>
-              </Link>
-            ))}
+                >
+                  <div className="flex items-center">
+                    {category.icon}
+                    <p className='ml-6'>{category.name}</p>
+                  </div>
+                </Link>
+              )
+            })} */}
           </div>
           <div className="h-[1px] mt-4 mb-6 relative bg-gray-300 dark:bg-gray-700" />
           <div className="flex flex-col space-y-1">
@@ -175,16 +208,16 @@ const Sidebar = () => {
               </Link>
           </div>
           <div className='flex flex-col px-3 text-sm text-gray-500 mt-4'>
-            <p>© 2022 DesoTube</p>
+            <p>© 2022 {APP.Name}</p>
           </div>
           <div className="flex w-full">
-            <button
+            {/* <button
               type="button"
               onClick={() => onToggleTheme()}
               className="flex p-3 py-4 justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-[#181818] focus:outline-none opacity-90 hover:opacity-100"
             >
               {theme === 'light' ? <BiMoon /> : <BiSun />}
-            </button>
+            </button> */}
             {/* <MoreTrigger /> */}
           </div>
         </div>

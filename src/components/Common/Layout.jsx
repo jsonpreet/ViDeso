@@ -27,12 +27,12 @@ const Layout = ({ children }) => {
                 <div className='hidden md:flex md:flex-shrink-0'>
                     <Sidebar />
                 </div>
-                <div className='flex flex-col mx-auto flex-1'>
+                <div className='flex flex-col mx-auto flex-1 -ml-64'>
                     <Header />
                     <div className='relative overflow-y-scroll overflow-x-hidden'>
                         <div className="pt-16 pb-0 lg:pb-12">
                             <div className="min-h-screen">
-                                <div className='max-w-7xl px-2.5 mx-auto sm:px-4 lg:px-8 pt-5'>
+                                <div className='max-w-7xl mx-auto pt-5'>
                                     {children}
                                 </div>
                             </div>

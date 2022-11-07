@@ -6,6 +6,14 @@ html {
   @apply overflow-y-scroll;
 }
 
+.customBorder {
+  @apply border-[#ccc];
+}
+
+.boxShadow {
+  box-shadow: inset 0 1px 2px #eee
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -27,14 +35,13 @@ html, body{
 }
 
 body{
-    background-color: #fff;
-    font-family: "Roboto","Arial",sans-serif;
-    -webkit-font-smoothing: antialiased;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: #0f0f0f;
-
+  background-color: #fff;
+  font-family: "Roboto","Arial",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #0f0f0f;
 }
 
 * {
