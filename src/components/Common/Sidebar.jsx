@@ -18,11 +18,18 @@ import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
 import { FaDiscord } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
 import { APP } from '@app/utils/constants'
+import { Scrollbars } from 'react-custom-scrollbars-2';
+import { useState } from 'react'
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
+
 // const MoreTrigger = dynamic(() => import('../../components/Common/MoreTrigger'))
 
 const Sidebar = () => {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
+  const [top, setTop] = useState(0)
+  const [showMore, setShowMore] = useState(false)
+  const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 6;
 
   const isActivePath = (path) => router.pathname === path
 
@@ -30,11 +37,33 @@ const Sidebar = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
+  const renderView = ({ style, ...props }) => {
+    return (
+      <div className="box" style={{ ...style }} {...props}/>
+    );
+  }
+
+  const renderThumb = ({ style, ...props }) => {
+    const thumbStyle = {
+      borderRadius: `1.5rem`,
+    };
+    return (
+        <div className='bg-gray-500 dark:bg-white' style={{ ...style, ...thumbStyle }} {...props}/>
+    );
+  }
+  
+  const handleUpdate = (values) => {
+    const { top } = values;
+    setTop(top);
+  }
+
+
   return (
     <>
       {/* {!getShowFullScreen(router.pathname) && <MobileBottomNav />} */}
-      <div className="flex flex-col w-64 primaryBg h-screen p-4 items-start justify-start overflow-y-auto z-10 pt-16 text-[14px] font-light tracking-wide">
-        <div className="flex flex-col w-full">
+      <div className="flex flex-col w-64 primaryBg h-screen p-4 items-start justify-start overflow-hidden z-10 pt-16 text-[14px] font-light tracking-wide">
+        <Scrollbars onUpdate={handleUpdate} renderView={renderView} renderThumbVertical={renderThumb} autoHeight autoHide autoHeightMax={`100%`}>
+          <div className="flex flex-col w-full">
           <div className="flex flex-col w-full space-y-1">
             <Link
               href={HOME}
@@ -112,20 +141,21 @@ const Sidebar = () => {
             <div className='text-base'>Explore</div>
           </div>
           <div className="flex flex-col space-y-1">
-            {Object.keys(CREATOR_VIDEO_CATEGORIES).map((categories) => {
-              const category = CREATOR_VIDEO_CATEGORIES[categories];
-                console.log(category);
-                return (
-                  <Link key={category.tag.toLowerCase()}
-                    href={`/explore/${category.tag.toLowerCase()}`}
-                    className="rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]"
-                  >
-                    <div className="flex items-center">
-                      {category.icon}
-                      <p className='ml-6'>{category.name}</p>
-                    </div>
-                  </Link>
-                )
+              {Object.keys(CREATOR_VIDEO_CATEGORIES.slice(0,loadCount)).map((categories) => {
+                if (categories !== 6) {
+                  const category = CREATOR_VIDEO_CATEGORIES[categories];
+                  return (
+                    <Link key={category.tag.toLowerCase()}
+                      href={`/explore/${category.tag.toLowerCase()}`}
+                      className="rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]"
+                    >
+                      <div className="flex items-center">
+                        {category.icon}
+                        <p className='ml-6'>{category.name}</p>
+                      </div>
+                    </Link>
+                  )
+                }
               // return Object.keys(allCategories).map((key, index) => {
               //   const category = allCategories[index];
               //   console.log(category);
@@ -141,7 +171,24 @@ const Sidebar = () => {
               //     </Link>
               //   )
               // })
-            })}
+              })}
+              
+                {
+                  !showMore ?
+                    <div key={`showMore`} onClick={() => setShowMore(!showMore)} className="cursor-pointer rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]">
+                      <div className="flex items-center">
+                        <BsChevronDown size={20}/>
+                        <p className='ml-6'>Show More</p>
+                      </div>
+                    </div>
+                    :
+                    <div key={`showMore`} onClick={() => setShowMore(!showMore)} className="cursor-pointer rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]">
+                      <div className="flex items-center">
+                        <BsChevronUp size={20}/>
+                        <p className='ml-6'>Show Less</p>
+                      </div>
+                    </div>
+                }
             {/* {CREATOR_VIDEO_CATEGORIES.map((category) => {
               return (
                 <Link key={category.tag.toLowerCase()}
@@ -220,7 +267,8 @@ const Sidebar = () => {
             </button> */}
             {/* <MoreTrigger /> */}
           </div>
-        </div>
+          </div>
+        </Scrollbars>
       </div>
     </>
   )

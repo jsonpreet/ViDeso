@@ -31,7 +31,7 @@ export const Button = forwardRef(function Button(
           'px-5 md:py-2 py-1.5 text-sm': size === 'md',
           'px-6 py-3 text-base': size === 'lg',
           'px-8 py-4 text-lg': size === 'xl',
-          'bg-blue-500 border border-blue-500 md:rounded-full':
+          'bg-blue-500 hover:bg-blue-600 border border-blue-500 md:rounded-full':
             variant === 'primary',
           'bg-transparent md:rounded-full': variant === 'secondary',
           'bg-red-500 border border-red-500 md:rounded-full':

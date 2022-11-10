@@ -7,9 +7,13 @@ export const usePersistStore = create(
       autoPlay: true,
       recentlyWatched: [],
       watchLater: [],
+      user: [],
       selectedChannelId: null,
+      isLoggedIn: false,
       notificationCount: 0,
       setAutoPlay: (autoPlay) => set(() => ({ autoPlay })),
+      setLoggedIn: (isLoggedIn) => set(() => ({ isLoggedIn })),
+      setUser: (user) => set(() => ({ user })),
       setNotificationCount: (notificationCount) =>
         set(() => ({ notificationCount })),
       setSelectedChannelId: (id) => set(() => ({ selectedChannelId: id })),
@@ -39,7 +43,7 @@ export const usePersistStore = create(
       }
     }),
     {
-      name: 'desoly.store'
+      name: 'videso.store'
     }
   )
 )

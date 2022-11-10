@@ -12,6 +12,8 @@ import { CgBell } from 'react-icons/cg'
 import GlobalSearchBar from '@components/Search/GlobalSearchBar'
 import { Button } from '@components/UIElements/Button'
 import { APP } from '@app/utils/constants'
+import Image from 'next/image'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 
 
 
@@ -19,16 +21,18 @@ const Header = ({ className }) => {
   const hasNewNotification = useAppStore((state) => state.hasNewNotification)
   const selectedChannelId = usePersistStore((state) => state.selectedChannelId)
   const [showShowModal, setSearchModal] = useState(false)
+  const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
   const [loading, setLoading] = useState(false)
 
   return (
     <div className='dark:bg-[#121214]/70 bg-white bg-opacity-70 fixed items-center flex justify-between flex-row z-20 left-0 right-0 top-0 flex-shrink-0 bg-clip-padding backdrop-blur-xl backdrop-filter h-16 px-4'>
-      <div className="w-56 py-4">
+      <div className="w-56 flex justify-center py-4">
         <Link
           href={HOME}
-          className="flex items-center justify-center pt-1 focus:outline-none"
+          className="flex items-center justify-start pb-1 focus:outline-none"
         >
-          {APP.Name}
+          <Image src='/videso.png' alt={APP.Name} height={35} width={31} />
+          <span className='font-semibold font-oswald text-gray-700 dark:text-white text-3xl ml-2'>Videso</span>
         </Link>
       </div>
       <GlobalSearchBar />
@@ -52,11 +56,27 @@ const Header = ({ className }) => {
             <NewVideoTrigger />
           </>
         ) : null} */}
-          <CgBell className="text-lg" />
-        <Button onClick={() => setLoading(!loading)}  loading={loading}>
-          Sign In
-          <span className="hidden ml-1 md:inline-block">with DeSo</span>
-          </Button>
+        {isLoggedIn ? (
+          <>
+            <button className='w-10 h-10 dark:hover:bg-gray-50 hover:bg-gray-200 flex items-center justify-center text-gray-700 dark:text-white rounded-full'>
+              <CgBell size={21} />
+            </button>
+            <Button onClick={() => setLoading(!loading)}  loading={loading}>
+              Upload Video
+              <span className="hidden ml-1 md:inline-block">with DeSo</span>
+            </Button>
+          </>
+        ) : (
+          <>
+            <button className='w-10 h-10 dark:hover:bg-gray-50 hover:bg-gray-200 flex items-center justify-center text-gray-700 dark:text-white rounded-full'>
+              <BsThreeDotsVertical size={21} />
+            </button>
+            <Button onClick={() => setLoading(!loading)} loading={loading}>
+                Sign In
+                <span className="hidden ml-1 md:inline-block">with DeSo</span>
+            </Button>
+          </>
+        )}
       </div>
     </div>
   )
