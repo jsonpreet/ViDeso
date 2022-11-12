@@ -11,6 +11,9 @@ export const Loader = ({ size = 'md', className }) => {
             className,
             {
               'w-5 h-5': size === 'md',
+              'w-8 h-8': size === 'lg',
+              'w-12 h-12': size === 'xl',
+              'w-16 h-16': size === '2xl',
               'w-3.5 h-3.5': size === 'sm'
             }
           )}

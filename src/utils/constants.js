@@ -17,12 +17,12 @@ export const BASE_IDENTITY_URI = process.env.NEXT_PUBLIC_NODE_IDENTITY_URL || 'h
 export const EXTERNAL_LINK = process.env.NEXT_PUBLIC_EXTERNAL_URL || 'https://diamondapp.com';
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://videso.xyz';
 
-export const config = {
+export const queryConfig = {
     defaultOptions: {
         queries: {
-            staleTime: 600 * 2 * 1000,
-            cacheTime: 0,
-            refetchOnWindowFocus: false,
+          staleTime: 60 * 1 * 1000,
+          // cacheTime: 0,
+          refetchOnWindowFocus: true,
         }
     }
 }

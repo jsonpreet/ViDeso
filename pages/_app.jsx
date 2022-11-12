@@ -7,11 +7,13 @@ import '@styles/globals.scss'
 import FullPageLoader from '@components/Common/FullPageLoader';
 // import Layout from '@components/Common/Layout';
 import MetaTags from '@app/components/Common/MetaTags';
+import { Devtools } from '@app/components/DevTools';
+import { queryConfig } from '@app/utils/constants';
 
 const Layout = lazy(() => import('../src/components/Common/Layout'))
 
 function MyApp({ Component, pageProps }) {
-  const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = useState(() => new QueryClient(queryConfig))
   return (
     <>
       <MetaTags/>
@@ -20,9 +22,10 @@ function MyApp({ Component, pageProps }) {
         <Suspense fallback={<FullPageLoader />}>
           <ThemeProvider enableSystem={false} attribute="class">
             <Hydrate state={pageProps.dehydratedState}>
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+              <Devtools />
             </Hydrate>
           </ThemeProvider>
         </Suspense>

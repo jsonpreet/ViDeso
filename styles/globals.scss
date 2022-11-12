@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'react-lazy-load-image-component/src/effects/blur.css';
 
 html {
   @apply overflow-y-scroll;
@@ -56,4 +57,29 @@ body{
 
 .font-oswald {
   font-family: 'Oswald', sans-serif;
+}
+
+.text-secondary {
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+.bg-secondary {
+  @apply dark:bg-[#050506] bg-white;
+}
+
+.dropdown-shadow{
+  box-shadow: 0px 4px 32px 0px rgba(0,0,0,0.1);
+  backdrop-filter: blur(8px);
+}
+
+.header-glassy {
+  @apply dark:bg-[#121214]/90 bg-white bg-opacity-90 bg-clip-padding backdrop-blur-xl backdrop-filter;
+}
+
+.header {
+  @apply last:dark:bg-[#121214] bg-white
+}
+
+.primary-button {
+  @apply bg-gradient-to-r from-brand-700 to-pink-600 hover:from-brand-600 hover:to-brand-600 dark:from-pink-500 dark:to-brand-500 dark:hover:from-brand-600 dark:hover:to-brand-600 text-white;
 }

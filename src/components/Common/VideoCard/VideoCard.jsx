@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react'
 import Deso from 'deso-protocol'
 import ThumbnailOverlays from './ThumbnailOverlays'
 import IsVerified from '../IsVerified'
-import { timeNow } from '@app/utils/functions'
+import { getThumbDuration, timeNow } from '@app/utils/functions'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import VideoOptions from './VideoOptions'
+import axios from 'axios'
 
 // import IsVerified from '../IsVerified'
 // import ReportModal from './ReportModal'
@@ -18,6 +21,7 @@ const VideoCard = ({ video }) => {
   const [showShare, setShowShare] = useState(false)
   const [showReport, setShowReport] = useState(false)
   const [videoData, setVideoData] = useState('')
+  const [thumbnailUrl, setThumbnailUrl] = useState('')
 
   const userProfile = video.ProfileEntryResponse;
   const extraData = video.PostExtraData
@@ -32,20 +36,40 @@ const VideoCard = ({ video }) => {
         };
         const videoData = await deso.media.getVideoStatus(request)
         setVideoData(videoData.data)
+        try {
+          const duration = getThumbDuration(videoData.data.Duration);
+          const url = `${video.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.jpg?time=${duration}&height=1660`;
+          await axios.get(url, { responseType: 'blob' }).then((res) => {
+            setThumbnailUrl(URL.createObjectURL(res.data))
+          })
+        } catch (error) {
+          console.log(video.PostHashHex, error)
+        }
       } catch (error) {
         console.log(video.PostHashHex, error)
       }
     }
+    // const getVideoThumb = async () => {
+    //   try {
+    //     const duration = getThumbDuration(videoData.Duration);
+    //     const url = `${video.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.jpg?time=${duration}&height=1660`;
+    //     await axios.get(url, { responseType: 'blob' }).then((res) => {
+    //       setThumbnailUrl(URL.createObjectURL(res.data))
+    //     })
+    //   } catch (error) {
+    //     console.log(video.PostHashHex, error)
+    //   }
+    // }
     if (video.VideoURLs[0] !== null) {
       getVideoData()
+      //getVideoThumb()
     }
   }, [video])
 
 
-  const thumbnailUrl = video.VideoURLs[0] !== null ? `${video.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.jpg?time=1s&height=1660` : ``;
-
+  // const thumbnailUrl = video.VideoURLs[0] !== null ? `${video.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.jpg?time=0s&height=1660` : ``;
   return (
-    <div className="group">
+    <div className="group" data-id={video.PostHashHex} data-duration={videoData.Duration}>
       {video.IsHidden ? (
         <div className="grid h-full place-items-center">
           <span className="text-xs">Video Hidden by User</span>
@@ -64,13 +88,18 @@ const VideoCard = ({ video }) => {
           /> */}
           <Link href={`/watch/${video.PostHashHex}`}>
             <div className="relative rounded-xl aspect-w-16 aspect-h-9">
-              <img
-                src={thumbnailUrl}
-                draggable={false}
-                className={clsx(
+                <LazyLoadImage
+                  delayTime={1000}
+                  className={clsx(
                   'object-center bg-gray-100 dark:bg-gray-900 w-full h-full rounded-xl lg:w-full lg:h-full object-cover'
-                )}
-                alt="thumbnail"
+                  )}
+                  alt={`Video by @${userProfile.Username}`}
+                  wrapperClassName='w-full'
+                  effect="blur"
+                  // beforeLoad={() => setLoading(true)}
+                  // afterLoad={() => setLoading(false)}
+                  placeholderSrc='https://placekitten.com/360/220'
+                  src={thumbnailUrl}
               />
               <ThumbnailOverlays video={video} data={videoData} />
             </div>
@@ -79,9 +108,9 @@ const VideoCard = ({ video }) => {
             <div className="flex items-start space-x-2.5">
               <Link href={`/watch/${video.id}`} className="flex-none mt-0.5">
                 <img
-                  className="w-8 h-8 rounded-full"
+                  className="w-9 h-9 rounded-full"
                   src={userProfile.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${userProfile.PublicKeyBase58Check}`}
-                  alt="channel picture"
+                  alt={`${userProfile.Username} Picture`}
                   draggable={false}
                 />
               </Link>
@@ -94,11 +123,11 @@ const VideoCard = ({ video }) => {
                       Video by @{userProfile.Username}
                     {/* {userProfile.Username} */}
                   </Link>
-                  {/* <VideoOptions
+                  <VideoOptions
                     video={video}
                     setShowShare={setShowShare}
                     setShowReport={setShowReport}
-                  /> */}
+                  />
                 </div>
                 <Link
                   href={`/${userProfile.Username}`}
@@ -107,10 +136,10 @@ const VideoCard = ({ video }) => {
                   <span>{userProfile.Username}</span>
                   {userProfile.IsVerified ? <IsVerified size="xs" /> : null}
                 </Link>
-                <div className="flex overflow-hidden items-center text-[11px] opacity-70">
-                  {/* <span className="whitespace-nowrap">
-                    {video.stats?.totalUpvotes} likes
-                  </span> */}
+                <div className="flex overflow-hidden items-center text-[13px] opacity-70">
+                  <span className="whitespace-nowrap">
+                    {video.LikeCount} likes
+                  </span>
                   <span className="middot" />
                     <span className="whitespace-nowrap">
                       {timeNow(video.TimestampNanos)}

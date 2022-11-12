@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors');
 module.exports = {
   mode: 'jit',
   darkMode: 'class',
@@ -8,7 +9,15 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        gray: colors.zinc,
+        green: colors.emerald,
+        purple: colors.violet,
+        yellow: colors.yellow,
+        brand: colors.violet
+      }
+    }
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),

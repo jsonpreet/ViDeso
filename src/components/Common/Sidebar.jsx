@@ -21,15 +21,19 @@ import { APP } from '@app/utils/constants'
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { useState } from 'react'
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
+import usePersistStore from '@app/store/persist'
+import { Button } from '../UIElements/Button'
 
 // const MoreTrigger = dynamic(() => import('../../components/Common/MoreTrigger'))
 
 const Sidebar = () => {
+  const { isLoggedIn } = usePersistStore((state) => state.isLoggedIn) 
   const router = useRouter()
   const { theme, setTheme } = useTheme()
   const [top, setTop] = useState(0)
   const [showMore, setShowMore] = useState(false)
   const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 6;
+
 
   const isActivePath = (path) => router.pathname === path
 
@@ -93,7 +97,7 @@ const Sidebar = () => {
                 <p className='ml-6'>Subscriptions</p>
               </div>
             </Link>
-            <Link
+            {/* <Link
               href={SHORTS}
               className={clsx('rounded-lg px-3 py-2 group', {
                 'bg-gray-100 font-bold dark:bg-[#181818]':
@@ -106,7 +110,7 @@ const Sidebar = () => {
                 <MdSlowMotionVideo size={21} />
                 <p className='ml-6'>Shorts</p>
               </div>
-            </Link>
+            </Link> */}
             <Link
               href={LIBRARY}
               className={clsx(
@@ -136,6 +140,15 @@ const Sidebar = () => {
               </div>
             </Link>
           </div>
+          {!isLoggedIn ? 
+              <>
+                <div className="h-[1px] mt-4 mb-6 relative bg-gray-300 dark:bg-gray-700" />
+                <div className="flex flex-col w-full mb-3 space-y-3 px-3">
+                  <div className='text-sm'>Sign in to like videos, comment, and subscribe.</div>
+                  <div className='w-full'><Button>Log In</Button></div>
+                </div>
+              </>
+          : null}  
           <div className="h-[1px] mt-4 mb-6 relative bg-gray-300 dark:bg-gray-700" />
           <div className="flex flex-col w-full mb-3 px-3">
             <div className='text-base'>Explore</div>

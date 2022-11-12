@@ -25,7 +25,7 @@ const Header = ({ className }) => {
   const [loading, setLoading] = useState(false)
 
   return (
-    <div className='dark:bg-[#121214]/70 bg-white bg-opacity-70 fixed items-center flex justify-between flex-row z-20 left-0 right-0 top-0 flex-shrink-0 bg-clip-padding backdrop-blur-xl backdrop-filter h-16 px-4'>
+    <div className='fixed items-center flex justify-between flex-row z-20 left-0 right-0 top-0 flex-shrink-0 header-glassy h-16 px-4'>
       <div className="w-56 flex justify-center py-4">
         <Link
           href={HOME}
@@ -61,9 +61,8 @@ const Header = ({ className }) => {
             <button className='w-10 h-10 dark:hover:bg-gray-50 hover:bg-gray-200 flex items-center justify-center text-gray-700 dark:text-white rounded-full'>
               <CgBell size={21} />
             </button>
-            <Button onClick={() => setLoading(!loading)}  loading={loading}>
+            <Button onClick={() => setLoading(!loading)} loading={loading}>
               Upload Video
-              <span className="hidden ml-1 md:inline-block">with DeSo</span>
             </Button>
           </>
         ) : (
