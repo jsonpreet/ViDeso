@@ -42,7 +42,7 @@ const Sidebar = () => {
     <>
       {/* {!getShowFullScreen(router.pathname) && <MobileBottomNav />} */}
       <div className="flex flex-col w-72 primaryBg h-screen p-4 items-start justify-start overflow-hidden z-10 pt-16 text-[14px] font-light tracking-wide">
-        <SimpleBar forceVisible="y" style={{ height: `100vh`, width: `100%` }}>
+        <SimpleBar forceVisible="y" style={{ height: `100%`, width: `100%` }}>
           <div className="flex flex-col w-full overflow-hidden pr-4">
             <div className="flex flex-col w-full space-y-1">
               <Link
