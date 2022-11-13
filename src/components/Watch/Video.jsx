@@ -4,7 +4,9 @@ import { getOriginalVideoUrl, getPermanentVideoUrl, getVideoUrl, getPlaybackIdFr
 import axios from 'axios'
 import dynamic from 'next/dynamic'
 import React, { FC, useEffect, useState } from 'react'
-import Linkify from 'linkify-react';
+import Linkify from 'linkify-react'
+import "linkify-plugin-hashtag"
+import "linkify-plugin-mention"
 import { LinkifyOptions } from '@app/utils/functions/getLinkifyOptions'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 import VideoMeta from './VideoMeta'
@@ -12,6 +14,7 @@ import VideoActions from './VideoActions'
 import Link from 'next/link'
 import IsVerified from '../Common/IsVerified'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
+import { Button } from '../UIElements/Button'
 
 // import VideoActions from './VideoActions'
 // import VideoMeta from './VideoMeta'
@@ -38,10 +41,10 @@ const Video = ({ video }) => {
       />
       <div className="flex flex-col">
         <div>
-            <h1 className="mt-4 text-lg font-medium line-clamp-2">
-                <Linkify options={LinkifyOptions}>
-                    {videoTitle}
-                </Linkify>
+            <h1 className="mt-4 text-2xl font-medium line-clamp-2">
+              <Linkify options={LinkifyOptions}>
+                  {videoTitle}
+              </Linkify>
             </h1>
           {/* <VideoMeta video={video} /> */}
         </div>
@@ -66,6 +69,11 @@ const Video = ({ video }) => {
               <span className="text-xs text-gray-500">
                 200k subscribers
               </span>
+            </div>
+            <div>
+              <Button variant="dark">
+                <span>Subcribe</span>
+              </Button>
             </div>
           </div>
           <div>

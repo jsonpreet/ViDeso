@@ -18,9 +18,8 @@ const VideoCard = ({ video }) => {
   const [showReport, setShowReport] = useState(false)
   const [videoData, setVideoData] = useState('')
   const [thumbnailUrl, setThumbnailUrl] = useState('')
-
-  const userProfile = video.ProfileEntryResponse;
-  const extraData = video.PostExtraData
+  const [userProfile, setUserProfile] = useState('')
+  const [extraData, setExtraData] = useState('')
 
   useEffect(() => {
     const deso = new Deso()
@@ -48,6 +47,8 @@ const VideoCard = ({ video }) => {
     if (video.VideoURLs[0] !== null) {
       getVideoData()
     }
+      setUserProfile(video.ProfileEntryResponse)
+      setExtraData(video.ExtraData)
   }, [video])
 
   return (

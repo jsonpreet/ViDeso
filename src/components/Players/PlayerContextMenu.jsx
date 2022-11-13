@@ -9,8 +9,7 @@ import { AiOutlineLink } from 'react-icons/ai'
 import { BiCheck } from 'react-icons/bi'
 import { MdOutlineLoop } from 'react-icons/md'
 
-const PlayerContextMenu = forwardRef(
-  ({ position, hideContextMenu, isVideoLoop, setIsVideoLoop }, ref) => {
+const PlayerContextMenu = forwardRef(({ position, hideContextMenu, isVideoLoop, setIsVideoLoop }, ref) => {
     const { query } = useRouter()
     const [copy] = useCopyToClipboard()
     const contextMenuRef = useRef(null)
@@ -38,16 +37,17 @@ const PlayerContextMenu = forwardRef(
       await copy(`${APP.URL}/watch/${query.id}?t=${selectedTime}`)
       toast.success(`Video link copied`)
       hideContextMenu()
-    }
+  }
+  console.log(position);
 
     return (
       <div
-        className="absolute z-10 p-2 text-sm text-white bg-gray-900 bg-opacity-90 rounded-xl"
-        style={{ top: position.y, left: position.x }}
+        className="absolute z-10 py-2 text-sm text-white bg-gray-900 bg-opacity-70 rounded-xl"
+        style={{ top: position.y, left: (position.x - `280`) }}
         ref={contextMenuRef}
       >
         <div
-          className="px-3 py-2 cursor-pointer hover:bg-gray-700 rounded-xl"
+          className="p-3 cursor-pointer hover:bg-gray-700 bg-opacity-70"
           onClick={toggleLoop}
         >
           <div className="flex items-center justify-between">
@@ -59,7 +59,7 @@ const PlayerContextMenu = forwardRef(
           </div>
         </div>
         <div
-          className="px-3 py-2 cursor-pointer rounded-xl hover:bg-gray-700"
+          className="p-3 cursor-pointer hover:bg-gray-700 bg-opacity-70"
           onClick={onCopyVideoUrl}
         >
           <div className="flex items-center space-x-2">
@@ -68,7 +68,7 @@ const PlayerContextMenu = forwardRef(
           </div>
         </div>
         <div
-          className="px-3 py-2 cursor-pointer hover:bg-gray-700 rounded-xl"
+          className="p-3 cursor-pointer hover:bg-gray-700 bg-opacity-70"
           onClick={onCopyAtCurrentTime}
         >
           <div className="flex items-center space-x-2">

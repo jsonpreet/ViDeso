@@ -76,28 +76,6 @@ const WatchVideo = () => {
             getVideoData()
         }
     }, [video])
-    
-
-
-//   const fetchHls = async (currentVideo) => {
-//     const playbackId = getPlaybackIdFromUrl(currentVideo)
-//     if (!playbackId) {
-//       setVideo(currentVideo)
-//       return setLoading(false)
-//     }
-//     try {
-//       const hls = await getHlsData(playbackId)
-//       const videoObject = { ...currentVideo }
-//       if (getIsHlsSupported() && hls) {
-//         videoObject.hls = hls
-//       }
-//       setVideo(videoObject)
-//     } catch (error) {
-//       setVideo(currentVideo)
-//     } finally {
-//       setLoading(false)
-//     }
-//   }
 
 
     useEffect(() => {
@@ -111,19 +89,15 @@ const WatchVideo = () => {
         setVideoWatchTime(Number(t))
     }, [t, setVideoWatchTime])
 
-//   if (error) return <Custom500 />
-    // if (loading) return <WatchVideoShimmer />
-//   if (!canWatch) return <Custom404 />
-
   return (
     <>
         <MetaTags title={!loading && video ? getVideoTitle(video) : 'Watch'} />
-        <div className='px-20'>
+        <div className='px-16'>
         {!loading && video ? (
             <div className="grid grid-cols-1 gap-y-4 md:gap-4 xl:grid-cols-4">
-                <div className="col-span-3 space-y-3 divide-y divide-gray-200 dark:divide-gray-900">
+                <div className="col-span-3 space-y-4">
                     <Video video={video} />
-                    {/* <AboutChannel video={video} /> */}
+                    <AboutChannel video={video} />
                     {/* <VideoComments video={video} /> */}
                 </div>
                 <div className="col-span-1">

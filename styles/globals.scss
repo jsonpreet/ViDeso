@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 @import 'react-lazy-load-image-component/src/effects/blur.css';
+@import 'simplebar-react/dist/simplebar.min.css';
+@import '@vime/core/themes/default.css';
 
 html {
   @apply overflow-y-scroll;
@@ -72,6 +74,10 @@ body{
   backdrop-filter: blur(8px);
 }
 
+.gradientLink {
+  @apply text-pink-600 dark:text-pink-400 hover:text-brand-600 dark:hover:text-brand-400 transition;
+}
+
 .header-glassy {
   @apply dark:bg-[#121214]/90 bg-white bg-opacity-90 bg-clip-padding backdrop-blur-xl backdrop-filter;
 }
@@ -82,4 +88,22 @@ body{
 
 .primary-button {
   @apply bg-gradient-to-r from-brand-700 to-pink-600 hover:from-brand-600 hover:to-brand-600 dark:from-pink-500 dark:to-brand-500 dark:hover:from-brand-600 dark:hover:to-brand-600 text-white;
+}
+
+vm-player {
+  --vm-player-font-family: 'Roboto', sans-serif !important;
+  --vm-player-border-radius: 0 !important;
+  --vm-settings-border-radius: 10px !important;
+  --vm-menu-bg: rgba(0, 0, 0, 0.40) !important;
+  --vm-settings-padding: 0 !important;
+  --vm-menu-item-focus-bg: rgba(90, 90, 90, 0.95) !important;
+  --vm-controls-bg: rgba(0, 0, 0, 0) !important;
+  --vm-slider-value-color: #db2777 !important;
+  // --vm-scrim-bg: rgba(0, 0, 0, 0) !important;
+}
+vm-player video {
+  @apply flex-1 h-auto w-auto rounded-none aspect-[16/9];
+}
+vm-player video.sc-vm-file {
+  @apply border-inherit align-middle  w-full outline-none;
 }

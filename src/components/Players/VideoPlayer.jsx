@@ -120,7 +120,7 @@ const PlayerInstance = ({ source, ratio, hls, poster }) => {
           aspectRatio={ratio}
           autopause
           autoplay
-          icons="material"
+          icons="vime"
         >
             <Hls version="latest" poster={poster}>
               <source data-src={hls} type="application/x-mpegURL" />
@@ -162,7 +162,7 @@ const VideoPlayer = ({
   const [sensitiveWarning, setSensitiveWarning] = useState(isSensitiveContent)
 
   return (
-    <div className={clsx('overflow-hidden rounded-xl', wrapperClassName)}>
+    <div className={clsx('overflow-hidden', wrapperClassName)}>
       {/* {sensitiveWarning ? (
         <SensitiveWarning acceptWarning={() => setSensitiveWarning(false)} />
       ) : (
@@ -174,10 +174,10 @@ const VideoPlayer = ({
         />
       )} */}
         <PlayerInstance
-            source={source}
-            ratio={ratio}
-            poster={poster}
-            hls={hls}
+          source={source}
+          ratio={ratio}
+          poster={poster}
+          hls={hls}
         />
     </div>
   )

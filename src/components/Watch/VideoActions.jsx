@@ -22,12 +22,12 @@ const VideoActions = ({ video }) => {
             /> */}
             <Reactions video={video} />
             <Button
-                variant="secondary"
-                className="!p-0"
+                variant="light"
                 onClick={() => setShowShare(true)}
-                >
-                <span className="flex items-center space-x-1">
-                    <RiShareForwardLine />
+                className='h-10 '
+            >
+                <span className="flex items-center space-x-3">
+                    <RiShareForwardLine size={22} />
                     <span>Share</span>
                 </span>
             </Button>
@@ -35,11 +35,11 @@ const VideoActions = ({ video }) => {
                 onClick={() => {
                     setShowReport(true)
                 }}
-                variant="secondary"
-                className="!p-0"
+                variant="light"
+                className='h-10 '
                 >
-                <span className="flex items-center space-x-1">
-                    <FiFlag className="text-xs" />
+                <span className="flex items-center space-x-3">
+                    <FiFlag size={18} />
                     <span>Report</span>
                 </span>
             </Button>

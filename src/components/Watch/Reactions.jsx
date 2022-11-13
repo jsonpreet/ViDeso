@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
+import { BiLike } from 'react-icons/bi'
 import { IoDiamondOutline } from 'react-icons/io5'
 
 const Reactions = ({ video, iconSize = 'sm', textSize = 'sm', isVertical = false, showLabel = true}) => {
@@ -39,25 +40,21 @@ const Reactions = ({ video, iconSize = 'sm', textSize = 'sm', isVertical = false
             'space-x-2.5 md:space-x-4': !isVertical
             })}
         >
-            <Button variant="secondary" className="!p-0" onClick={() => likeVideo()}>
+            <Button variant="light" className="h-10" onClick={() => likeVideo()}>
                 <span
-                    className={clsx('flex items-center space-x-1 outline-none', {
+                    className={clsx('flex items-center space-x-2 outline-none', {
                     'text-indigo-500 font-semibold': reaction.isLiked,
                     'flex-col space-y-1': isVertical
                     })}
                 >
-                    <AiOutlineLike
+                    <BiLike size={21}
                     className={clsx({
-                        'text-xs': iconSize === 'xs',
-                        'text-xl': iconSize === 'xl',
-                        'text-2xl': iconSize === '2xl',
                         'text-indigo-500': reaction.isLiked
                     })}
                     />
                     {showLabel && (
                     <span
                         className={clsx({
-                        'text-xs': textSize === 'xs',
                         'text-indigo-500': reaction.isLiked
                         })}
                     >
@@ -91,9 +88,9 @@ const Reactions = ({ video, iconSize = 'sm', textSize = 'sm', isVertical = false
                 </span>
             </Button> */}
             
-            <Button variant="secondary" className="!p-0" onClick={() => { setShowTip(true) }}>
-                <span className="flex items-center space-x-1">
-                    <IoDiamondOutline />
+            <Button variant="light" className="h-10" onClick={() => { setShowTip(true) }}>
+                <span className="flex items-center space-x-3">
+                    <IoDiamondOutline size={20} />
                     <span>{video.DiamondCount}</span>
                 </span>
             </Button>

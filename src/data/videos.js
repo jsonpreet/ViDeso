@@ -18,12 +18,10 @@ export const getHotFeed = async ({ limit }) => {
         const posts = response.data.HotFeedPage;
 
         const filtered = posts.filter(post => {
-            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '') {
+            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '' && post.ProfileEntryResponse !== null && post.ProfileEntryResponse > 0) {
                 return post
             }
         });
-
-        console.log(filtered);
 
         return filtered
     }
@@ -46,7 +44,7 @@ export const getLatestFeed = async (limit, lastPost) => {
         const posts = response.data.PostsFound;
 
         const filtered = posts.filter(post => {
-            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '') {
+            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '' && post.ProfileEntryResponse !== null) {
                 return post
             }
         });

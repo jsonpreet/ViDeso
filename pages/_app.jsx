@@ -10,7 +10,6 @@ import { Devtools } from '@app/components/DevTools';
 import { queryConfig } from '@app/utils/constants';
 
 import '@styles/globals.scss'
-import '@vime/core/themes/default.css'
 
 const Layout = lazy(() => import('../src/components/Common/Layout'))
 
