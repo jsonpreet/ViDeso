@@ -37,7 +37,6 @@ const WatchVideo = () => {
                         PostHashHex: id
                     }
                     const response = await deso.posts.getSinglePost(request);  
-                    console.log(response.PostFound)
                     setVideo(response.PostFound)
                 } catch (error) {
                     console.log(error)
@@ -92,16 +91,16 @@ const WatchVideo = () => {
   return (
     <>
         <MetaTags title={!loading && video ? getVideoTitle(video) : 'Watch'} />
-        <div className='px-16'>
+        <div className=''>
         {!loading && video ? (
-            <div className="grid grid-cols-1 gap-y-4 md:gap-4 xl:grid-cols-4">
-                <div className="col-span-3 space-y-4">
-                    <Video video={video} />
+            <div className="flex space-x-4">
+                <div className="flex flex-1 flex-col space-y-4">
+                    <Video video={video} poster={thumbnailUrl} />
                     <AboutChannel video={video} />
-                    {/* <VideoComments video={video} /> */}
+                    <VideoComments video={video} />
                 </div>
-                <div className="col-span-1">
-                    {/* <SuggestedVideos currentVideoId={video?.id} /> */}
+                <div className="w-full min-w-[300px] max-w-[400px]">
+                    <SuggestedVideos currentVideoId={video?.PostHashHex} />
                 </div>
             </div>
         ) : <WatchVideoShimmer />}

@@ -11,6 +11,7 @@ import axios from 'axios'
 import { getPlaybackIdFromUrl } from '@app/utils/functions/getVideoUrl'
 import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
+import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 
 
 const VideoCard = ({ video }) => {
@@ -102,8 +103,7 @@ const VideoCard = ({ video }) => {
                       href={`/watch/${video.PostHashHex}`}
                       className="text-[15px] font-medium line-clamp-2 break-words"
                       >
-                        Video by @{userProfile.Username}
-                      {/* {userProfile.Username} */}
+                        {getVideoTitle(video)}
                     </Link>
                     <Link
                       href={`/${userProfile.Username}`}

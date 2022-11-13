@@ -15,6 +15,10 @@ import Link from 'next/link'
 import IsVerified from '../Common/IsVerified'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 import { Button } from '../UIElements/Button'
+import Deso from 'deso-protocol'
+import { getThumbDuration } from '@app/utils/functions'
+import { generateVideoThumbnails } from '@app/utils/functions/generateVideoThumbnails'
+import ChannelInfo from './ChannelInfo'
 
 // import VideoActions from './VideoActions'
 // import VideoMeta from './VideoMeta'
@@ -24,58 +28,52 @@ const VideoPlayer = dynamic(() => import('../Players/VideoPlayer'), {
   ssr: false
 })
 
-const Video = ({ video }) => {
+const Video = ({ video, poster }) => {
   const userProfile = video.ProfileEntryResponse;
   const [videoUrl, setVideoUrl] = useState(getVideoUrl(video))
   const [videoID, setVideoID] = useState(getPlaybackIdFromUrl(video))
   const videoTitle = getVideoTitle(video)
 //   const isSensitiveContent = getIsSensitiveContent(video.metadata, video.id)
+  const [videoData, setVideoData] = useState('')
+
+  useEffect(() => {
+    const deso = new Deso()
+    const getVideoData = async () => {
+      try {
+          const videoID = getPlaybackIdFromUrl(video);
+          const request = {
+              "videoId": videoID
+          };
+          const videoData = await deso.media.getVideoStatus(request)
+          setVideoData(videoData.data)
+      } catch (error) {
+          console.log(video.PostHashHex, error)
+      }
+    }
+    if (video.VideoURLs[0] !== null) {
+        getVideoData()
+    }
+  }, [video])   
 
   return (
     <div className="overflow-hidden">
       <VideoPlayer
         source={videoUrl}
         hls={`https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoID}/manifest/video.m3u8`}
-        poster={getVideoThumbnail(video, '0s')}
-        // isSensitiveContent={isSensitiveContent}
+        poster={poster}
+      // isSensitiveContent={isSensitiveContent}
       />
       <div className="flex flex-col">
         <div>
             <h1 className="mt-4 text-2xl font-medium line-clamp-2">
               <Linkify options={LinkifyOptions}>
-                  {videoTitle}
+                {videoTitle}
               </Linkify>
             </h1>
           {/* <VideoMeta video={video} /> */}
         </div>
         <div className='flex justify-between items-center mt-3'>
-          <div className='flex items-start space-x-3'>
-            <Link href={`/${userProfile.Username}`} className="flex-none">
-              <img
-                className="w-10 h-10 rounded-full"
-                src={getProfilePicture(userProfile)}
-                alt={`${userProfile.Username} Picture`}
-                draggable={false}
-              />
-            </Link>
-            <div className='flex flex-col'>
-              <Link
-                href={`/${userProfile.Username}`}
-                className="flex w-fit space-x-0.5 font-medium"
-              >
-                <span>{userProfile.Username}</span>
-                {userProfile.IsVerified ? <IsVerified size="xs" /> : null}
-              </Link>
-              <span className="text-xs text-gray-500">
-                200k subscribers
-              </span>
-            </div>
-            <div>
-              <Button variant="dark">
-                <span>Subcribe</span>
-              </Button>
-            </div>
-          </div>
+          <ChannelInfo channel={userProfile} video={video}/>
           <div>
             <VideoActions video={video} />
           </div>

@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <MetaTags/>
-      <NextNProgress color="#5634ee" showOnShallow={true} />
+      <NextNProgress color="#db2777" showOnShallow={true} />
       <QueryClientProvider client={queryClient}>
         <Suspense fallback={<FullPageLoader />}>
           <ThemeProvider enableSystem={false} attribute="class">

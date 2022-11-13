@@ -17,6 +17,7 @@ const VideoOptions = ({
   video,
   setShowShare,
   setShowReport,
+  isSuggested = false,
   showOnHover = true
 }) => {
   const addToWatchLater = usePersistStore((state) => state.addToWatchLater)
@@ -64,7 +65,7 @@ const VideoOptions = ({
             }
           )}
         >
-          <BsThreeDotsVertical size={22} />
+          <BsThreeDotsVertical size={isSuggested ? 17 : 22} />
         </div>
       }
     >

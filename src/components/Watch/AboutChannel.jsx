@@ -12,6 +12,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineRetweet } from 'react-icons/ai'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
+import { timeNow } from '@app/utils/functions'
 
 // import CollectVideo from './CollectVideo'
 // import MetaInfo from './MetaInfo'
@@ -22,7 +23,7 @@ const AboutChannel = ({ video }) => {
   const [showMore, setShowMore] = useState(false)
 
   useEffect(() => {
-    if (video.Body.trim().length > 300) {
+    if (video.Body.trim().length > 200) {
       setClamped(true)
       setShowMore(true)
     }
@@ -31,10 +32,12 @@ const AboutChannel = ({ video }) => {
   return (
     <div className="flex items-start justify-between w-full bg-gray-100 p-4 rounded-xl">
       <div className="flex flex-col flex-1 overflow-hidden break-words">
+        <div className='text-sm mb-3'>
+          <span>Uploaded {timeNow(video.TimestampNanos)}</span>
+        </div>
         {video.Body !== null && (
-          
             <Linkify options={LinkifyOptions}>
-              {video.Body}
+              {clamped ? video.Body.trim().substring(0, 200) : video.Body}
             </Linkify>
         )}
         {showMore && (
@@ -42,15 +45,15 @@ const AboutChannel = ({ video }) => {
             <button
               type="button"
               onClick={() => setClamped(!clamped)}
-              className="flex items-center text-xs outline-none hover:opacity-100 opacity-60"
+              className="flex items-center text-sm outline-none hover:opacity-100 opacity-80"
             >
               {clamped ? (
                 <>
-                  Show more <BiChevronDown className="text-sm" />
+                  Show more <BiChevronDown size={20} className='-mt-[2px]' />
                 </>
               ) : (
                 <>
-                  Show less <BiChevronUp className="text-sm" />
+                  Show less <BiChevronUp size={20} className='-mt-[2px]' />
                 </>
               )}
             </button>

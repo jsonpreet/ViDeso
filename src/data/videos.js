@@ -3,12 +3,13 @@ import { BASE_URI } from "@app/utils/constants";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const getHotFeed = async ({ limit }) => {
+export const getHotFeed = async (limit, lastPost, output) => {
     const pins = [];
     const endpoint = 'get-hot-feed';
-    const nLimit = (limit && limit !== -1) ? limit : 300
+    const lastid = (lastPost !== 0 && lastPost !== undefined) ? `${lastPost}` : ``;
+    const nLimit = (limit && limit !== -1) ? limit : 500
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        SeenPosts: [],
+        SeenPosts: [lastid],
         SortByNew: true,
         ResponseLimit: nLimit,
     });
@@ -18,19 +19,18 @@ export const getHotFeed = async ({ limit }) => {
         const posts = response.data.HotFeedPage;
 
         const filtered = posts.filter(post => {
-            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '' && post.ProfileEntryResponse !== null && post.ProfileEntryResponse > 0) {
+            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '' && post.ProfileEntryResponse !== null) {
                 return post
             }
         });
 
-        return filtered
+        return filtered.splice(0, output)
     }
 }
 
-export const getLatestFeed = async (limit, lastPost) => {
+export const getLatestFeed = async (limit, lastPost, output = 32) => {
     const pins = [];
     const endpoint = 'get-posts-stateless';
-    console.log(limit, lastPost);
     const lastid = (lastPost !== 0 && lastPost !== undefined) ? `${lastPost}` : ``;
     const nLimit = (limit && limit !== -1) ? limit : 500
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
@@ -49,7 +49,7 @@ export const getLatestFeed = async (limit, lastPost) => {
             }
         });
 
-        return filtered.splice(0, 32)
+        return filtered.splice(0, output)
     }
 }
 
@@ -63,6 +63,21 @@ export const FetchHotFeed = ({limit}) => {
     return useQuery(['hot-feed', limit], ({limit}) => getHotFeed({limit}), {
         keepPreviousData: true,
     });
+}
+
+export const FetchInfiniteHotFeed = (limit, output) => {
+    return useInfiniteQuery(['infinite-hot-feed'], ({ pageParam = 0 }) => getHotFeed(limit, pageParam, output),
+        {
+            getNextPageParam: (lastPage, pages) => {
+                if(lastPage === null) {
+                    return null;
+                } else {
+                    let last = lastPage[lastPage.length - 1];
+                    return last.PostHashHex;
+                }
+            }
+        }
+    );
 }
 
 export const FetchInfiniteLatestFeed = (limit) => {
