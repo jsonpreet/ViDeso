@@ -15,7 +15,7 @@ import {
 import { RiLeafLine } from 'react-icons/ri'
 import { SHORTS, HISTORY, FEED, HOME, LIBRARY } from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
-import { FaDiscord } from "react-icons/fa";
+import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
 import { APP } from '@app/utils/constants'
 import { Scrollbars } from 'react-custom-scrollbars-2';
@@ -219,16 +219,16 @@ const Sidebar = () => {
           <div className="h-[1px] mt-4 mb-6 relative bg-gray-300 dark:bg-gray-700" />
           <div className="flex flex-col space-y-1">
             <a
-              href='#'
+              href='https://twitter.com/VidesoApp' target='_blank' rel="noreferrer"
               className={'rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]'}
             >
               <div className="flex items-center">
-                <FaDiscord size={21} />
-                <p className='ml-6'>Discord</p>
+                <FaTwitter size={21} />
+                <p className='ml-6'>Twitter</p>
               </div>
             </a>
             <a
-              href='#'
+              href='https://diamondapp.com/Videso' rel="noreferrer"
               className={'rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]'}
             >
               <div className="flex items-center">
@@ -237,7 +237,7 @@ const Sidebar = () => {
               </div>
             </a>
             <a
-              href='#'
+              href='#' rel="noreferrer"
               className={'rounded-lg px-3 py-2 group hover:bg-gray-100 dark:hover:bg-[#181818]'}
             >
               <div className="flex items-center">

@@ -8,13 +8,9 @@ import { getThumbDuration, timeNow } from '@app/utils/functions'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import VideoOptions from './VideoOptions'
 import axios from 'axios'
-
-// import IsVerified from '../IsVerified'
-// import ReportModal from './ReportModal'
-// import ShareModal from './ShareModal'
-// import ThumbnailOverlays from './ThumbnailOverlays'
-// import VideoOptions from './VideoOptions'
-
+import { getPlaybackIdFromUrl } from '@app/utils/functions/getVideoUrl'
+import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
+import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 
 
 const VideoCard = ({ video }) => {
@@ -30,7 +26,7 @@ const VideoCard = ({ video }) => {
     const deso = new Deso()
     const getVideoData = async () => {
       try {
-        const videoID = video.VideoURLs[0].split('/').pop();
+        const videoID = getPlaybackIdFromUrl(video);
         const request = {
           "videoId": videoID
         };
@@ -38,7 +34,7 @@ const VideoCard = ({ video }) => {
         setVideoData(videoData.data)
         try {
           const duration = getThumbDuration(videoData.data.Duration);
-          const url = `${video.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.jpg?time=${duration}&height=1660`;
+          const url = getVideoThumbnail(video, duration);
           await axios.get(url, { responseType: 'blob' }).then((res) => {
             setThumbnailUrl(URL.createObjectURL(res.data))
           })
@@ -49,25 +45,11 @@ const VideoCard = ({ video }) => {
         console.log(video.PostHashHex, error)
       }
     }
-    // const getVideoThumb = async () => {
-    //   try {
-    //     const duration = getThumbDuration(videoData.Duration);
-    //     const url = `${video.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.jpg?time=${duration}&height=1660`;
-    //     await axios.get(url, { responseType: 'blob' }).then((res) => {
-    //       setThumbnailUrl(URL.createObjectURL(res.data))
-    //     })
-    //   } catch (error) {
-    //     console.log(video.PostHashHex, error)
-    //   }
-    // }
     if (video.VideoURLs[0] !== null) {
       getVideoData()
-      //getVideoThumb()
     }
   }, [video])
 
-
-  // const thumbnailUrl = video.VideoURLs[0] !== null ? `${video.VideoURLs[0].replace('iframe.', '')}/thumbnails/thumbnail.jpg?time=0s&height=1660` : ``;
   return (
     <div className="group" data-id={video.PostHashHex} data-duration={videoData.Duration}>
       {video.IsHidden ? (
@@ -87,7 +69,7 @@ const VideoCard = ({ video }) => {
             setShowReport={setShowReport}
           /> */}
           <Link href={`/watch/${video.PostHashHex}`}>
-            <div className="relative rounded-xl aspect-w-16 aspect-h-9">
+            <div className="relative rounded-xl aspect-w-16 overflow-hidden aspect-h-9">
                 <LazyLoadImage
                   delayTime={1000}
                   className={clsx(
@@ -96,8 +78,6 @@ const VideoCard = ({ video }) => {
                   alt={`Video by @${userProfile.Username}`}
                   wrapperClassName='w-full'
                   effect="blur"
-                  // beforeLoad={() => setLoading(true)}
-                  // afterLoad={() => setLoading(false)}
                   placeholderSrc='https://placekitten.com/360/220'
                   src={thumbnailUrl}
               />
@@ -106,44 +86,46 @@ const VideoCard = ({ video }) => {
           </Link>
           <div className="p-2">
             <div className="flex items-start space-x-2.5">
-              <Link href={`/watch/${video.id}`} className="flex-none mt-0.5">
+              <Link href={`/${userProfile.Username}`} className="flex-none mt-0.5">
                 <img
                   className="w-9 h-9 rounded-full"
-                  src={userProfile.ExtraData?.LargeProfilePicURL || `https://node.deso.org/api/v0/get-single-profile-picture/${userProfile.PublicKeyBase58Check}`}
+                  src={getProfilePicture(userProfile)}
                   alt={`${userProfile.Username} Picture`}
                   draggable={false}
                 />
               </Link>
-              <div className="grid flex-1 pb-1">
-                <div className="flex w-full items-start justify-between space-x-1.5 min-w-0">
-                  <Link
-                    href={`/watch/${video.PostHashHex}`}
-                    className="text-[15px] font-medium line-clamp-2 break-words"
+              <div className="grid flex-1">
+                <div className='flex w-full items-start justify-between '>
+                  <div className="flex flex-col w-full items-start pr-2 justify-between min-w-0">
+                    <Link
+                      href={`/watch/${video.PostHashHex}`}
+                      className="text-[15px] font-medium line-clamp-2 break-words"
+                      >
+                        Video by @{userProfile.Username}
+                      {/* {userProfile.Username} */}
+                    </Link>
+                    <Link
+                      href={`/${userProfile.Username}`}
+                      className="flex w-fit space-x-0.5 text-[14px] hover:opacity-100 opacity-70"
                     >
-                      Video by @{userProfile.Username}
-                    {/* {userProfile.Username} */}
-                  </Link>
+                      <span>{userProfile.Username}</span>
+                      {userProfile.IsVerified ? <IsVerified size="xs" /> : null}
+                    </Link>
+                    <div className="flex overflow-hidden text-[13px] opacity-70">
+                      <span className="whitespace-nowrap">
+                        {video.LikeCount} likes
+                      </span>
+                      <span className="middot" />
+                        <span className="whitespace-nowrap">
+                          {timeNow(video.TimestampNanos)}
+                        </span>
+                    </div>
+                  </div>
                   <VideoOptions
                     video={video}
                     setShowShare={setShowShare}
                     setShowReport={setShowReport}
                   />
-                </div>
-                <Link
-                  href={`/${userProfile.Username}`}
-                  className="flex w-fit items-center space-x-0.5 text-[14px] hover:opacity-100 opacity-70"
-                >
-                  <span>{userProfile.Username}</span>
-                  {userProfile.IsVerified ? <IsVerified size="xs" /> : null}
-                </Link>
-                <div className="flex overflow-hidden items-center text-[13px] opacity-70">
-                  <span className="whitespace-nowrap">
-                    {video.LikeCount} likes
-                  </span>
-                  <span className="middot" />
-                    <span className="whitespace-nowrap">
-                      {timeNow(video.TimestampNanos)}
-                    </span>
                 </div>
               </div>
             </div>

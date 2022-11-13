@@ -36,7 +36,7 @@ const Timeline = () => {
                 })
               )}
             </div>
-            {isFetchingNextPage && <div><TimelineShimmer cols={28} /></div>}
+            {isFetchingNextPage && hasNextPage && <div><TimelineShimmer cols={28} /></div>}
             <div className='loadMore'>
               <div className='loadMoreButton'>
                 <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage}  className='btn'>
@@ -51,7 +51,7 @@ const Timeline = () => {
           </>
         )
         : (
-          <div className="px-20"><TimelineShimmer cols={28} /></div>
+          <div><TimelineShimmer cols={28} /></div>
         )
       }
     </>

@@ -74,16 +74,6 @@ export function nFormatter(num, digits) {
 export const dateFormat = (p_timeStampNanoSeconds) => {
   const milliseconds = p_timeStampNanoSeconds / 1000000;
   const date = new Date(milliseconds);
-  //return new Date(milliseconds).toLocaleString('en-US');
-  // const formattedDate = new Date(milliseconds).toLocaleString('en-US', {
-  //     year: 'numeric',
-  //     month: 'short',
-  //     day: 'numeric',
-  //     hour: 'numeric',
-  //     minute: 'numeric',
-  //     second: 'numeric',
-  //     hour12: true
-  // });
   const formattedDate = date.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
@@ -94,6 +84,16 @@ export const dateFormat = (p_timeStampNanoSeconds) => {
       year: 'numeric'
   });
   return formattedDate;
+}
+
+export const formatNumber = (num) => {
+  if (num > 999 && num < 1000000) {
+    return `${(num / 1000).toPrecision(3)}k`
+  } else if (num > 1000000) {
+    return `${(num / 1000000).toPrecision(3)}m`
+  } else if (num < 1000) {
+    return num
+  }
 }
 
 export const timeNow = (p_timeStampNanoSeconds) => {
