@@ -77,7 +77,7 @@ const WatchVideo = () => {
         if (id) {
             getVideo()
         }
-    }, [id, addToRecentlyWatched])
+    }, [id])
 
     useEffect(() => {
         setVideoWatchTime(Number(t))
