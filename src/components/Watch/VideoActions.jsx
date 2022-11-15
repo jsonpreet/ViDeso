@@ -3,6 +3,7 @@ import { FiFlag } from 'react-icons/fi'
 import { IoDiamondOutline } from 'react-icons/io5'
 import { RiShareForwardLine } from 'react-icons/ri'
 import { TbHeartHandshake } from 'react-icons/tb'
+import ShareModal from '../Common/VideoCard/ShareModal'
 import { Button } from '../UIElements/Button'
 import Reactions from './Reactions'
 
@@ -13,9 +14,9 @@ const VideoActions = ({ video }) => {
 
     return (
         <div className="flex items-center justify-end mt-4 space-x-2.5 md:space-x-4 md:mt-0">
-            {/* <TipModal show={showTip} setShowTip={setShowTip} video={video} />
+            {/* <TipModal show={showTip} setShowTip={setShowTip} video={video} />*/}
             <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
-            <ReportModal
+            {/*<ReportModal
             show={showReport}
             setShowReport={setShowReport}
             video={video}

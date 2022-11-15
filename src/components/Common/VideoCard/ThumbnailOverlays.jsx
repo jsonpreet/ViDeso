@@ -19,7 +19,7 @@ const ThumbnailOverlays = ({ video, data }) => {
       
       {data.Duration ? (
         <div>
-          <span className="py-0.5 absolute bottom-2 right-2 text-xs px-1 text-white bg-black rounded">
+          <span className="py-0.5 absolute bottom-3 right-2 text-xs px-1 text-white bg-black rounded">
             {getTimeFromSeconds(data.Duration)}
           </span>
         </div>

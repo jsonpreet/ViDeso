@@ -48,7 +48,7 @@ function ChannelInfo({ video, channel }) {
                         className="flex items-center w-fit space-x-0.5 font-medium"
                     >
                         <span>{channel.Username}</span>
-                        {channel.IsVerified ? <IsVerified size="22" /> : null}
+                        {channel.IsVerified ? <IsVerified size="lg" /> : null}
                     </Link>
                     {!loading ?
                         <span className="text-sm text-gray-500">

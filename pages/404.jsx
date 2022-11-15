@@ -1,5 +1,5 @@
-import { APP } from '@app/utils/constants'
-import { HOME } from '@app/utils/paths'
+import { APP } from '@utils/constants'
+import { HOME } from '@utils/paths'
 import { Button } from '@components/UIElements/Button'
 import Head from 'next/head'
 import Image from 'next/image'

@@ -21,14 +21,14 @@ const SuggestedVideos = ({ currentVideoId }) => {
         if (inView) {
             fetchNextPage()
         }
-    }, [inView])
+    }, [inView, fetchNextPage])
 
     useEffect(() => {
-        if (isSuccess && videos) {
+        if (isSuccess, videos) {
             const nextVideo = videos.pages[0].find((video) => video.PostHashHex !== currentVideoId)
             setUpNextVideo(nextVideo)
         }
-    }, [isSuccess, videos, currentVideoId])
+    }, [isSuccess, videos, currentVideoId, setUpNextVideo])
 
     return (
         <>

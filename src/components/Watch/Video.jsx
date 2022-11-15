@@ -28,38 +28,18 @@ const VideoPlayer = dynamic(() => import('../Players/VideoPlayer'), {
   ssr: false
 })
 
-const Video = ({ video, poster }) => {
+const Video = ({ videoData, video, poster }) => {
   const userProfile = video.ProfileEntryResponse;
   const [videoUrl, setVideoUrl] = useState(getVideoUrl(video))
-  const [videoID, setVideoID] = useState(getPlaybackIdFromUrl(video))
   const videoTitle = getVideoTitle(video)
 //   const isSensitiveContent = getIsSensitiveContent(video.metadata, video.id)
-  const [videoData, setVideoData] = useState('')
-
-  useEffect(() => {
-    const deso = new Deso()
-    const getVideoData = async () => {
-      try {
-          const videoID = getPlaybackIdFromUrl(video);
-          const request = {
-              "videoId": videoID
-          };
-          const videoData = await deso.media.getVideoStatus(request)
-          setVideoData(videoData.data)
-      } catch (error) {
-          console.log(video.PostHashHex, error)
-      }
-    }
-    if (video.VideoURLs[0] !== null) {
-        getVideoData()
-    }
-  }, [video])   
 
   return (
     <div className="overflow-hidden">
       <VideoPlayer
         source={videoUrl}
-        hls={`https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoID}/manifest/video.m3u8`}
+        videoData={videoData.data}
+        hls={`https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoData.id}/manifest/video.m3u8`}
         poster={poster}
       // isSensitiveContent={isSensitiveContent}
       />

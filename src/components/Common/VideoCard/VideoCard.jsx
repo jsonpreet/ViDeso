@@ -12,6 +12,7 @@ import { getPlaybackIdFromUrl } from '@app/utils/functions/getVideoUrl'
 import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
+import ShareModal from './ShareModal'
 
 
 const VideoCard = ({ video }) => {
@@ -60,12 +61,12 @@ const VideoCard = ({ video }) => {
         </div>
       ) : (
         <>
-          {/* <ShareModal
+          <ShareModal
             video={video}
             show={showShare}
             setShowShare={setShowShare}
           />
-          <ReportModal
+          {/* <ReportModal
             video={video}
             show={showReport}
             setShowReport={setShowReport}
@@ -107,7 +108,7 @@ const VideoCard = ({ video }) => {
                     </Link>
                     <Link
                       href={`/${userProfile.Username}`}
-                      className="flex w-fit space-x-0.5 text-[14px] hover:opacity-100 opacity-70"
+                      className="flex w-fit items-center space-x-0.5 text-[14px] hover:opacity-100 opacity-70"
                     >
                       <span>{userProfile.Username}</span>
                       {userProfile.IsVerified ? <IsVerified size="xs" /> : null}

@@ -93,17 +93,17 @@ const VideoComments = ({ video }) => {
             )} */}
             {!loading && (
                 <>
-                <div className=" space-y-4">
-                    {post.Comments?.map((comment) => (
-                        <Comment key={`${comment?.PostHashHex}`} comment={comment}
-                    />
-                    ))}
-                </div>
-                {/* {pageInfo?.next && comments.length !== pageInfo?.totalCount && (
-                    <span ref={observe} className="flex justify-center p-10">
-                    <Loader />
-                    </span>
-                )} */}
+                    <div className=" space-y-4">
+                        {post.Comments?.map((comment) => (
+                            <Comment key={`${comment?.PostHashHex}`} comment={comment}
+                        />
+                        ))}
+                    </div>
+                    {/* {pageInfo?.next && comments.length !== pageInfo?.totalCount && (
+                        <span ref={observe} className="flex justify-center p-10">
+                        <Loader />
+                        </span>
+                    )} */}
                 </>
             )}
         </div>

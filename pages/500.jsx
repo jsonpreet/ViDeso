@@ -1,8 +1,9 @@
-import { HOME } from '@app/utils/paths'
+import { HOME } from '@utils/paths'
 import { Button } from '@components/UIElements/Button'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { APP } from '@utils/constants'
 
 export default function Custom404() {
   return (

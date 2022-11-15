@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import IsVerified from '../Common/IsVerified'
+import { useRouter } from 'next/router'
 
 
 const NextVideo = ({ video, playNext, cancelPlayNext }) => {
@@ -19,17 +20,15 @@ const NextVideo = ({ video, playNext, cancelPlayNext }) => {
     const [thumbnailUrl, setThumbnailUrl] = useState('')
     const [duration, setDuration] = useState(0)
 
-    // useEffect(() => {
-    //     if (timeLeft === 0) playNext()
-    //     if (!timeLeft) return
-    //     const intervalId = setInterval(() => {
-    //         setTimeLeft(timeLeft - 1)
-    //     }, 1000)
+    useEffect((e) => {
+        if (timeLeft === 0) playNext()
+        if (!timeLeft) return
+        const intervalId = setInterval(() => {
+            setTimeLeft(timeLeft - 1)
+        }, 1000)
 
-    //     return () => clearInterval(intervalId)
-    // }, [timeLeft, playNext])
-
-    
+        return () => clearInterval(intervalId)
+    }, [timeLeft, playNext])
 
     useEffect(() => {
         const deso = new Deso()
@@ -59,8 +58,8 @@ const NextVideo = ({ video, playNext, cancelPlayNext }) => {
         }
     }, [video])
 
-    if (!video) return null
 
+    if (!video) return null
     // const isSensitiveContent = getIsSensitiveContent(video.metadata, video.id)
     
     return (
@@ -75,7 +74,7 @@ const NextVideo = ({ video, playNext, cancelPlayNext }) => {
                                 href={`/watch/${video.PostHashHex}`}
                                 className="rounded-lg cursor-pointer"
                             >
-                                <div className="relative border border-gray-600">
+                                <div className="relative border bg-gray-600 border-gray-600">
                                     <img
                                         src={thumbnailUrl}
                                         alt={`${userProfile.Username} Video`}
@@ -118,7 +117,7 @@ const NextVideo = ({ video, playNext, cancelPlayNext }) => {
                             variant="light"
                             size="md"
                             className="w-full"
-                            onClick={() => cancelPlayNext()}
+                            onClick={(e) => cancelPlayNext(e)}
                         >
                             Cancel
                         </Button>
