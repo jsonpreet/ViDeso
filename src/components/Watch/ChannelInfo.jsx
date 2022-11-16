@@ -14,7 +14,8 @@ function ChannelInfo({ video, channel }) {
             const deso = new Deso();
             try {
                 const request = {
-                    PublicKeyBase58Check: channel.PublicKeyBase58Check 
+                    PublicKeyBase58Check: channel.PublicKeyBase58Check ,
+                    GetEntriesFollowingUsername: true
                 };
                     
                 const response = await deso.social.getFollowsStateless(request);
@@ -33,30 +34,32 @@ function ChannelInfo({ video, channel }) {
     }, [channel])
     return (
         <>
-            <div className='flex items-start space-x-3'>
-                <Link href={`/${channel.Username}`} className="flex-none">
-                    <img
-                        className="w-10 h-10 rounded-full"
-                        src={getProfilePicture(channel)}
-                        alt={`${channel.Username} Picture`}
-                        draggable={false}
-                    />
-                </Link>
-                <div className='flex flex-col'>
-                    <Link
-                        href={`/${channel.Username}`}
-                        className="flex items-center w-fit space-x-0.5 font-medium"
-                    >
-                        <span>{channel.Username}</span>
-                        {channel.IsVerified ? <IsVerified size="lg" /> : null}
+            <div className='flex items-center space-x-3'>
+                <div className='flex space-x-2'>
+                    <Link href={`/${channel.Username}`} className="flex-none">
+                        <img
+                            className="w-10 h-10 rounded-full"
+                            src={getProfilePicture(channel)}
+                            alt={`${channel.Username} Picture`}
+                            draggable={false}
+                        />
                     </Link>
-                    {!loading ?
-                        <span className="text-sm text-gray-500">
-                            {formatNumber(followers)} subscribers
-                        </span>
-                        : <div className="h-2 bg-gray-300 rounded dark:bg-gray-700" />
-                    }
-                    
+                    <div className='flex flex-col'>
+                        <Link
+                            href={`/${channel.Username}`}
+                            className="flex items-center w-fit space-x-0.5 font-medium"
+                        >
+                            <span>{channel.Username}</span>
+                            {channel.IsVerified ? <IsVerified size="lg" /> : null}
+                        </Link>
+                        {!loading ?
+                            <span className="text-[13px] leading-4 text-gray-600">
+                                {formatNumber(followers)} subscribers
+                            </span>
+                            : <div className="h-2 bg-gray-300 rounded dark:bg-gray-700" />
+                        }
+                        
+                    </div>
                 </div>
                 <div>
                     <Button variant="dark">
