@@ -54,9 +54,9 @@ const SuggestedVideoCard = ({ video }) => {
     }, [video])   
   
     return (
-        <div className="flex justify-between group" data-id={video.PostHashHex} data-duration={videoData.Duration}>
+        <div className="flex w-full justify-between group" data-id={video.PostHashHex} data-duration={videoData.Duration}>
             <div className="flex w-full">
-                <div className="flex-none overflow-hidden rounded-xl w-44">
+                <div className="flex-none overflow-hidden rounded-xl w-36 md:w-44">
                     <Link
                         href={`/watch/${video.PostHashHex}`}
                         className="rounded-xl cursor-pointer"

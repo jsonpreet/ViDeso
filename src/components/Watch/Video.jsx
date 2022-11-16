@@ -23,7 +23,7 @@ import ChannelInfo from './ChannelInfo'
 // import VideoActions from './VideoActions'
 // import VideoMeta from './VideoMeta'
 
-const VideoPlayer = dynamic(() => import('../Players/VideoPlayer'), {
+const VideoPlayer = dynamic(() => import('../Player/VideoPlayer'), {
   loading: () => <CardShimmer />,
   ssr: false
 })
@@ -52,7 +52,7 @@ const Video = ({ videoData, video, poster }) => {
             </h1>
           {/* <VideoMeta video={video} /> */}
         </div>
-        <div className='flex justify-between items-center mt-3'>
+        <div className='flex md:flex-row flex-col justify-between md:items-center mt-3'>
           <ChannelInfo channel={userProfile} video={video}/>
           <div>
             <VideoActions video={video} />

@@ -53,7 +53,7 @@ function ChannelInfo({ video, channel }) {
                             {channel.IsVerified ? <IsVerified size="lg" /> : null}
                         </Link>
                         {!loading ?
-                            <span className="text-[13px] leading-4 text-gray-600">
+                            <span className="text-[13px] leading-4 text-secondary">
                                 {formatNumber(followers)} subscribers
                             </span>
                             : <div className="h-2 bg-gray-300 rounded dark:bg-gray-700" />

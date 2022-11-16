@@ -77,8 +77,9 @@ export const getSuggestedFeed = async (limit, output = 32, seenPosts) => {
                 return post
             }
         });
-        console.log(filtered);
+        
         let offset = seenPostLists.length > 0 ? seenPostLists.length : 0;
+        //const random = filtered[Math.floor(Math.random() * filtered.length)];
         return filtered.splice(0, output)
     }
 }

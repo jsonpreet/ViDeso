@@ -59,7 +59,7 @@ const VideoOptions = ({
       trigger={
         <div
           className={clsx(
-            'hover:bg-gray-200 rounded-full w-9 h-9 flex items-center justify-center md:text-inherit outline-none ring-0 group-hover:visible transition duration-150 ease-in-out -mr-4 focus:outline-none focus:ring-0',
+            'hover-primary rounded-full w-9 h-9 flex items-center justify-center md:text-inherit outline-none ring-0 group-hover:visible transition duration-150 ease-in-out md:-mr-4 focus:outline-none focus:ring-0',
             {
               'lg:invisible': showOnHover
             }
@@ -74,7 +74,7 @@ const VideoOptions = ({
           <button
             type="button"
             onClick={() => setShowShare(true)}
-            className="inline-flex items-center px-3 py-2 space-x-3 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="inline-flex items-center px-3 py-2 space-x-3 hover-primary"
           >
             <RiShareForwardLine size={22} />
             <span className="whitespace-nowrap">Share</span>
@@ -82,7 +82,7 @@ const VideoOptions = ({
           <button
             type="button"
             onClick={() => onClickWatchLater()}
-            className="inline-flex items-center px-3 py-2 space-x-3 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="inline-flex items-center px-3 py-2 space-x-3 hover-primary"
           >
             <FiClock size={19} />
             <span className="whitespace-nowrap">
@@ -116,7 +116,7 @@ const VideoOptions = ({
           <button
             type="button"
             onClick={() => setShowReport(true)}
-            className="inline-flex items-center px-3 py-2 space-x-3 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="inline-flex items-center px-3 py-2 space-x-3 hover-primary"
           >
             <FiFlag size={18} className="ml-0.5" />
             <span className="whitespace-nowrap">Report</span>

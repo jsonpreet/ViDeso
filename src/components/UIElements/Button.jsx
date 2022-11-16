@@ -35,8 +35,8 @@ export const Button = forwardRef(function Button(
            variant === 'primary',
           'bg-transparent md:rounded-full': variant === 'secondary',
           'bg-red-500 border border-red-500 md:rounded-full': variant === 'danger',
-          'bg-black hover:bg-gray-700 md:rounded-full': variant === 'dark',
-          'bg-gray-100 hover:bg-gray-200 md:rounded-full': variant === 'light',
+          'dark-button md:rounded-full': variant === 'dark',
+          'light-button md:rounded-full': variant === 'light',
         },
         className
       )}
@@ -45,10 +45,10 @@ export const Button = forwardRef(function Button(
     >
       <span
         className={clsx('relative flex items-center justify-center space-x-2', {
-          'text-white': variant !== 'secondary' && variant !== 'outlined' && variant !== 'light',
-        }, {
-          'text-gray-600': variant === 'light',
-        })}
+          'text-white': variant !== 'secondary' && variant !== 'outlined' && variant !== 'light' && variant !== 'dark',
+        }, { 'text-secondary': variant === 'light' }
+          , { 'dark-button-text': variant === 'dark'}
+        )}
       >
         {icon}
         {loading && <Loader size="sm" />}

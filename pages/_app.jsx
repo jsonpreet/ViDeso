@@ -3,16 +3,13 @@ import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query
 import NextNProgress from 'nextjs-progressbar';
 import Head from 'next/head';
 import { lazy, Suspense, useEffect, useState } from 'react'
-import FullPageLoader from '@components/Common/FullPageLoader';
-// import Layout from '@components/Common/Layout';
 import MetaTags from '@app/components/Common/MetaTags';
 import { Devtools } from '@app/components/DevTools';
 import { queryConfig, queryConfigAuto } from '@app/utils/constants';
 
 import '@styles/globals.scss'
 import { useRouter } from 'next/router';
-
-const Layout = lazy(() => import('../src/components/Common/Layout'))
+import Layout from '@app/components/Common/Layout';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -30,18 +27,16 @@ function MyApp({ Component, pageProps }) {
     <>
       <MetaTags/>
       <NextNProgress color="#db2777" showOnShallow={true} />
-      <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<FullPageLoader />}>
-          <ThemeProvider enableSystem={false} attribute="class">
-            <Hydrate state={pageProps.dehydratedState}>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-              <Devtools />
-            </Hydrate>
-          </ThemeProvider>
-        </Suspense>
-      </QueryClientProvider>
+      <ThemeProvider enableSystem={false} attribute="class">
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+            <Devtools />
+          </Hydrate>
+        </QueryClientProvider>
+      </ThemeProvider>
     </>
   )
 }

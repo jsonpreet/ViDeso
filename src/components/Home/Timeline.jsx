@@ -16,10 +16,10 @@ const Timeline = () => {
   // console.log('spliced videos', splicedVideos);
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       fetchNextPage()
     }
-  }, [inView])
+  }, [inView, hasNextPage])
 
   return (
     <>

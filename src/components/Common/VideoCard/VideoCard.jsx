@@ -19,7 +19,7 @@ const VideoCard = ({ video }) => {
   const [showShare, setShowShare] = useState(false)
   const [showReport, setShowReport] = useState(false)
   const [videoData, setVideoData] = useState('')
-  const [thumbnailUrl, setThumbnailUrl] = useState('')
+  const [thumbnailUrl, setThumbnailUrl] = useState('/default-black.jpg')
   const [userProfile, setUserProfile] = useState('')
   const [extraData, setExtraData] = useState('')
 
@@ -33,15 +33,6 @@ const VideoCard = ({ video }) => {
         };
         const videoData = await deso.media.getVideoStatus(request)
         setVideoData(videoData.data)
-        try {
-          const duration = getThumbDuration(videoData.data.Duration);
-          const url = getVideoThumbnail(video, duration);
-          await axios.get(url, { responseType: 'blob' }).then((res) => {
-            setThumbnailUrl(URL.createObjectURL(res.data))
-          })
-        } catch (error) {
-          console.log(video.PostHashHex, error)
-        }
       } catch (error) {
         console.log(video.PostHashHex, error)
       }
@@ -53,6 +44,26 @@ const VideoCard = ({ video }) => {
       setExtraData(video.ExtraData)
   }, [video])
 
+  useEffect(() => {
+    const getThumbnail = async () => {
+        try {
+          const duration = getThumbDuration(videoData.Duration);
+          const url = getVideoThumbnail(video, duration);
+            //setThumbnailUrl(url)
+          await axios.get(url, { responseType: 'blob' }).then((res) => {
+            
+            setThumbnailUrl(URL.createObjectURL(res.data))
+          })
+        } catch (error) {
+          console.log(video.PostHashHex, error)
+      }
+    }
+    console.log(videoData);
+    if (videoData) {
+      getThumbnail()
+    }
+  }, [videoData, video])
+
   return (
     <div className="group" data-id={video.PostHashHex} data-duration={videoData.Duration}>
       {video.IsHidden ? (
@@ -60,12 +71,12 @@ const VideoCard = ({ video }) => {
           <span className="text-xs">Video Hidden by User</span>
         </div>
       ) : (
-        <>
-          <ShareModal
-            video={video}
-            show={showShare}
-            setShowShare={setShowShare}
-          />
+          <>
+            <ShareModal
+              video={video}
+              show={showShare}
+              setShowShare={setShowShare}
+            />
           {/* <ReportModal
             video={video}
             show={showReport}

@@ -84,20 +84,18 @@ const WatchVideo = () => {
     return (
         <>
             <MetaTags title={video ? getVideoTitle(video) : 'Watch'} />
-            <div className=''>
             {!isFetching && !loading && !isError && video ? (
-                <div className="flex">
-                    <div className="flex pr-6 flex-1 flex-col space-y-4">
+                <div className="w-full">
+                    <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
                         <Video videoData={videoData} video={video} poster={thumbnailUrl} />
                         <AboutChannel video={video} />
                         <VideoComments video={video} />
                     </div>
-                    <div className="w-full min-w-[300px] max-w-[400px]">
+                    <div className="w-full md:min-w-[300px] md:max-w-[400px]">
                         <SuggestedVideos currentVideoId={video?.PostHashHex} />
                     </div>
                 </div>
             ) : null}
-            </div>
         </>
     )
 }

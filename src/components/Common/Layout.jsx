@@ -3,16 +3,12 @@ import { toastOptions } from '@utils/functions'
 import Head from 'next/head'
 import { useTheme } from 'next-themes'
 import { Toaster } from 'react-hot-toast'
-import FullPageLoader from './FullPageLoader'
 import Header from './Header'
 import Sidebar from './Sidebar'
-import { useState } from 'react'
 
 
 const Layout = ({ children }) => {
     const { theme } = useTheme()
-    const [loading, setLoading] = useState(false)
-    if (loading) return <FullPageLoader />
 
     return (
         <>
@@ -23,7 +19,7 @@ const Layout = ({ children }) => {
                 position="bottom-right"
                 toastOptions={toastOptions}
             />
-            <div className='dark:bg-black bg-white h-screen flex'>
+            <div className='bg-primary h-screen flex'>
                 <div className='hidden md:flex md:flex-shrink-0'>
                     <Sidebar />
                 </div>
@@ -32,7 +28,7 @@ const Layout = ({ children }) => {
                     <div className='relative overflow-y-scroll overflow-x-hidden'>
                         <div className="pt-16 pb-0 lg:pb-12">
                             <div className="min-h-screen">
-                                <div className='max-w-full mx-auto pl-0 p-5'>
+                                <div className='max-w-full w-full mx-auto md:pl-0 p-3 md:p-5'>
                                     {children}
                                 </div>
                             </div>
