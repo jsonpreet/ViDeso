@@ -85,7 +85,7 @@ const WatchVideo = () => {
         <>
             <MetaTags title={video ? getVideoTitle(video) : 'Watch'} />
             {!isFetching && !loading && !isError && video ? (
-                <div className="w-full">
+                <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
                         <Video videoData={videoData} video={video} poster={thumbnailUrl} />
                         <AboutChannel video={video} />
