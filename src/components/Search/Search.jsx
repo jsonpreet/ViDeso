@@ -43,7 +43,7 @@ const Search = ({ onSearchResults }) => {
   return (
     <>
       <div className="md:w-[728px] hidden md:flex" style={{flex: '0 1 728'}}>
-        <div ref={resultsRef} className='mx-auto'>
+        <div ref={resultsRef} className='w-full mx-auto'>
           <div className="relative mt-1">
             <div className="relative w-full overflow-hidden border shadow-inner customBorder cursor-default bg-secondary dark:border-gray-800 rounded-full">
               <input
