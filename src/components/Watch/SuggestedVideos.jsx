@@ -1,6 +1,8 @@
-import { FetchInfiniteHotFeed } from '@app/data/videos'
+import { FetchInfiniteHotFeed, FetchSuggestedFeed, getSuggestedFeed } from '@app/data/videos'
 import useAppStore from '@app/store/app'
+import usePersistStore from '@app/store/persist'
 import { Loader } from '@components/UIElements/Loader'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
@@ -12,7 +14,23 @@ const SuggestedVideos = ({ currentVideoId }) => {
     const {query: { id }} = useRouter()
     const { ref, inView } = useInView()
     const setUpNextVideo = useAppStore((state) => state.setUpNextVideo)
-    const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data:videos } = FetchInfiniteHotFeed( -1, 15 );
+    const recentlyWatched = usePersistStore((state) => state.recentlyWatched)
+    //const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data:videos } = FetchSuggestedFeed( -1, 15 );
+    const { isSuccess, isLoading, isError, error, hasNextPage, isFetchingNextPage, fetchNextPage, data: videos } = useInfiniteQuery(['suggested-feed'], ({ pageParam = recentlyWatched }) => getSuggestedFeed(-1, 15, pageParam),
+        {
+            enabled: !!id,
+            getNextPageParam: (lastPage, pages) => {
+                if(lastPage === null) {
+                    return null;
+                } else {
+                    //let last = lastPage[lastPage.length - 1];
+                    //console.log({ pages: pages, watched: recentlyWatched })
+                    return recentlyWatched;
+                }
+            }
+
+        }
+    );
     if (isError) {
         console.log('error', error)
     }
@@ -24,7 +42,7 @@ const SuggestedVideos = ({ currentVideoId }) => {
     }, [inView, fetchNextPage])
 
     useEffect(() => {
-        if (isSuccess, videos) {
+        if (isSuccess && videos) {
             const nextVideo = videos.pages[0].find((video) => video.PostHashHex !== currentVideoId)
             setUpNextVideo(nextVideo)
         }
@@ -37,13 +55,15 @@ const SuggestedVideos = ({ currentVideoId }) => {
                     <div className="space-y-1 flex flex-col">
                         {videos.pages.map(page => 
                             page.map(video => {
-                                return (
-                                    !video.IsHidden && <SuggestedVideoCard video={video} key={video?.PostHashHex} />
-                                )
+                                if (video.PostHashHex !== currentVideoId) {
+                                    return (
+                                        !video.IsHidden && <SuggestedVideoCard video={video} key={video?.PostHashHex} />
+                                    )
+                                }
                             })
                         )}
                     </div>
-                    {isFetchingNextPage && hasNextPage && <div><SuggestedVideosShimmer/></div>}
+                    {isFetchingNextPage && <div><SuggestedVideosShimmer/></div>}
                     {/* <div className='loadMore'>
                         <div className='loadMoreButton'>
                             <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage}  className='btn'>

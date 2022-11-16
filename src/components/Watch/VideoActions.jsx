@@ -3,14 +3,21 @@ import { FiFlag } from 'react-icons/fi'
 import { IoDiamondOutline } from 'react-icons/io5'
 import { RiShareForwardLine } from 'react-icons/ri'
 import { TbHeartHandshake } from 'react-icons/tb'
-import ShareModal from '../Common/VideoCard/ShareModal'
+import ShareModal from '../Common/ShareModal'
 import { Button } from '../UIElements/Button'
 import Reactions from './Reactions'
+import { useDetectClickOutside } from 'react-detect-click-outside'
 
 const VideoActions = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
     const [showReport, setShowReport] = useState(false)
     const [showTip, setShowTip] = useState(false)
+
+    const closeShareModal = () => {
+        setShowShare(false)
+    }
+    
+    const shareModalRef = useDetectClickOutside({ onTriggered: closeShareModal, triggerKeys: ['Escape', 'x'], });
 
     return (
         <div className="flex items-center justify-end mt-4 space-x-2.5 md:space-x-4 md:mt-0">
@@ -26,6 +33,7 @@ const VideoActions = ({ video }) => {
                 variant="light"
                 onClick={() => setShowShare(true)}
                 className='h-10 '
+                ref={shareModalRef} 
             >
                 <span className="flex items-center space-x-3">
                     <RiShareForwardLine size={22} />

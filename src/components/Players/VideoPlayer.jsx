@@ -98,9 +98,9 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
   }
 
   const playNext = () => {
-    // currentVideo.style.display = 'block'
-    // setShowNext(false)
-    router.push(`/watch/${upNextVideo?.PostHashHex}`)
+    currentVideo.style.display = 'block'
+    setShowNext(false)
+    router.push(`/watch/${upNextVideo?.PostHashHex}`, null, { shallow: false })
   }
 
   const cancelPlayNext = (e) => {

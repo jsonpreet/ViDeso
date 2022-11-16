@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Deso from 'deso-protocol'
-import ThumbnailOverlays from './ThumbnailOverlays'
+import ThumbnailOverlays from '../ThumbnailOverlays'
 import IsVerified from '../IsVerified'
 import { getThumbDuration, timeNow } from '@app/utils/functions'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -12,7 +12,7 @@ import { getPlaybackIdFromUrl } from '@app/utils/functions/getVideoUrl'
 import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
-import ShareModal from './ShareModal'
+import ShareModal from '../ShareModal'
 
 
 const VideoCard = ({ video }) => {

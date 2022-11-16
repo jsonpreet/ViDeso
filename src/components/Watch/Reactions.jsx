@@ -5,13 +5,13 @@ import { Button } from '@components/UIElements/Button'
 import clsx from 'clsx'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 import { BiLike } from 'react-icons/bi'
 import { IoDiamondOutline } from 'react-icons/io5'
 
-const Reactions = ({ video, iconSize = 'sm', textSize = 'sm', isVertical = false, showLabel = true}) => {
-    const selectedChannelId = usePersistStore((state) => state.selectedChannelId)
+const Reactions = ({ video, isVertical = false, showLabel = true}) => {
+    const {isLoggedIn, user } = usePersistStore((state) => state)
     const selectedChannel = useAppStore((state) => state.selectedChannel)
+    const [showTipModal, setShowTipModal] = useState(false)
 
     const [reaction, setReaction] = useState({
         isLiked: video.reaction === 'UPVOTE',
@@ -19,7 +19,7 @@ const Reactions = ({ video, iconSize = 'sm', textSize = 'sm', isVertical = false
     })
 
     const likeVideo = () => {
-    if (!selectedChannelId) return toast.error(SIGN_IN_REQUIRED_MESSAGE)
+    if (!isLoggedIn) return toast.error('You must be logged in!')
         setReaction((reaction) => ({
             likeCount: reaction.isLiked
             ? reaction.likeCount - 1
@@ -88,7 +88,7 @@ const Reactions = ({ video, iconSize = 'sm', textSize = 'sm', isVertical = false
                 </span>
             </Button> */}
             
-            <Button variant="light" className="h-10" onClick={() => { setShowTip(true) }}>
+            <Button variant="light" className="h-10" onClick={() => { setShowTipModal(!showTipModal) }}>
                 <span className="flex items-center space-x-3">
                     <IoDiamondOutline size={20} />
                     <span>{video.DiamondCount}</span>

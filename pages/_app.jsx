@@ -7,14 +7,25 @@ import FullPageLoader from '@components/Common/FullPageLoader';
 // import Layout from '@components/Common/Layout';
 import MetaTags from '@app/components/Common/MetaTags';
 import { Devtools } from '@app/components/DevTools';
-import { queryConfig } from '@app/utils/constants';
+import { queryConfig, queryConfigAuto } from '@app/utils/constants';
 
 import '@styles/globals.scss'
+import { useRouter } from 'next/router';
 
 const Layout = lazy(() => import('../src/components/Common/Layout'))
 
 function MyApp({ Component, pageProps }) {
-  const [queryClient] = useState(() => new QueryClient(queryConfig))
+  const router = useRouter();
+  const [config, setConfig] = useState(queryConfig);
+
+  useEffect(() => {
+    if (router.pathname === '/watch/[id]') {
+      setConfig(queryConfig);
+    } else {
+      setConfig(queryConfigAuto);
+    }
+  }, [router]);
+  const [queryClient] = useState(() => new QueryClient(config))
   return (
     <>
       <MetaTags/>

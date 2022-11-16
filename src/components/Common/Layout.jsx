@@ -1,5 +1,5 @@
 
-import { getToastOptions } from '@utils/functions'
+import { toastOptions } from '@utils/functions'
 import Head from 'next/head'
 import { useTheme } from 'next-themes'
 import { Toaster } from 'react-hot-toast'
@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
             </Head>
             <Toaster
                 position="bottom-right"
-                toastOptions={getToastOptions(theme)}
+                toastOptions={toastOptions}
             />
             <div className='dark:bg-black bg-white h-screen flex'>
                 <div className='hidden md:flex md:flex-shrink-0'>

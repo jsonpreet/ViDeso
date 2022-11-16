@@ -6,6 +6,7 @@ export const usePersistStore = create(
     (set, get) => ({
       autoPlay: true,
       recentlyWatched: [],
+      suggestedVideos: [],
       watchLater: [],
       user: [],
       selectedChannelId: null,
@@ -14,36 +15,40 @@ export const usePersistStore = create(
       setAutoPlay: (autoPlay) => set(() => ({ autoPlay })),
       setLoggedIn: (isLoggedIn) => set(() => ({ isLoggedIn })),
       setUser: (user) => set(() => ({ user })),
-      setNotificationCount: (notificationCount) =>
-        set(() => ({ notificationCount })),
+      setNotificationCount: (notificationCount) => set(() => ({ notificationCount })),
       setSelectedChannelId: (id) => set(() => ({ selectedChannelId: id })),
       addToRecentlyWatched: (video) => {
         const alreadyExists = get().recentlyWatched.find(
-          (el) => el.id === video.id
+          (el) => el.PostHashHex === video.PostHashHex
         )
-        const newList = get().recentlyWatched?.slice(0, 7)
+        const newList = get().recentlyWatched?.slice(0, 15)
         set(() => ({
           recentlyWatched: alreadyExists
             ? get().recentlyWatched
             : [video, ...newList]
         }))
       },
+      addSuggestedVideos: (videos) => {
+        set(() => ({
+          suggestedVideos: videos
+        }))
+      },
       addToWatchLater: (video) => {
-        const alreadyExists = get().watchLater.find((el) => el.id === video.id)
+        const alreadyExists = get().watchLater.find((el) => el.PostHashHex === video.PostHashHex)
         const newList = get().watchLater.splice(0, 7)
         set(() => ({
           watchLater: alreadyExists ? get().watchLater : [video, ...newList]
         }))
       },
       removeFromWatchLater: (video) => {
-        const videos = get().watchLater.filter((el) => el.id !== video.id)
+        const videos = get().watchLater.filter((el) => el.PostHashHex !== video.PostHashHex)
         set(() => ({
           watchLater: videos
         }))
       }
     }),
     {
-      name: 'videso.store'
+      name: 'videso'
     }
   )
 )

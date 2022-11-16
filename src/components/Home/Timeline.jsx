@@ -14,7 +14,6 @@ const Timeline = () => {
   }
   // const splicedVideos = videos.splice(0, 24);
   // console.log('spliced videos', splicedVideos);
-  console.log(isSuccess, videos)
 
   useEffect(() => {
     if (inView) {

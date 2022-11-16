@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
-import { BiMoon, BiSun } from 'react-icons/bi'
 import { FiHome } from 'react-icons/fi'
 import {
   MdOutlineSubscriptions,
@@ -11,10 +10,9 @@ import {
   MdHistory,
   MdOutlineFeedback
 } from 'react-icons/md'
-import { RiLeafLine } from 'react-icons/ri'
 import { SHORTS, HISTORY, FEED, HOME, LIBRARY } from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
-import { FaDiscord, FaTwitter } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
 import { APP } from '@app/utils/constants'
 import { useState } from 'react'

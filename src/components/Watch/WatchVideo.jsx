@@ -16,6 +16,8 @@ import Deso from 'deso-protocol'
 import { getThumbDuration } from '@app/utils/functions'
 import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
+import { FetchSinglePost, getSinglePost } from '@app/data/videos'
+import { useQuery } from '@tanstack/react-query'
 
 const WatchVideo = () => {
     const router = useRouter()
@@ -23,76 +25,67 @@ const WatchVideo = () => {
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
     const selectedChannel = useAppStore((state) => state.selectedChannel)
     const setVideoWatchTime = useAppStore((state) => state.setVideoWatchTime)
-    const [video, setVideo] = useState()
-    const [videoData, setVideoData] = useState()
-    const [thumbnailUrl, setThumbnailUrl] = useState()
+    const [videoData, setVideoData] = useState('')
+    const [thumbnailUrl, setThumbnailUrl] = useState('')
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(false)
+    const [posthash, setPosthash] = useState('')
+    
+    ///const { data: video, isLoading, isFetching, isFetched, error, isError } = FetchSinglePost({ id });
+
+    const { isSuccess, isLoading, isError, error, refetch, isFetching, status, fetchStatus, data: video } = useQuery([['single-post', id], { id: id }], getSinglePost, { enabled: !!id, })
+
+    useEffect(() => {
+        const { id, t } = router.query
+        if (id) {
+            setPosthash(id)
+        }
+        if (t) {
+            setVideoWatchTime(Number(t))
+        }
+    }, [router])
+
+    console.log({isSuccess: isSuccess, isLoading: isLoading, isFetching: isFetching, isError: isError, 'video': id})
 
     useEffect(() => {
         const deso = new Deso()
         const getVideo = async () => {
+            const videoID = getPlaybackIdFromUrl(video);
+            // const request = {
+            //     "videoId": videoID
+            // };
+            // const videoData = await deso.media.getVideoStatus(request)
+            setVideoData({ id: videoID, data: null })
             try {
-                const request = {
-                    PostHashHex: id
-                }
-                const response = await deso.posts.getSinglePost(request);  
-                if (response.PostFound && response.PostFound !== null) {
-                    setVideo(response.PostFound)
-                    addToRecentlyWatched(response.PostFound)
-                    try {
-                        const videoID = getPlaybackIdFromUrl(response.PostFound);
-                        const request = {
-                            "videoId": videoID
-                        };
-                        const videoData = await deso.media.getVideoStatus(request)
-                        setVideoData({ id: videoID, data: videoData.data })
-                        try {
-                            const duration = getThumbDuration(videoData.data.Duration);
-                            const url = getVideoThumbnail(response.PostFound, duration);
-                            await axios.get(url, { responseType: 'blob' }).then((res) => {
-                                setThumbnailUrl(URL.createObjectURL(res.data))
-                            })
-                            setLoading(false)
-                        } catch (error) {
-                            setError(true)
-                            setLoading(false)
-                            console.log(response.PostFound.PostHashHex, error)
-                        }
-                    } catch (error) {
-                        setError(true)
-                        setLoading(false)
-                        console.log(response.PostFound.PostHashHex, error)
-                    }
-                } else {
-                    setError(true)
+                //const duration = getThumbDuration(videoData.data.Duration);
+                const url = getVideoThumbnail(video);
+                await axios.get(url, { responseType: 'blob' }).then((res) => {
+                    setThumbnailUrl(URL.createObjectURL(res.data))
                     setLoading(false)
-                }
+                })
             } catch (error) {
-                setError(true)
-                console.log(error)
                 setLoading(false)
+                console.log(video.PostHashHex, 'thumbnail', error)
             }
         }
-        if (id) {
+        if (video && isSuccess) {
+            addToRecentlyWatched(video)
             getVideo()
         }
-    }, [id])
+    }, [video, isSuccess, addToRecentlyWatched])
 
-    useEffect(() => {
-        setVideoWatchTime(Number(t))
-    }, [t, setVideoWatchTime])
+    // useEffect(() => {
+    //     setVideoWatchTime(Number(t))
+    // }, [t, setVideoWatchTime])
 
-    if (error) {
-        return <Custom404 />
+    if (isError) {
+        return <Custom500 />
     }
-    console.log(video)
-
+    if (loading || isFetching || !video) return <WatchVideoShimmer />
     return (
         <>
-            <MetaTags title={!loading && video ? getVideoTitle(video) : 'Watch'} />
+            <MetaTags title={video ? getVideoTitle(video) : 'Watch'} />
             <div className=''>
-            {!loading && !error && video ? (
+            {!isFetching && !loading && !isError && video ? (
                 <div className="flex">
                     <div className="flex pr-6 flex-1 flex-col space-y-4">
                         <Video videoData={videoData} video={video} poster={thumbnailUrl} />
@@ -103,7 +96,7 @@ const WatchVideo = () => {
                         <SuggestedVideos currentVideoId={video?.PostHashHex} />
                     </div>
                 </div>
-            ) : <WatchVideoShimmer />}
+            ) : null}
             </div>
         </>
     )

@@ -1,28 +1,59 @@
-export const getToastOptions = (theme) => ({
-  style: {
-    background: theme === 'dark' ? '#1a1b1f' : '',
-    color: theme === 'dark' ? '#fff' : ''
-  },
-  className: '!border-l-2 !rounded !border-indigo-500 overflow-hidden',
-  success: {
-    className: '!border-l-2 !rounded !border-green-500 overflow-hidden',
-    iconTheme: {
-      primary: '#10B981',
-      secondary: 'white'
-    }
-  },
+export const toastOptions = {
   error: {
-    className: '!border-l-2 !rounded !border-red-500 overflow-hidden',
+    style: {
+      border: '1px solid rgba(223, 0, 141, 1)',
+      padding: '16px',
+      background: 'linear-gradient(333deg, rgba(223, 0, 141, 0.88), rgba(124, 0, 214, 0.9))',
+      borderRadius: '100px',
+      boxShadow: 'rgba(0, 0, 0, 0.35) 0px 6px 45px',
+      backdropFilter: 'blur(3px)',
+      color: '#ffffff',
+      whiteSpace: 'nowrap',
+      textShadow: 'rgba(17, 17, 17, 0.21) 0px 1px 12px',
+    },
     iconTheme: {
-      primary: '#EF4444',
-      secondary: 'white'
-    }
+      primary: '#fff',
+      secondary: 'rgba(223, 0, 141, 0.88)',
+    },
+  },
+  success: {
+    style: {
+      border: '1px solid rgb(62, 148, 95)',
+      padding: '16px',
+      background: 'linear-gradient(333deg, rgba(6, 176, 63, 0.88), rgba(0, 165, 142, 0.9))',
+      borderRadius: '100px',
+      boxShadow: 'rgba(0, 0, 0, 0.35) 0px 6px 45px',
+      backdropFilter: 'blur(3px)',
+      color: 'rgb(255, 255, 255)',
+      whiteSpace: 'nowrap',
+      textShadow: 'rgba(17, 17, 17, 0.21) 0px 1px 12px',
+    },
+    iconTheme: {
+      primary: '#fff',
+      secondary: 'rgba(6, 176, 63, 0.88)',
+    },
   },
   loading: {
-    className: '!border-l-2 !rounded !border-yellow-500 overflow-hidden'
+    style: {
+      border: '1px solid rgba(230, 125, 0, 0.88)',
+      padding: '16px',
+      background: 'linear-gradient(333deg, rgba(230, 125, 0, 0.88), rgba(244, 160, 0, 0.9))',
+      borderRadius: '100px',
+      boxShadow: 'rgba(0, 0, 0, 0.35) 0px 6px 45px',
+      backdropFilter: 'blur(3px)',
+      color: '#ffffff',
+      whiteSpace: 'nowrap',
+      textShadow: 'rgba(17, 17, 17, 0.21) 0px 1px 12px',
+    },
+    iconTheme: {
+      primary: '#fff',
+      secondary: 'rgba(230, 125, 0, 1)',
+    },
   },
-  duration: 4000
-})
+  position:"top-center",
+  reverseOrder: false,
+  duration: 4000,
+}
 
 export const withCSR = (next) => async (ctx) => {
     const isCSR = ctx.req.url?.startsWith('/_next');

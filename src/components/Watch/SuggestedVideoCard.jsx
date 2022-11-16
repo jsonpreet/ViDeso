@@ -9,7 +9,7 @@ import Link from 'next/link'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import ThumbnailOverlays from '../Common/VideoCard/ThumbnailOverlays'
+import ThumbnailOverlays from '../Common/ThumbnailOverlays'
 import VideoOptions from '../Common/VideoCard/VideoOptions'
 
 const SuggestedVideoCard = ({ video }) => {
@@ -19,6 +19,7 @@ const SuggestedVideoCard = ({ video }) => {
     const [thumbnailUrl, setThumbnailUrl] = useState('')
     const [userProfile, setUserProfile] = useState('')
     const [extraData, setExtraData] = useState('')
+    const [error, setError] = useState(false)
 
     useEffect(() => {
         const deso = new Deso()
@@ -37,10 +38,12 @@ const SuggestedVideoCard = ({ video }) => {
                     setThumbnailUrl(URL.createObjectURL(res.data))
                 })
             } catch (error) {
-             console.log(video.PostHashHex, error)
+                setError(true)
+             console.log('Video Thumbnail:', video.PostHashHex, error)
             }
         } catch (error) {
-            console.log(video.PostHashHex, error)
+            setError(true)
+            console.log('Video Status:', video.PostHashHex, error)
         }
         }
         if (video.VideoURLs[0] !== null) {
@@ -50,7 +53,6 @@ const SuggestedVideoCard = ({ video }) => {
         setExtraData(video.ExtraData)
     }, [video])   
   
-
     return (
         <div className="flex justify-between group" data-id={video.PostHashHex} data-duration={videoData.Duration}>
             <div className="flex w-full">
