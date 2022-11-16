@@ -35,7 +35,7 @@ const Video = ({ videoData, video, poster }) => {
 //   const isSensitiveContent = getIsSensitiveContent(video.metadata, video.id)
 
   return (
-    <div className="overflow-hidden">
+    <>
       <VideoPlayer
         source={videoUrl}
         videoData={videoData.data}
@@ -45,7 +45,7 @@ const Video = ({ videoData, video, poster }) => {
       />
       <div className="flex flex-col">
         <div>
-            <h1 className="mt-4 text-2xl font-medium line-clamp-2">
+            <h1 className="mt-4 text-lg md:text-2xl font-medium line-clamp-2">
               <Linkify options={LinkifyOptions}>
                 {videoTitle}
               </Linkify>
@@ -59,7 +59,7 @@ const Video = ({ videoData, video, poster }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

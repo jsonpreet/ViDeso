@@ -29,7 +29,7 @@ const Header = ({ className }) => {
           className="flex items-center justify-start pb-1 focus:outline-none"
         >
           <Image src='/videso.png' alt={APP.Name} height={35} width={31} />
-          <span className='font-semibold font-oswald text-gray-700 dark:text-white text-3xl ml-2'>Videso</span>
+          <span className='font-semibold font-oswald text-gray-700 dark:text-white text-2xl md:text-3xl ml-2'>Videso</span>
         </Link>
       </div>
       <Search />

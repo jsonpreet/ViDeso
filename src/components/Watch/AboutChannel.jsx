@@ -36,9 +36,11 @@ const AboutChannel = ({ video }) => {
           <span>Uploaded {timeNow(video.TimestampNanos)}</span>
         </div>
         {video.Body !== null && (
+          <div className="text-sm md:text-base">
           <Linkify options={LinkifyOptions}>
             {clamped ? video.Body.trim().substring(0, 200) : video.Body}
-          </Linkify>
+            </Linkify>
+          </div>
         )}
         {showMore && (
           <div className="inline-flex mt-3">

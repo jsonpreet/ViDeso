@@ -40,7 +40,7 @@ const Reactions = ({ video, isVertical = false, showLabel = true}) => {
             'space-x-2.5 md:space-x-4': !isVertical
             })}
         >
-            <Button variant="light" className="h-10" onClick={() => likeVideo()}>
+            <Button variant="light" className="md:h-10" onClick={() => likeVideo()}>
                 <span
                     className={clsx('flex items-center space-x-2 outline-none', {
                     'text-indigo-500 font-semibold': reaction.isLiked,
@@ -88,7 +88,7 @@ const Reactions = ({ video, isVertical = false, showLabel = true}) => {
                 </span>
             </Button> */}
             
-            <Button variant="light" className="h-10" onClick={() => { setShowTipModal(!showTipModal) }}>
+            <Button variant="light" className="md:h-10" onClick={() => { setShowTipModal(!showTipModal) }}>
                 <span className="flex items-center space-x-3">
                     <IoDiamondOutline size={20} />
                     <span>{video.DiamondCount}</span>

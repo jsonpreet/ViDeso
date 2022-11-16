@@ -36,7 +36,7 @@ const VideoActions = ({ video }) => {
             <Button
                 variant="light"
                 onClick={() => setShowShare(true)}
-                className='h-10 '
+                className='md:h-10'
                 ref={shareModalRef} 
             >
                 <span className="flex items-center space-x-3">
@@ -56,9 +56,7 @@ const VideoActions = ({ video }) => {
                     <span>Report</span>
                 </span>
             </Button> */}
-            
             <DropMenu
-                position='left'
                 trigger={
                     <div
                     className={clsx(

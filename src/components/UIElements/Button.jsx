@@ -29,8 +29,8 @@ export const Button = forwardRef(function Button(
         {
           'px-4 py-1.5 text-xs': size === 'sm',
           'px-5 md:py-2 py-1.5 text-sm': size === 'md',
-          'px-6 py-3 text-base': size === 'lg',
-          'px-8 py-4 text-lg': size === 'xl',
+          'px-6 md:py-3 py-1.5 text-base': size === 'lg',
+          'px-8 md:py-4 py-1.5 text-lg': size === 'xl',
           'primary-button md:rounded-full':
            variant === 'primary',
           'bg-transparent md:rounded-full': variant === 'secondary',

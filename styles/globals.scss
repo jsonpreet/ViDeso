@@ -101,7 +101,7 @@ body{
 }
 
 .dark-button {
-  @apply bg-[#1b1b1b] dark:bg-gray-100 hover:bg-[#fff]/[0.1] dark:hover:bg-gray-200;
+  @apply bg-[#1b1b1b] dark:bg-gray-100 hover:bg-gray-700 dark:hover:bg-gray-300;
 }
 
 .dark-button-text {
