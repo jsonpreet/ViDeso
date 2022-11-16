@@ -85,7 +85,7 @@ const Comment = ({ comment }) => {
                     </span>
                     <div
                         className={clsx(
-                        'opacity-80 text-base',
+                        'opacity-80 text-base overflow-hidden break-words',
                         clamped ? 'line-clamp-2' : ''
                         )}
                     >
