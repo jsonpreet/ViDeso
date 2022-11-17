@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import ThumbnailOverlays from '../Common/ThumbnailOverlays'
 import VideoOptions from '../Common/VideoCard/VideoOptions'
+import { DESO_CONFIG } from '@app/utils/constants'
 
 const SuggestedVideoCard = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
@@ -22,7 +23,7 @@ const SuggestedVideoCard = ({ video }) => {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        const deso = new Deso()
+        const deso = new Deso(DESO_CONFIG)
         const getVideoData = async () => {
         try {
             const videoID = getPlaybackIdFromUrl(video);

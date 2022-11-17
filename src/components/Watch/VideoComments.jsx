@@ -1,6 +1,7 @@
 
 import useAppStore from '@app/store/app'
 import usePersistStore from '@app/store/persist'
+import { DESO_CONFIG } from '@app/utils/constants'
 import CommentsShimmer from '@components/Shimmers/CommentsShimmer'
 import { Loader } from '@components/UIElements/Loader'
 import { NoDataFound } from '@components/UIElements/NoDataFound'
@@ -20,17 +21,14 @@ const VideoComments = ({ video }) => {
     const { query: { id } } = useRouter()
     const selectedChannelId = usePersistStore((state) => state.selectedChannelId)
     const selectedChannel = useAppStore((state) => state.selectedChannel)
-    const isLoggedIn = useAppStore((state) => state.isLoggedIn)
-    const user = useAppStore((state) => state.user)
+    const {isLoggedIn, user } = usePersistStore((state) => state)
     const [loading, setLoading] = useState(true)
-    const userPublicKey = isLoggedIn
-    ? user.profile.PublicKeyBase58Check
-    : "BC1YLhBLE1834FBJbQ9JU23JbPanNYMkUsdpJZrFVqNGsCe7YadYiUg";
+    const userPublicKey = isLoggedIn ? user.profile.PublicKeyBase58Check : "BC1YLhBLE1834FBJbQ9JU23JbPanNYMkUsdpJZrFVqNGsCe7YadYiUg";
     const [post, setPost] = useState([])
 
     useEffect(() => {
         async function fetchData() {
-            const deso = new Deso();
+            const deso = new Deso(DESO_CONFIG);
             try {
                 const request = {
                     ReaderPublicKeyBase58Check: userPublicKey,

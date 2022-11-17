@@ -110,11 +110,9 @@ const Comment = ({ comment }) => {
                         </button>
                         </div>
                     )}
-                    {!comment.IsHidden && (
-                        <div className="mt-1">
-                            <Reactions iconSize="17" showButton={false} video={comment} />
-                        </div>
-                    )}
+                    <div className="mt-1">
+                        <Reactions iconSize="17" showButton={false} video={comment} />
+                    </div>
                 </div>
             </div>
             <div>

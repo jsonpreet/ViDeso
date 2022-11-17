@@ -6,44 +6,48 @@ import clsx from 'clsx'
 import Deso from 'deso-protocol'
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
-import { BiLike } from 'react-icons/bi'
 import { IoDiamondOutline } from 'react-icons/io5'
 import party from "party-js"
+import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
+import { DESO_CONFIG } from '@app/utils/constants'
 
 const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = true}) => {
     const {isLoggedIn, user } = usePersistStore((state) => state)
     const selectedChannel = useAppStore((state) => state.selectedChannel)
     const [showTipModal, setShowTipModal] = useState(false)
+    const [liking, setLiking] = useState(false)
     const [postReader, setPostReader] = useState()
-    const [liked, setLiked] = useState(false)
-    const [diamondBestowed, setDiamondBestowed] = useState(0)
-    const [likes, setLikes] = useState(0);
+    const [liked, setLiked] = useState(video.PostEntryReaderState.LikedByReader)
+    const [diamondBestowed, setDiamondBestowed] = useState(video.PostEntryReaderState.DiamondLevelBestowed)
+    const [likes, setLikes] = useState(video.LikeCount);
     const likeRef = useRef(null);
     const [deso, setDeso] = useState();
 
-    useEffect(() => {
-        if (video && video.PostEntryReaderState) {
-            setLikes(video.PostEntryReaderState.LikeCount)
-            setLiked(video.PostEntryReaderState.LikedByReader)
-            setDiamondBestowed(video.PostEntryReaderState.DiamondLevelBestowed)
-        }
-    }, [video])
+    // useEffect(() => {
+    //     if (video && video.PostEntryReaderState) {
+    //         setLikes(video.PostEntryReaderState.LikeCount)
+    //         setLiked(video.PostEntryReaderState.LikedByReader)
+    //         setDiamondBestowed(video.PostEntryReaderState.DiamondLevelBestowed)
+    //     }
+    // }, [video])
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const deso = new Deso();
+            const deso = new Deso(DESO_CONFIG);
             setDeso(deso);
         }
     }, []);
 
     const likeVideo = async (isLiked) => {
-    if (!isLoggedIn) return toast.error('You must be logged in!')
-        setLiked(!liked)
+        if (!isLoggedIn) {
+            return toast.error('You must be logged in!')
+        } 
+        setLiking(true)
         const isUnlike = isLiked ? true : false;
         try {
             const request = {
                 ReaderPublicKeyBase58Check: user.profile.PublicKeyBase58Check,
-                LikedPostHashHex: post.PostHashHex,
+                LikedPostHashHex: video.PostHashHex,
                 MinFeeRateNanosPerKB: 1000,
                 IsUnlike: isUnlike,
             };
@@ -51,19 +55,24 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
             if (response && response.TxnHashHex !== null) {
                 setLikes(!isUnlike ? likes + 1 : likes - 1);
                 setLiked(!isUnlike);
-                toast.success('Post liked');
-                party.confetti(likeRef.current, {
-                    count: party.variation.range(100, 100),
-                    size: party.variation.range(0.5, 1.5),
-                }); 
+                //toast.success('Post liked');
+                if (!isLiked) {
+                    party.confetti(likeRef.current, {
+                        count: party.variation.range(50, 100),
+                        size: party.variation.range(0.2, 1.0),
+                    });
+                }
+                setLiking(false)
             }
         } catch (error) {
-            toast.error("Something went wrong!");
+            console.log(error);
+            setLiking(false)
+            toast.error(`Error: ${error.message}`);
         }
     }
     return (
         <div
-            className={'flex items-center justify-end space-x-2.5 md:space-x-4'}
+            className={'  flex items-center justify-end space-x-2.5 md:space-x-4'}
         >
             <Button ref={likeRef} variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `md:h-10` : `!p-0`}`} onClick={() => { likeVideo(liked) }}>
                 <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 space-x-2 outline-none', {
@@ -72,18 +81,27 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
                     { 'space-x-3': showButton },
                     { 'mt-1.5': !showButton }
                 )}>
-                    <BiLike size={iconSize}
-                    className={clsx({
-                        'text-brand2-500 dark:text-brand2-400': liked
-                    })}
-                    />
+                    {liked ? <FaThumbsUp size={iconSize}
+                        className={clsx({
+                            'text-brand2-500 dark:text-brand2-400': liked,
+                            'animate-bounce': liking
+                        })}
+                    /> :
+                        <FaRegThumbsUp size={iconSize}
+                        className={clsx({
+                            'text-brand2-500 dark:text-brand2-400': liked,
+                            'animate-bounce': liking
+                        })}
+                        />
+                    }
+
                     <span
                         className={clsx({
                         'text-brand2-500 dark:text-brand2-400': liked
                         })}
                     >
-                        {video.LikeCount > 0
-                        ? formatNumber(video.LikeCount)
+                        {likes > 0
+                        ? formatNumber(likes)
                         : 'Like'}
                     </span>
                 </span>

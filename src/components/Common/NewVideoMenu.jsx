@@ -3,9 +3,11 @@ import { useRouter } from 'next/router'
 import { RiVideoAddLine } from 'react-icons/ri'
 import DropMenu, { NextLink } from '../UIElements/DropMenu'
 import { TfiPencilAlt, TfiVideoCamera } from "react-icons/tfi";
+import usePersistStore from '@app/store/persist';
 
 function NewVideoMenu() {
     const { query } = useRouter()
+    const {isLoggedIn, user } = usePersistStore()
     return (
         <>
             <DropMenu
@@ -29,7 +31,7 @@ function NewVideoMenu() {
                         </Menu.Item>
                         <Menu.Item
                             as={NextLink}
-                            href={`/${query.channel}/community`}
+                            href={`/${user.profile.Username}/community`}
                             className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                         >
                             <TfiPencilAlt size="20" />

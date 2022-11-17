@@ -45,7 +45,7 @@ const Search = ({ onSearchResults }) => {
       <div className="md:w-[728px] hidden md:flex" style={{flex: '0 1 728'}}>
         <div ref={resultsRef} className='w-full mx-auto'>
           <div className="relative mt-1">
-            <div className="relative w-full overflow-hidden border shadow-inner customBorder cursor-default bg-primary dark:border-gray-800 rounded-full">
+            <div className="relative w-full overflow-hidden cursor-default border shadow-inner customBorder bg-primary dark:border-gray-800 rounded-full">
               <input
                 className="w-full py-2.5 pl-3 pr-10 bg-transparent focus:outline-none"
                 onChange={(event) => setKeyword(event.target.value)}

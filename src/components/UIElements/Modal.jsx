@@ -43,7 +43,7 @@ const Modal = ({
             >
               <Dialog.Panel
                 className={clsx(
-                  'w-full p-5 py-5 overflow-x-hidden text-left align-middle transition-all transform shadow-xl bg-secondary rounded-2xl',
+                  'w-full p-5 py-5 overflow-x-hidden text-left align-middle transition-all transform shadow-xl bg-primary rounded-2xl',
                   panelClassName
                 )}
               >

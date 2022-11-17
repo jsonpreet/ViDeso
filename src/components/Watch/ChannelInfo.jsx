@@ -1,24 +1,41 @@
+import usePersistStore from '@app/store/persist'
 import { formatNumber } from '@app/utils/functions'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 import Deso from 'deso-protocol'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import IsVerified from '../Common/IsVerified'
 import { Button } from '../UIElements/Button'
+import party from "party-js"
+import { DESO_CONFIG } from '@app/utils/constants'
 
 function ChannelInfo({ video, channel }) {
-    const [followers, setFollowers] = React.useState(0)
-    const [loading, setLoading] = React.useState(true)
+    const [followers, setFollowers] = useState(0)
+    const [loading, setLoading] = useState(true)
+    const [subscribing, setSubscribing] = useState(false)
+    //const [deso, setDeso] = useState()
+    const followRef = useRef(null);
+    const [follow, setFollow] = useState(false)
+    const user = usePersistStore((state) => state.user)
+    const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
+    const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : '';
+
+    // useEffect(() => {
+    //     const deso = new Deso();
+    //     if (deso) {
+    //         setDeso(deso);
+    //     }
+    // }, [])
+
     useEffect(() => {
+        const deso = new Deso(DESO_CONFIG);
         async function getFollowers() {
-            const deso = new Deso();
             try {
                 const request = {
-                    PublicKeyBase58Check: channel.PublicKeyBase58Check ,
+                    PublicKeyBase58Check: video.ProfileEntryResponse.PublicKeyBase58Check,
                     GetEntriesFollowingUsername: true
                 };
-                    
                 const response = await deso.social.getFollowsStateless(request);
                 if (response && response.NumFollowers) {
                     setFollowers(response.NumFollowers);
@@ -27,12 +44,66 @@ function ChannelInfo({ video, channel }) {
                     
             } catch (error) {
                 console.log(error);
-                toast.error("Something went wrong!", toastOptions);
+                toast.error("Something went wrong!");
                 setLoading(false);
             }
         }
+        
+        async function checkFollowing() {
+            const request = {
+                PublicKeyBase58Check: reader,
+                IsFollowingPublicKeyBase58Check: video.ProfileEntryResponse.PublicKeyBase58Check
+            };
+            try {
+                const response = await deso.social.isFollowingPublicKey(request);
+                setFollow(response.data.IsFollowing);
+
+            } catch (error) {
+                console.log(error);
+                toast.error("Something went wrong!");
+            }
+        }
         getFollowers()
-    }, [channel])
+        if (isLoggedIn) {
+            checkFollowing()
+        }
+    }, [video, reader, isLoggedIn])
+
+    const onFollow = async() => {
+        if (!isLoggedIn) {
+            return toast.error('Please login to Subscribe this user');
+        }
+        try{
+            const deso = new Deso();
+            setSubscribing(true)
+            const isFollow = follow ? true : false;
+            const request = {
+                IsUnfollow: isFollow,
+                FollowedPublicKeyBase58Check: video.ProfileEntryResponse.PublicKeyBase58Check,
+                FollowerPublicKeyBase58Check: reader
+            };
+            const response = await deso.social.createFollowTxnStateless(request);
+            if (response && response.TxnHashHex !== null) {
+                console.log('response', response);
+                if (!isFollow) {
+                    party.confetti(followRef.current, {
+                        count: party.variation.range(50, 100),
+                        size: party.variation.range(0.2, 1.0),
+                    });
+                }
+                setSubscribing(false)
+                setFollow(!isFollow)
+                toast.success('Unfollowed successfully');
+            } else {
+                toast.error("Something went wrong!");
+                setSubscribing(false)
+            }
+        }  catch (error) {
+            setSubscribing(false)
+            toast.error('Something went wrong');
+        }
+    }
+    
     return (
         <>
             <div className='flex items-center space-x-3'>
@@ -59,13 +130,19 @@ function ChannelInfo({ video, channel }) {
                             </span>
                             : <div className="h-2 bg-gray-300 rounded dark:bg-gray-700" />
                         }
-                        
                     </div>
                 </div>
-                <div>
-                    <Button variant="dark">
-                        <span>Subscribe</span>
-                    </Button>
+                <div ref={followRef}>
+                    {!follow ?
+                        <Button className={`${subscribing ? `animate-pulse` : ``}`} variant="dark" onClick={() => onFollow(follow)}>
+                            <span>Subscribe</span>
+                        </Button>
+                        :
+                        
+                        <Button className={`${subscribing ? `animate-pulse` : ``}`} variant="light" onClick={() => onFollow(follow)}>
+                            <span>Subscribed</span>
+                        </Button>
+                    }
                 </div>
             </div>
         </>

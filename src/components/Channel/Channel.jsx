@@ -31,11 +31,15 @@ function Channel() {
         }
     );
 
+
     useEffect(() => {
         if (inView && hasNextPage) {
             fetchNextPage()
         }
     }, [inView, hasNextPage])
+
+    
+
 
     if(isLoading) return <ChannelShimmer />
     if (isFetched) {

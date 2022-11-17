@@ -67,17 +67,6 @@ const SuggestedVideos = ({ currentVideoId }) => {
                         )}
                     </div>
                     {isFetchingNextPage && <div><SuggestedVideosShimmer/></div>}
-                    {/* <div className='loadMore'>
-                        <div className='loadMoreButton'>
-                            <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage}  className='btn'>
-                                {isFetchingNextPage
-                                ? 'Loading more...'
-                                : hasNextPage
-                                ? 'Load More'
-                                : 'Nothing more to load'}
-                            </button>
-                        </div>
-                    </div> */}
                 </div>
             ): <SuggestedVideosShimmer />}
         </>

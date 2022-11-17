@@ -1,7 +1,5 @@
 import { APP } from '@app/utils/constants'
 import Modal from '@components/UIElements/Modal'
-import Link from 'next/link'
-import { IoCopyOutline } from 'react-icons/io5'
 import useCopyToClipboard from '@utils/hooks/useCopyToClipboard'
 import toast from 'react-hot-toast'
 import SimpleBar from 'simplebar-react';
@@ -41,6 +39,7 @@ const ShareModal = ({ rootRef, show, setShowShare, video }) => {
       title="Share"
       onClose={() => setShowShare(false)}
       show={show}
+      ref={rootRef}
       panelClassName="w-full max-w-lg"
     >
       <div className="w-full mt-2">
@@ -111,7 +110,7 @@ const ShareModal = ({ rootRef, show, setShowShare, video }) => {
           </TumblrShareButton>
         </div>
         </SimpleBar>  
-        <div className="flex items-center justify-between p-3 py-3 border bg-gray-100 border-gray-200 rounded-xl dark:border-gray-800">
+        <div className="flex items-center justify-between p-3 py-3 border shadow-inner customBorder bg-primary dark:border-gray-800 rounded-xl">
           <div className="text-sm truncate select-all pr-2">
             {APP.URL}/watch/{video.PostHashHex}
           </div>

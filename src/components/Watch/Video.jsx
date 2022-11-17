@@ -45,7 +45,7 @@ const Video = ({ videoData, video, poster }) => {
       />
       <div className="md:px-0 px-3 flex flex-col">
         <div>
-            <h1 className="md:mt-4 mt-0 text-lg md:text-2xl font-medium line-clamp-2">
+            <h1 className="text-lg md:text-2xl font-medium line-clamp-2">
               <Linkify options={LinkifyOptions}>
                 {videoTitle}
               </Linkify>

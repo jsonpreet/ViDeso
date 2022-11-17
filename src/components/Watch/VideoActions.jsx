@@ -26,7 +26,7 @@ const VideoActions = ({ video }) => {
     return (
         <div className="flex items-center md:justify-end mt-4 space-x-2.5 md:space-x-4 md:mt-0">
             {/* <TipModal show={showTip} setShowTip={setShowTip} video={video} />*/}
-            <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
+            <ShareModal rootRef={shareModalRef} video={video} show={showShare} setShowShare={setShowShare} />
             {/*<ReportModal
             show={showReport}
             setShowReport={setShowReport}

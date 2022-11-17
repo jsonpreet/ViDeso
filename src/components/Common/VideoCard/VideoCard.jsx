@@ -13,6 +13,7 @@ import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 import ShareModal from '../ShareModal'
+import { DESO_CONFIG } from '@app/utils/constants'
 
 
 const VideoCard = ({ video, userProfile }) => {
@@ -23,7 +24,7 @@ const VideoCard = ({ video, userProfile }) => {
   const [extraData, setExtraData] = useState('')
 
   useEffect(() => {
-    const deso = new Deso()
+    const deso = new Deso(DESO_CONFIG)
     const getVideoData = async () => {
       try {
         const videoID = getPlaybackIdFromUrl(video);
