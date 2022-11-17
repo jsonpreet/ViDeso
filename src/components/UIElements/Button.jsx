@@ -31,6 +31,7 @@ export const Button = forwardRef(function Button(
           'px-5 md:py-2 py-1.5 text-sm': size === 'md',
           'px-6 md:py-3 py-1.5 text-base': size === 'lg',
           'px-8 md:py-4 py-1.5 text-lg': size === 'xl',
+          'p-0 text-sm': size === 'small',
           'primary-button md:rounded-full':
            variant === 'primary',
           'bg-transparent md:rounded-full': variant === 'secondary',
@@ -44,10 +45,12 @@ export const Button = forwardRef(function Button(
       {...rest}
     >
       <span
-        className={clsx('relative flex items-center justify-center space-x-2', {
-          'text-white': variant !== 'secondary' && variant !== 'outlined' && variant !== 'light' && variant !== 'dark',
+        className={clsx('relative flex items-center justify-center ', {
+          'text-white': variant !== 'secondary' && variant !== 'outlined' && variant !== 'light' && variant !== 'dark' && variant !== 'none',
         }, { 'text-secondary': variant === 'light' }
           , { 'dark-button-text': variant === 'dark'}
+          , { 'dark-text': variant === 'none' },
+          {'space-x-2': size !== 'small'}
         )}
       >
         {icon}

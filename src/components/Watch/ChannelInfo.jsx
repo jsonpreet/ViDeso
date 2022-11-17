@@ -3,6 +3,7 @@ import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 import Deso from 'deso-protocol'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
+import toast from 'react-hot-toast'
 import IsVerified from '../Common/IsVerified'
 import { Button } from '../UIElements/Button'
 

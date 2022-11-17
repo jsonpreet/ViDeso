@@ -83,11 +83,11 @@ const VideoCard = ({ video }) => {
             setShowReport={setShowReport}
           /> */}
           <Link href={`/watch/${video.PostHashHex}`}>
-            <div className="relative rounded-xl aspect-w-16 overflow-hidden aspect-h-9">
+            <div className="relative rounded-none md:rounded-xl aspect-w-16 overflow-hidden aspect-h-9">
                 <LazyLoadImage
                   delayTime={1000}
                   className={clsx(
-                  'object-center bg-gray-100 dark:bg-gray-900 w-full h-full rounded-xl lg:w-full lg:h-full object-cover'
+                  'object-center bg-gray-100 dark:bg-gray-900 w-full h-full rounded-none md:rounded-xl lg:w-full lg:h-full object-cover'
                   )}
                   alt={`Video by @${userProfile.Username}`}
                   wrapperClassName='w-full'

@@ -30,7 +30,7 @@ const AboutChannel = ({ video }) => {
   }, [video])
 
   return (
-    <div className="flex items-start justify-between w-full bg-secondary p-4 rounded-xl">
+    <div className="flex items-start justify-between w-full bg-secondary p-4 rounded-none md:rounded-xl">
       <div className="flex flex-col flex-1 overflow-hidden break-words">
         <div className='text-sm mb-3'>
           <span>Uploaded {timeNow(video.TimestampNanos)}</span>

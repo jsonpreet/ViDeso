@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { AiFillHeart, AiOutlinePlayCircle } from 'react-icons/ai'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 import IsVerified from '../Common/IsVerified'
+import Reactions from './Reactions'
 
 // const CommentOptions = dynamic(() => import('./CommentOptions'))
 // const Reactions = dynamic(() => import('./Reactions'))
@@ -69,16 +70,7 @@ const Comment = ({ comment }) => {
                             <span>{userProfile.Username}</span>
                             {userProfile.IsVerified ? <IsVerified size="xs" /> : null}
                         </Link>
-                        {/* {checkValueInAttributes(
-                        comment?.metadata.attributes,
-                        'tip'
-                        ) && (
-                        <Tooltip placement="top" content="Tipper">
-                            <span>
-                                <AiFillHeart className="text-sm text-pink-500" />
-                            </span>
-                        </Tooltip>
-                        )} */}
+                        <span className="middot" />
                         <span className="inline-flex items-center opacity-70 space-x-1 text-xs">
                             {timeNow(comment.TimestampNanos)}
                         </span>
@@ -120,7 +112,7 @@ const Comment = ({ comment }) => {
                     )}
                     {!comment.IsHidden && (
                         <div className="mt-1">
-                            {/* <Reactions iconSize="xs" publication={comment} /> */}
+                            <Reactions iconSize="17" showButton={false} video={comment} />
                         </div>
                     )}
                 </div>

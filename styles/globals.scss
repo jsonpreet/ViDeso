@@ -80,8 +80,24 @@ body{
   @apply dark:bg-[#1b1b1b] bg-gray-100;
 }
 
+.bg-dropdown  {
+  @apply dark:bg-[#1b1b1b] bg-white;
+}
+
 .hover-primary {
   @apply dark:hover:bg-[#fff]/[0.1] hover:bg-gray-200;
+}
+
+.theme-border-bg {
+  @apply bg-gray-200 dark:bg-gray-800;
+}
+
+.theme-border {
+  @apply border-gray-200 dark:border-gray-800;
+}
+
+.theme-divider {
+  @apply divide-gray-200 dark:divide-gray-800;
 }
 
 .active-primary {
@@ -108,8 +124,11 @@ body{
   @apply dark:text-gray-800 text-white;
 }
 
+.dark-text {
+  @apply text-gray-800 dark:text-white;
+}
 
-.dropdown-shadow{
+.dropdown-shadow {
   box-shadow: 0px 4px 32px 0px rgba(0,0,0,0.1);
   backdrop-filter: blur(8px);
 }

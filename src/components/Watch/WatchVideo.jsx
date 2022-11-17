@@ -25,6 +25,9 @@ const WatchVideo = () => {
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
     const selectedChannel = useAppStore((state) => state.selectedChannel)
     const setVideoWatchTime = useAppStore((state) => state.setVideoWatchTime)
+    const user = usePersistStore((state) => state.user)
+    const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
+    const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : '';
     const [videoData, setVideoData] = useState('')
     const [thumbnailUrl, setThumbnailUrl] = useState('')
     const [loading, setLoading] = useState(true)
@@ -32,7 +35,7 @@ const WatchVideo = () => {
     
     ///const { data: video, isLoading, isFetching, isFetched, error, isError } = FetchSinglePost({ id });
 
-    const { isSuccess, isLoading, isError, error, refetch, isFetching, status, fetchStatus, data: video } = useQuery([['single-post', id], { id: id }], getSinglePost, { enabled: !!id, })
+    const { isSuccess, isLoading, isError, error, refetch, isFetching, status, fetchStatus, data: video } = useQuery([['single-post', id], { id: id, reader: reader }], getSinglePost, { enabled: !!id, })
 
     useEffect(() => {
         const { id, t } = router.query
@@ -44,7 +47,7 @@ const WatchVideo = () => {
         }
     }, [router])
 
-    console.log({isSuccess: isSuccess, isLoading: isLoading, isFetching: isFetching, isError: isError, 'video': id})
+    //console.log({isSuccess: isSuccess, isLoading: isLoading, isFetching: isFetching, isError: isError, 'video': id})
 
     useEffect(() => {
         const deso = new Deso()

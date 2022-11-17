@@ -63,7 +63,7 @@ const VideoComments = ({ video }) => {
     if (loading) return <CommentsShimmer />
 
     return (
-        <div className="pb-4">
+        <div className="pb-4 md:px-0 px-3">
             <div className="flex items-center justify-between">
                 <h1 className="flex items-center my-4 space-x-2">
                     <BiComment size={22} />

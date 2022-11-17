@@ -4,12 +4,12 @@ import { BASE_URI } from "@app/utils/constants";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const getHotFeed = async (limit, lastPost, output) => {
-    const pins = [];
+export const GetHotFeed = async (limit, reader, lastPost, output) => {
     const endpoint = 'get-hot-feed';
     const lastid = (lastPost !== 0 && lastPost !== undefined) ? `${lastPost}` : ``;
     const nLimit = (limit && limit !== -1) ? limit : 500
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
+        ReaderPublicKeyBase58Check: reader,
         SeenPosts: [lastid],
         SortByNew: true,
         ResponseLimit: nLimit,
@@ -29,12 +29,12 @@ export const getHotFeed = async (limit, lastPost, output) => {
     }
 }
 
-export const getLatestFeed = async (limit, lastPost, output = 32) => {
-    const pins = [];
+export const GetLatestFeed = async (limit, reader, lastPost, output = 32) => {
     const endpoint = 'get-posts-stateless';
     const lastid = (lastPost !== 0 && lastPost !== undefined) ? `${lastPost}` : ``;
     const nLimit = (limit && limit !== -1) ? limit : 500
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
+        ReaderPublicKeyBase58Check: reader,
         PostHashHex: lastid,
         NumToFetch: nLimit,
         MediaRequired: true,
@@ -54,8 +54,7 @@ export const getLatestFeed = async (limit, lastPost, output = 32) => {
     }
 }
 
-export const getSuggestedFeed = async (limit, output = 32, seenPosts) => {
-    const pins = [];
+export const GetSuggestedFeed = async (limit, reader, output = 32, seenPosts) => {
     const endpoint = 'get-hot-feed';
     //const lastid = (lastPost !== 0 && lastPost !== undefined) ? `${lastPost}` : ``;
     const seenPostLists = seenPosts.map(
@@ -63,6 +62,7 @@ export const getSuggestedFeed = async (limit, output = 32, seenPosts) => {
     );
     const nLimit = (limit && limit !== -1) ? limit : 2500
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
+        ReaderPublicKeyBase58Check: reader,
         SeenPosts: seenPostLists,
         SortByNew: false,
         ResponseLimit: nLimit,
@@ -85,19 +85,19 @@ export const getSuggestedFeed = async (limit, output = 32, seenPosts) => {
 }
 
 export const FetchLatestFeed = ({limit}) => {
-    return useQuery(['latest-feed', limit], ({limit}) => getLatestFeed({limit}), {
+    return useQuery(['latest-feed', limit], ({limit}) => GetLatestFeed({limit}), {
         keepPreviousData: true,
     });
 }
 
 export const FetchHotFeed = ({limit}) => {
-    return useQuery(['hot-feed', limit], ({limit}) => getHotFeed({limit}), {
+    return useQuery(['hot-feed', limit], ({limit}) => GetHotFeed({limit}), {
         keepPreviousData: true,
     });
 }
 
 export const FetchInfiniteHotFeed = (limit, output) => {
-    return useInfiniteQuery(['infinite-hot-feed'], ({ pageParam = 0 }) => getHotFeed(limit, pageParam, output),
+    return useInfiniteQuery(['infinite-hot-feed'], ({ pageParam = 0 }) => GetHotFeed(limit, pageParam, output),
         {
             getNextPageParam: (lastPage, pages) => {
                 if(lastPage === null) {
@@ -112,7 +112,10 @@ export const FetchInfiniteHotFeed = (limit, output) => {
 }
 
 export const FetchInfiniteLatestFeed = (limit) => {
-    return useInfiniteQuery(['infinite-latest-feed'], ({ pageParam = 0 }) => getLatestFeed(limit, pageParam),
+    const user = usePersistStore((state) => state.user)
+    const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
+    const reader = isLoggedIn ? user.PublicKeyBase58Check : '';
+    return useInfiniteQuery(['infinite-latest-feed'], ({ pageParam = 0 }) => GetLatestFeed(limit, reader, pageParam),
         {
             getNextPageParam: (lastPage, pages) => {
                 if(lastPage === null) {
@@ -127,8 +130,11 @@ export const FetchInfiniteLatestFeed = (limit) => {
 }
 
 export const FetchSuggestedFeed = (limit, output) => {
+    const user = usePersistStore((state) => state.user)
+    const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
+    const reader = isLoggedIn ? user.PublicKeyBase58Check : '';
     const recentlyWatched = usePersistStore((state) => state.recentlyWatched)
-    return useInfiniteQuery(['suggested-feed'], ({ pageParam = recentlyWatched }) => getSuggestedFeed(limit, output, pageParam),
+    return useInfiniteQuery(['suggested-feed'], ({ pageParam = recentlyWatched }) => GetSuggestedFeed(limit, reader, output, pageParam),
         {
             getNextPageParam: (lastPage, pages) => {
                 if(lastPage === null) {
@@ -144,9 +150,11 @@ export const FetchSuggestedFeed = (limit, output) => {
 }
 
 export const getSinglePost = async ({ queryKey }) => {
-    const [_key, { id }] = queryKey;
+    const [_key, { id, reader }] = queryKey;
+    console.log(queryKey)
     const endpoint = 'get-single-post';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
+        ReaderPublicKeyBase58Check: reader,
         PostHashHex: id,
         CommentLimit: 10,
     });
@@ -154,13 +162,15 @@ export const getSinglePost = async ({ queryKey }) => {
         return null
     } else {
         const post = response.data.PostFound;
-
         return post
     }
 }
 
 export const FetchSinglePost = ({id}) => {
-    return useQuery([['single-post', id], { id }], getSinglePost, {
+    const user = usePersistStore((state) => state.user)
+    const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
+    const reader = isLoggedIn ? user.PublicKeyBase58Check : '';
+    return useQuery([['single-post', id], { id, reader }], getSinglePost, {
         keepPreviousData: true,
     });
 }

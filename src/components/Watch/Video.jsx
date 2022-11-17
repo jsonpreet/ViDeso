@@ -43,9 +43,9 @@ const Video = ({ videoData, video, poster }) => {
         poster={poster}
       // isSensitiveContent={isSensitiveContent}
       />
-      <div className="flex flex-col">
+      <div className="md:px-0 px-3 flex flex-col">
         <div>
-            <h1 className="mt-4 text-lg md:text-2xl font-medium line-clamp-2">
+            <h1 className="md:mt-4 mt-0 text-lg md:text-2xl font-medium line-clamp-2">
               <Linkify options={LinkifyOptions}>
                 {videoTitle}
               </Linkify>

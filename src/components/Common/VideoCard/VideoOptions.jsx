@@ -69,7 +69,7 @@ const VideoOptions = ({
         </div>
       }
     >
-      <div className="py-2 my-1 overflow-hidden rounded-lg dropdown-shadow bg-secondary outline-none ring-0 focus:outline-none focus:ring-0 w-44">
+      <div className="py-2 my-1 overflow-hidden rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 w-44">
         <div className="flex flex-col text-[14px] transition duration-150 ease-in-out rounded-lg">
           <button
             type="button"

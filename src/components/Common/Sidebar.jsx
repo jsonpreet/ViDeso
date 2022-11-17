@@ -21,9 +21,12 @@ import usePersistStore from '@app/store/persist'
 import { Button } from '../UIElements/Button'
 import SimpleBar from 'simplebar-react';
 import TrendingTags from './TrendingTags'
+//import SidebarLoginMessage from './SidebarLoginMessage'
+import dynamic from 'next/dynamic'
+
+const SidebarLoginMessage = dynamic(() => import('./SidebarLoginMessage'), { ssr: false })
 
 const Sidebar = () => {
-  const { isLoggedIn } = usePersistStore((state) => state.isLoggedIn) 
   const router = useRouter()
   const [showMore, setShowMore] = useState(false)
   const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 6;
@@ -109,16 +112,8 @@ const Sidebar = () => {
                 </div>
               </Link>
             </div>
-            {!isLoggedIn ? 
-                <>
-                  <div className="h-[1px] mt-4 mb-6 relative bg-gray-300 dark:bg-white/[0.1]" />
-                  <div className="flex flex-col w-full mb-3 space-y-3 px-3">
-                    <div className='text-sm'>Sign in to like videos, comment, and subscribe.</div>
-                    <div className='w-full'><Button>Sign In</Button></div>
-                  </div>
-                </>
-            : null}  
-            <div className="h-[1px] mt-4 mb-6 relative bg-gray-300 dark:bg-white/[0.1]" />
+            <SidebarLoginMessage />
+            <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
             <div className="flex flex-col w-full mb-3 px-3">
               <div className='text-base'>Explore</div>
             </div>
@@ -163,7 +158,7 @@ const Sidebar = () => {
                   }
             </div>
             {/* <TrendingTags/> */}
-            <div className="h-[1px] mt-4 mb-6 relative bg-gray-300 dark:bg-white/[0.1]" />
+            <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
             <div className="flex flex-col space-y-1">
               <a
                 href='https://twitter.com/VidesoApp' target='_blank' rel="noreferrer"
@@ -193,7 +188,7 @@ const Sidebar = () => {
                 </div>
               </a>
             </div>
-            <div className="h-[1px] mt-4 mb-6 relative bg-gray-300 dark:bg-white/[0.1]" />
+            <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
             <div className="grid grid-cols-3 px-3">
                 <Link
                     href={`/about`}
