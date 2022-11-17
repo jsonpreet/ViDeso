@@ -30,7 +30,7 @@ const Timeline = () => {
               {videos.pages.map(page => 
                 page.map(video => {
                   return (
-                    <VideoCard key={`${video.PostHashHex}`} video={video} />
+                    <VideoCard userProfile={video.ProfileEntryResponse} key={`${video.PostHashHex}`} video={video} />
                   )
                 })
               )}

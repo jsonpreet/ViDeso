@@ -113,7 +113,7 @@ function UserMenu() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="pt-2">
+                            <div className="pt-2 text-sm">
                                 <Menu.Item
                                     as={NextLink}
                                     href={`/${user.profile.Username}`}

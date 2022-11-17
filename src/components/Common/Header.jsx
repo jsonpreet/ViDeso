@@ -1,8 +1,5 @@
-// import NewVideoTrigger from '@/components/Channel/NewVideoTrigger'
-// import NotificationTrigger from '@/components/Notifications/NotificationTrigger'
-
 import useAppStore from '@store/app'
-import { HOME } from '@utils/paths'
+import { HOME, NOTIFICATIONS } from '@utils/paths'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Search } from '@components/Search'
@@ -12,6 +9,8 @@ import Image from 'next/image'
 import ThemeSwitch from './ThemeSwitch'
 import UserMenu from './UserMenu'
 import usePersistStore from '@app/store/persist'
+import { CgBell } from 'react-icons/cg'
+import NewVideoMenu from './NewVideoMenu'
 
 
 
@@ -41,25 +40,17 @@ const Header = ({ className }) => {
         >
           <AiOutlineSearch className="text-lg" aria-hidden="true" />
         </button> */}
-        {/* {selectedChannelId ? (
+         {isLoggedIn ? (
           <>
-            <NotificationTrigger />
             <Link href={NOTIFICATIONS} className="relative p-1 md:hidden">
               <CgBell className="text-lg" />
               {hasNewNotification && (
                 <span className="absolute flex w-1.5 h-1.5 bg-red-500 rounded-full top-0 right-0" />
               )}
             </Link>
-            <NewVideoTrigger />
+            <NewVideoMenu />
           </>
-        ) : null} */}
-        {isLoggedIn ? (
-          <>
-            <Button onClick={() => setLoading(!loading)} loading={loading}>
-              Upload Video
-            </Button>
-          </>
-        ) : <ThemeSwitch/>}
+        ) : <ThemeSwitch/>} 
         <UserMenu/>
       </div>
     </div>

@@ -15,12 +15,11 @@ import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 import ShareModal from '../ShareModal'
 
 
-const VideoCard = ({ video }) => {
+const VideoCard = ({ video, userProfile }) => {
   const [showShare, setShowShare] = useState(false)
   const [showReport, setShowReport] = useState(false)
   const [videoData, setVideoData] = useState('')
   const [thumbnailUrl, setThumbnailUrl] = useState('/default-black.jpg')
-  const [userProfile, setUserProfile] = useState('')
   const [extraData, setExtraData] = useState('')
 
   useEffect(() => {
@@ -40,7 +39,6 @@ const VideoCard = ({ video }) => {
     if (video.VideoURLs[0] !== null) {
       getVideoData()
     }
-      setUserProfile(video.ProfileEntryResponse)
       setExtraData(video.ExtraData)
   }, [video])
 
@@ -58,7 +56,6 @@ const VideoCard = ({ video }) => {
           console.log(video.PostHashHex, error)
       }
     }
-    console.log(videoData);
     if (videoData) {
       getThumbnail()
     }
@@ -115,7 +112,7 @@ const VideoCard = ({ video }) => {
                       href={`/watch/${video.PostHashHex}`}
                       className="text-[15px] font-medium line-clamp-2 break-words"
                       >
-                        {getVideoTitle(video)}
+                        {getVideoTitle(video, userProfile)}
                     </Link>
                     <Link
                       href={`/${userProfile.Username}`}

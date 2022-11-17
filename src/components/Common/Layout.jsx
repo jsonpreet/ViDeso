@@ -4,11 +4,11 @@ import Head from 'next/head'
 import { useTheme } from 'next-themes'
 import { Toaster } from 'react-hot-toast'
 //import Header from './Header'
-//import Sidebar from './Sidebar'
+import Sidebar from './Sidebar'
 import dynamic from 'next/dynamic'
 
 const Header = dynamic(() => import('./Header'), { ssr: false })
-const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false })
+//const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false })
 
 const Layout = ({ children }) => {
     const { theme } = useTheme()
