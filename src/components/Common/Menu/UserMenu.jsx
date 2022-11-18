@@ -2,17 +2,17 @@ import usePersistStore from '@app/store/persist';
 import toast from 'react-hot-toast'
 import Deso from 'deso-protocol'
 import { useEffect, useState } from 'react'
-import { Button } from '../UIElements/Button';
+import { Button } from '../../UIElements/Button';
 import { Menu } from '@headlessui/react';
 import Link from 'next/link';
-import DropMenu, { NextLink } from '../UIElements/DropMenu';
+import DropMenu, { NextLink } from '../../UIElements/DropMenu';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { HiOutlineCog } from 'react-icons/hi';
 import { MdExitToApp } from 'react-icons/md';
 import { SETTINGS } from '@app/utils/paths';
 import { BASE_URI, DESO_CONFIG } from '@app/utils/constants';
-import IsVerified from './IsVerified';
-import ThemeSwitch from './ThemeSwitch';
+import IsVerified from '../IsVerified';
+import ThemeSwitch from '../ThemeSwitch';
 
 function UserMenu() {
     const [deso, setDeso] = useState();

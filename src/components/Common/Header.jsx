@@ -1,21 +1,16 @@
 import useAppStore from '@store/app'
-import { HOME, NOTIFICATIONS } from '@utils/paths'
+import { HOME } from '@utils/paths'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Search } from '@components/Search'
-import { Button } from '@components/UIElements/Button'
 import { APP } from '@utils/constants'
 import Image from 'next/image'
 import ThemeSwitch from './ThemeSwitch'
-import UserMenu from './UserMenu'
 import usePersistStore from '@app/store/persist'
-import { CgBell } from 'react-icons/cg'
-import NewVideoMenu from './NewVideoMenu'
-
+import { NotificationMenu, NewVideoMenu, UserMenu } from './Menu'
 
 
 const Header = ({ className }) => {
-  const hasNewNotification = useAppStore((state) => state.hasNewNotification)
   const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
   const [loading, setLoading] = useState(false)
   const [showShowModal, setSearchModal] = useState(false)
@@ -42,12 +37,7 @@ const Header = ({ className }) => {
         </button> */}
          {isLoggedIn ? (
           <>
-            <Link href={NOTIFICATIONS} className="relative p-1">
-              <CgBell size={24} />
-              {hasNewNotification && (
-                <span className="absolute flex w-1.5 h-1.5 bg-red-500 rounded-full top-0 right-0" />
-              )}
-            </Link>
+            <NotificationMenu/>
             <NewVideoMenu />
           </>
         ) : <ThemeSwitch/>} 
