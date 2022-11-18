@@ -12,7 +12,7 @@ function NewVideoMenu() {
         <>
             <DropMenu
                 trigger={
-                    <button className="bg-primary hover-primary flex items-center justify-center w-10 h-10 rounded-full flex-none">
+                    <button className="text-secondary hover-primary flex items-center justify-center w-10 h-10 rounded-full flex-none">
                         <RiVideoAddLine className='h-6 w-6' />
                     </button>
                 }

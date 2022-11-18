@@ -10,6 +10,7 @@ import { queryConfig, queryConfigAuto } from '@app/utils/constants';
 import '@styles/globals.scss'
 import { useRouter } from 'next/router';
 import Layout from '@app/components/Common/Layout';
+import FullPageLoader from '@app/components/Common/FullPageLoader';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -26,13 +27,13 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <MetaTags/>
-      <NextNProgress color="#db2777" showOnShallow={true} />
       <ThemeProvider enableSystem={false} attribute="class">
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <NextNProgress color="#db2777" showOnShallow={true} />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
             <Devtools />
           </Hydrate>
         </QueryClientProvider>

@@ -1,5 +1,5 @@
 import VideoCard from '@app/components/Common/VideoCard/VideoCard'
-import TimelineShimmer from '../Shimmers/TimelineShimmer';
+import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
 import { FetchInfiniteLatestFeed } from '@app/data/videos';
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';

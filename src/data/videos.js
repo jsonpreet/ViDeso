@@ -151,7 +151,6 @@ export const FetchSuggestedFeed = (limit, output) => {
 
 export const getSinglePost = async ({ queryKey }) => {
     const [_key, { id, reader }] = queryKey;
-    console.log(queryKey)
     const endpoint = 'get-single-post';
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
         ReaderPublicKeyBase58Check: reader,

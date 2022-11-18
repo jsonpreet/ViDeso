@@ -11,33 +11,31 @@ import VideoOptions from '../Common/VideoCard/VideoOptions'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import DropMenu from '../UIElements/DropMenu'
 import clsx from 'clsx'
+import usePersistStore from '@app/store/persist'
+import { APP } from '@app/utils/constants'
 
 const VideoActions = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
     const [showReport, setShowReport] = useState(false)
     const [showTip, setShowTip] = useState(false)
+    const { isLoggedIn, user } = usePersistStore();
+    const reporterID = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
 
     const closeShareModal = () => {
         setShowShare(false)
     }
     
-    const shareModalRef = useDetectClickOutside({ onTriggered: closeShareModal, triggerKeys: ['Escape', 'x'], });
+    //const shareModalRef = useDetectClickOutside({ onTriggered: closeShareModal, triggerKeys: ['Escape', 'x'], });
 
     return (
         <div className="flex items-center md:justify-end mt-4 space-x-2.5 md:space-x-4 md:mt-0">
             {/* <TipModal show={showTip} setShowTip={setShowTip} video={video} />*/}
-            <ShareModal rootRef={shareModalRef} video={video} show={showShare} setShowShare={setShowShare} />
-            {/*<ReportModal
-            show={showReport}
-            setShowReport={setShowReport}
-            video={video}
-            /> */}
+            <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
             <Reactions video={video} />
             <Button
                 variant="light"
                 onClick={() => setShowShare(true)}
-                className='md:h-10'
-                ref={shareModalRef} 
+                className='md:h-10' 
             >
                 <span className="flex items-center space-x-3">
                     <RiShareForwardLine size={22} />
@@ -69,14 +67,15 @@ const VideoActions = ({ video }) => {
                 >
                 <div className="py-2 my-1 overflow-hidden rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 w-44">
                     <div className="flex flex-col text-[14px] transition duration-150 ease-in-out rounded-lg">
-                    <button
-                        type="button"
-                        onClick={() => setShowReport(true)}
-                        className="inline-flex items-center px-3 py-2 space-x-3 hover-primary"
-                    >
-                        <FiFlag size={18} className="ml-0.5" />
-                        <span className="whitespace-nowrap">Report</span>
-                    </button>
+                        <a
+                            href={`https://desoreporting.aidaform.com/content?ReporterPublicKey=${reporterID}&PostHash=${video.PostHashHex}&ReportedAccountPublicKey=${video.ProfileEntryResponse?.PublicKeyBase58Check}&ReportedAccountUsername=${video.ProfileEntryResponse?.Username}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-3 py-2 space-x-3 hover-primary"
+                        >
+                            <FiFlag size={18} className="ml-0.5" />
+                            <span className="whitespace-nowrap">Report</span>
+                        </a>
                     </div>
                 </div>
             </DropMenu>

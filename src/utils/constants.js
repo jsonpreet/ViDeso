@@ -11,6 +11,7 @@ export const APP = {
   URL: 'https://videso.xyz',
   Description: 'Videso is a decentralized video-sharing social media platform built with DeSo.',
   Twitter: 'VidesoApp',
+  PublicKeyBase58Check: 'BC1YLiHYuaqQc1r5UFvJ3G8eMYawk693wVGiTHmBQtr9DK8NQXt14oJ'
 }
 
 export const BASE_URI = process.env.NEXT_PUBLIC_NODE_API_URL || 'https://diamondapp.com/api/v0'; //'https://node.deso.org/api/v0';

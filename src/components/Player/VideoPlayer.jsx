@@ -1,20 +1,17 @@
 
 import useAppStore from '@app/store/app'
-import {
-  DefaultControls,
-  DefaultSettings,
-  DefaultUi,
-  Hls,
-  Player,
-  Video
-} from '@vime/react'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
 import NextVideo from './NextVideo'
 import PlayerContextMenu from './PlayerContextMenu'
-import SensitiveWarning from './SensitiveWarning'
+
+import dynamic from 'next/dynamic'
+const VimePlayer = dynamic(() => import('./PlayerInstance'), {
+  ssr: false,
+  suspense: true
+})
 
 const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
   const router = useRouter()
@@ -117,22 +114,7 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
       })}
     >
       <div className="relative z-[5]">
-        <Player
-          tabIndex={1}
-          ref={playerRef}
-          aspectRatio={ratio}
-          autopause
-          autoplay
-          icons="vime"
-        >
-            <Hls version="latest" poster={poster}>
-              <source data-src={hls} type="application/x-mpegURL" />
-            </Hls>
-            <DefaultUi noControls>
-                <DefaultControls hideOnMouseLeave activeDuration={2000} />
-                <DefaultSettings />
-            </DefaultUi>
-        </Player>
+        <VimePlayer playerRef={playerRef} ratio={ratio} hls={hls} poster={poster} />
       </div>
       {showNext && (
         <NextVideo
@@ -160,30 +142,18 @@ const VideoPlayer = ({
   poster,
   ratio = '16:9',
   wrapperClassName,
-  isSensitiveContent,
   hls
 }) => {
-  const [sensitiveWarning, setSensitiveWarning] = useState(isSensitiveContent)
 
   return (
     <div className={clsx('overflow-hidden', wrapperClassName)}>
-      {/* {sensitiveWarning ? (
-        <SensitiveWarning acceptWarning={() => setSensitiveWarning(false)} />
-      ) : (
-        <PlayerInstance
-          source={source}
-          ratio={ratio}
-          poster={poster}
-          hls={hls}
-        />
-      )} */}
-        <PlayerInstance
-          videoData={videoData}
-          source={source}
-          ratio={ratio}
-          poster={poster}
-          hls={hls}
-        />
+      <PlayerInstance
+        videoData={videoData}
+        source={source}
+        ratio={ratio}
+        poster={poster}
+        hls={hls}
+      />
     </div>
   )
 }

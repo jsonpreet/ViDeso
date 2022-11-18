@@ -1,8 +1,10 @@
 
 import useAppStore from '@app/store/app'
 import usePersistStore from '@app/store/persist'
+import { APP } from '@app/utils/constants'
 import { isAlreadyAddedToWatchLater } from '@app/utils/functions'
 import DropMenu, { NextLink } from '@components/UIElements/DropMenu'
+import { Menu } from '@vime/react'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
@@ -20,15 +22,13 @@ const VideoOptions = ({
   isSuggested = false,
   showOnHover = true
 }) => {
-  const addToWatchLater = usePersistStore((state) => state.addToWatchLater)
-  const watchLater = usePersistStore((state) => state.watchLater)
-  const selectedChannel = useAppStore((state) => state.selectedChannel)
-  const removeFromWatchLater = usePersistStore(
-    (state) => state.removeFromWatchLater
-  )
+  const { addToWatchLater, removeFromWatchLater, watchLater, isLoggedIn, user } = usePersistStore();
+  const reporterID = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
+
+  const ownerID = isLoggedIn ? user.profile.PublicKeyBase58Check : null;
 
   const router = useRouter()
-  // const isVideoOwner = selectedChannel?.id === video?.profile?.id
+  const isVideoOwner = isLoggedIn ? user.profile.PublicKeyBase58Check === video?.ProfileEntryResponse?.PublicKeyBase58Check : false
 
   // const [hideVideo] = useMutation(HidePublicationDocument, {
   //   onCompleted: () => {
@@ -38,15 +38,15 @@ const VideoOptions = ({
   //   }
   // })
 
-  // const onHideVideo = () => {
-  //   if (
-  //     confirm(
-  //       'This will hide your video from lens, are you sure want to continue?\n\nNote: This cannot be reverted.'
-  //     )
-  //   ) {
-  //     hideVideo({ variables: { request: { publicationId: video?.id } } })
-  //   }
-  // }
+  const onHideVideo = () => {
+    if (
+      confirm(
+        'This can’t be undone. The post will be removed from your profile, from search results, and from the feeds of anyone who follows you.'
+      )
+    ) {
+      // hideVideo({ variables: { request: { publicationId: video?.id } } })
+    }
+  }
 
   const onClickWatchLater = () => {
     isAlreadyAddedToWatchLater(video, watchLater)
@@ -91,36 +91,27 @@ const VideoOptions = ({
                 : 'Watch Later'}
             </span>
           </button>
-          {/* {isVideoOwner && (
+          {isVideoOwner && (
             <>
-              <Menu.Item
-                as={NextLink}
-                href={getPermanentVideoUrl(video)}
-                target="_blank"
-              >
-                <div className="flex items-center px-3 py-1.5 space-x-2 rounded-lg opacity-70 hover:opacity-100 hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <FiExternalLink className="text-base" />
-                  <span className="whitespace-nowrap">Raw Video</span>
-                </div>
-              </Menu.Item>
               <button
                 type="button"
                 onClick={() => onHideVideo()}
-                className="inline-flex items-center px-3 py-1.5 space-x-2 rounded-lg text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
+                className="inline-flex items-center px-3 py-2 space-x-3 text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
               >
-                <AiOutlineDelete className="text-base" />
+                <AiOutlineDelete size={19} className="ml-0.5" />
                 <span className="whitespace-nowrap">Delete</span>
               </button>
             </>
-          )} */}
-          <button
-            type="button"
-            onClick={() => setShowReport(true)}
+          )}
+          <a
+            href={`https://desoreporting.aidaform.com/content?ReporterPublicKey=${reporterID}&PostHash=${video.PostHashHex}&ReportedAccountPublicKey=${video.ProfileEntryResponse?.PublicKeyBase58Check}&ReportedAccountUsername=${video.ProfileEntryResponse?.Username}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center px-3 py-2 space-x-3 hover-primary"
           >
-            <FiFlag size={18} className="ml-0.5" />
-            <span className="whitespace-nowrap">Report</span>
-          </button>
+              <FiFlag size={18} className="ml-0.5" />
+              <span className="whitespace-nowrap">Report</span>
+          </a>
         </div>
       </div>
     </DropMenu>

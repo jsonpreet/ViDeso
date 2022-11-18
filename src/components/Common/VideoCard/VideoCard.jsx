@@ -70,11 +70,7 @@ const VideoCard = ({ video, userProfile }) => {
         </div>
       ) : (
           <>
-            <ShareModal
-              video={video}
-              show={showShare}
-              setShowShare={setShowShare}
-            />
+          <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
           {/* <ReportModal
             video={video}
             show={showReport}

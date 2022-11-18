@@ -3,8 +3,10 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   experimental: {
-    scrollRestoration: true,
-    newNextLinkBehavior: true
+    scrollRestoration: true
+  },
+  resolve: {
+    extensions: ['.jsx', '.js', '.json', '.wasm'],
   },
   images: {
     minimumCacheTTL: 360,

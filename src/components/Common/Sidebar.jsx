@@ -10,7 +10,7 @@ import {
   MdHistory,
   MdOutlineFeedback
 } from 'react-icons/md'
-import { SHORTS, HISTORY, FEED, HOME, LIBRARY } from '@utils/paths'
+import { SHORTS, HISTORY, FEED, HOME, LIBRARY, STORI } from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
 import { FaTwitter } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
@@ -69,20 +69,20 @@ const Sidebar = () => {
                   <p className='ml-6'>Subscriptions</p>
                 </div>
               </Link>
-              {/* <Link
-                href={SHORTS}
+              <Link
+                href={STORI}
                 className={clsx('rounded-lg px-3 py-2 group', {
                   'bg-gray-100 font-bold dark:bg-[#181818]':
-                    isActivePath(SHORTS) || router.pathname === '/shorts/[id]',
+                    isActivePath(STORI) || router.pathname === '/stori/[id]',
                   'hover:bg-gray-100 dark:hover:bg-[#181818]':
-                    !isActivePath(SHORTS) && router.pathname !== '/shorts/[id]'
+                    !isActivePath(STORI) && router.pathname !== '/stori/[id]'
                 })}
               >
                 <div className="flex items-center">
                   <MdSlowMotionVideo size={21} />
-                  <p className='ml-6'>Shorts</p>
+                  <p className='ml-6'>Stori</p>
                 </div>
-              </Link> */}
+              </Link>
               <Link
                 href={LIBRARY}
                 className={clsx(

@@ -22,7 +22,7 @@ const Header = ({ className }) => {
 
   return (
     <div className='fixed items-center flex justify-between flex-row z-20 left-0 right-0 top-0 flex-shrink-0 header-glassy h-16 px-4'>
-      <div className="w-56 flex md:justify-center py-4">
+      <div className="md:w-56 flex md:justify-center py-4">
         <Link
           href={HOME}
           className="flex items-center justify-start pb-1 focus:outline-none"
@@ -42,8 +42,8 @@ const Header = ({ className }) => {
         </button> */}
          {isLoggedIn ? (
           <>
-            <Link href={NOTIFICATIONS} className="relative p-1 md:hidden">
-              <CgBell className="text-lg" />
+            <Link href={NOTIFICATIONS} className="relative p-1">
+              <CgBell size={24} />
               {hasNewNotification && (
                 <span className="absolute flex w-1.5 h-1.5 bg-red-500 rounded-full top-0 right-0" />
               )}

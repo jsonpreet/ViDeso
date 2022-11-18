@@ -59,11 +59,11 @@ const Search = ({ onSearchResults }) => {
           </div>
         </div>
       </div>
-      <div className="md:hidden flex items-center pr-2">
+      {/* <div className="md:hidden flex items-center pr-2">
         <button onClick={() => setShowSearchModal()} className='w-10 h-10 text-secondary hover-primary flex items-center justify-center rounded-full'>
           <AiOutlineSearch size={24} />
         </button>
-      </div>
+      </div> */}
     </>
   )
 }
