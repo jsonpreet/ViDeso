@@ -8,10 +8,19 @@ import NextVideo from './NextVideo'
 import PlayerContextMenu from './PlayerContextMenu'
 
 import dynamic from 'next/dynamic'
-const VimePlayer = dynamic(() => import('./PlayerInstance'), {
-  ssr: false,
-  suspense: true
-})
+// const VimePlayer = dynamic(() => import('./PlayerInstance'), {
+//   ssr: false,
+// })
+
+import {
+  DefaultControls,
+  DefaultSettings,
+  DefaultUi,
+  Hls,
+  Player
+} from '@vime/react'
+
+// import VimePlayer from './PlayerInstance'
 
 const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
   const router = useRouter()
@@ -114,7 +123,23 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
       })}
     >
       <div className="relative z-[5]">
-        <VimePlayer playerRef={playerRef} ratio={ratio} hls={hls} poster={poster} />
+        {/* <VimePlayer playerRef={playerRef} ratio={ratio} hls={hls} poster={poster} /> */}
+        <Player
+            tabIndex={1}
+            ref={playerRef}
+            aspectRatio={ratio}
+            autopause
+            autoplay
+            icons="vime"
+        >
+            <Hls version="latest" poster={poster}>
+                <source data-src={hls} type="application/x-mpegURL" />
+            </Hls>
+            <DefaultUi noControls>
+                <DefaultControls hideOnMouseLeave activeDuration={2000} />
+                <DefaultSettings />
+            </DefaultUi>
+        </Player>
       </div>
       {showNext && (
         <NextVideo
