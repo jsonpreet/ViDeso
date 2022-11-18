@@ -11,6 +11,7 @@ import '@styles/globals.scss'
 import { useRouter } from 'next/router';
 import Layout from '@app/components/Common/Layout';
 import FullPageLoader from '@app/components/Common/FullPageLoader';
+import '@vidstack/player/hydrate.js';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();

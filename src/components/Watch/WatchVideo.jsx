@@ -53,11 +53,11 @@ const WatchVideo = () => {
         const deso = new Deso()
         const getVideo = async () => {
             const videoID = getPlaybackIdFromUrl(video);
-            // const request = {
-            //     "videoId": videoID
-            // };
-            // const videoData = await deso.media.getVideoStatus(request)
-            setVideoData({ id: videoID, data: null })
+            const request = {
+                "videoId": videoID
+            };
+            const videoData = await deso.media.getVideoStatus(request)
+            setVideoData({ id: videoID, data: videoData.data })
             try {
                 //const duration = getThumbDuration(videoData.data.Duration);
                 const url = getVideoThumbnail(video);

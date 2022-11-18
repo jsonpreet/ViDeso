@@ -6,7 +6,7 @@ import axios from "axios";
 export const GetFollowingFeed = async (limit, reader, lastPost, output = 32) => {
     const endpoint = 'get-posts-stateless';
     const lastid = (lastPost !== 0 && lastPost !== undefined) ? `${lastPost}` : ``;
-    const nLimit = (limit && limit !== -1) ? limit : 2500
+    const nLimit = (limit && limit !== -1) ? limit : 5000
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
         ReaderPublicKeyBase58Check: reader,
         PostHashHex: lastid,
