@@ -94,7 +94,6 @@ function ChannelInfo({ video, channel }) {
                 }
                 setSubscribing(false)
                 setFollow(!isFollow)
-                toast.success('Unfollowed successfully');
             } else {
                 toast.error("Something went wrong!");
                 setSubscribing(false)
