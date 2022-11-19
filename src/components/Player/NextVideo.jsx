@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 
 
 const NextVideo = ({ video, playNext, cancelPlayNext }) => {
-    const [timeLeft, setTimeLeft] = useState(5)
+    const [timeLeft, setTimeLeft] = useState(10)
     const userProfile = video.ProfileEntryResponse;
     const [videoData, setVideoData] = useState('')
     const [thumbnailUrl, setThumbnailUrl] = useState('')
@@ -106,7 +106,7 @@ const NextVideo = ({ video, playNext, cancelPlayNext }) => {
                                 <div className="flex items-center space-x-1 text-[13px] truncate md:text-sm opacity-80">
                                     <span>{userProfile.Username}</span>
                                     {userProfile.IsVerified ? (
-                                        <IsVerified size="xs" />
+                                        <IsVerified size="xs" className='text-gray-200' />
                                     ) : null}
                                 </div>
                             </div>

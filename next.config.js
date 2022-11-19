@@ -7,7 +7,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const moduleExports = withBundleAnalyzer(
   withAxiom({
-    reactStrictMode: process.env.NODE_ENV === 'production',
+    //reactStrictMode: process.env.NODE_ENV === 'production',
+    reactStrictMode: false,
     experimental: {
       scrollRestoration: true,
       newNextLinkBehavior: true
