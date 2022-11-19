@@ -13,6 +13,7 @@ import usePersistStore from '@app/store/persist'
 import Tooltip from '@app/components/UIElements/Tooltip'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
+import { APP } from '@app/utils/constants'
 
 dayjs.extend(advancedFormat)
 
