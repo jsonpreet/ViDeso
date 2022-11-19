@@ -19,6 +19,7 @@ import Deso from 'deso-protocol'
 import { getThumbDuration } from '@app/utils/functions'
 import { generateVideoThumbnails } from '@app/utils/functions/generateVideoThumbnails'
 import ChannelInfo from './ChannelInfo'
+// import VideoPlayer from '../Player/VideoPlayer'
 
 // import VideoActions from './VideoActions'
 // import VideoMeta from './VideoMeta'
@@ -32,6 +33,7 @@ const Video = ({ videoData, video, poster }) => {
   const userProfile = video.ProfileEntryResponse;
   const [videoUrl, setVideoUrl] = useState(getVideoUrl(video))
   const videoTitle = getVideoTitle(video)
+  console.log(videoData)
 //   const isSensitiveContent = getIsSensitiveContent(video.metadata, video.id)
 
   return (
@@ -39,7 +41,7 @@ const Video = ({ videoData, video, poster }) => {
       <VideoPlayer
         source={videoUrl}
         videoData={videoData.data}
-        hls={`https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoData.id}/manifest/video.m3u8`}
+        hls={videoData.hls}
         poster={poster}
       // isSensitiveContent={isSensitiveContent}
       />

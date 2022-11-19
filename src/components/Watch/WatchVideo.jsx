@@ -18,6 +18,8 @@ import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 import { FetchSinglePost, getSinglePost } from '@app/data/videos'
 import { useQuery } from '@tanstack/react-query'
+import { getIsHlsSupported } from '@app/utils/functions/getIsHlsSupported'
+import Hlsjs from 'hls.js';
 
 const WatchVideo = () => {
     const router = useRouter()
@@ -28,14 +30,14 @@ const WatchVideo = () => {
     const user = usePersistStore((state) => state.user)
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
     const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : '';
-    const [videoData, setVideoData] = useState('')
+    const [videoData, setVideoData] = useState(null)
     const [thumbnailUrl, setThumbnailUrl] = useState('')
     const [loading, setLoading] = useState(true)
     const [posthash, setPosthash] = useState('')
     
     ///const { data: video, isLoading, isFetching, isFetched, error, isError } = FetchSinglePost({ id });
 
-    const { isSuccess, isLoading, isError, error, refetch, isFetching, status, fetchStatus, data: video } = useQuery([['single-post', id], { id: id, reader: reader }], getSinglePost, { enabled: !!id, })
+    const { isSuccess, isLoading, isError, error, refetch, isFetching, status, fetchStatus, data: video } = useQuery([['single-post', posthash], { id: posthash, reader: reader }], getSinglePost, { enabled: !!posthash, })
 
     useEffect(() => {
         const { id, t } = router.query
@@ -45,7 +47,10 @@ const WatchVideo = () => {
         if (t) {
             setVideoWatchTime(Number(t))
         }
-    }, [router])
+        if (!video) {
+            setVideoData(null)
+        }
+    }, [router, video])
 
     //console.log({isSuccess: isSuccess, isLoading: isLoading, isFetching: isFetching, isError: isError, 'video': id})
 
@@ -57,7 +62,8 @@ const WatchVideo = () => {
                 "videoId": videoID
             };
             const videoData = await deso.media.getVideoStatus(request)
-            setVideoData({ id: videoID, data: videoData.data })
+            //setVideoData({ id: videoID, data: videoData.data })
+            setVideoData({ id: videoID, data: videoData.data, hls: `https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoID}/manifest/video.m3u8` })
             try {
                 //const duration = getThumbDuration(videoData.data.Duration);
                 const url = getVideoThumbnail(video);
@@ -65,6 +71,9 @@ const WatchVideo = () => {
                     setThumbnailUrl(URL.createObjectURL(res.data))
                     setLoading(false)
                 })
+                // if (Hlsjs.isSupported() && videoData.id) {
+                //     setVideoData({ id: videoID, data: videoData.data, hls: `https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoData.id}/manifest/video.m3u8` })
+                // }
             } catch (error) {
                 setLoading(false)
                 console.log(video.PostHashHex, 'thumbnail', error)
@@ -83,11 +92,11 @@ const WatchVideo = () => {
     if (isError) {
         return <Custom500 />
     }
-    if (loading || isFetching || !video) return <WatchVideoShimmer />
+    if (loading || isFetching || !video || !videoData) return <WatchVideoShimmer />
     return (
         <>
             <MetaTags title={video ? getVideoTitle(video) : 'Watch'} />
-            {!isFetching && !loading && !isError && video ? (
+            {!isFetching && !loading && !isError && videoData && video ? (
                 <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
                         <Video videoData={videoData} video={video} poster={thumbnailUrl} />
