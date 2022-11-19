@@ -17,7 +17,14 @@ import {
   DefaultSettings,
   DefaultUi,
   Hls,
-  Player
+  Player,
+  Scrim,
+  Controls,
+  ControlSpacer,
+  MuteControl,
+  PlaybackControl,
+  TimeProgress,
+  Poster,
 } from '@vime/react'
 
 // import VimePlayer from './PlayerInstance'
@@ -116,7 +123,7 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
   }
 
   return (
-    <div
+    <div  data-video={`${videoData.id}`} data-src={`${videoData.hls}`}
       onContextMenu={onContextClick}
       className={clsx({
         relative: showNext
@@ -130,15 +137,17 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
             aspectRatio={ratio}
             autopause
             autoplay
-            icons="vime"
+            icons="material"
         >
             <Hls version="latest" poster={poster}>
-                <source data-src={hls} type="application/x-mpegURL" />
+                <source data-src={hls} type="application/x-mpegURL"/>
             </Hls>
-            <DefaultUi noControls>
-                <DefaultControls hideOnMouseLeave activeDuration={2000} />
-                <DefaultSettings />
-            </DefaultUi>
+          <DefaultUi noControls noPoster>
+              <Poster fit='contain' />
+              <DefaultControls hideOnMouseLeave activeDuration={2000} />
+              <DefaultSettings />
+          </DefaultUi>
+                
         </Player>
       </div>
       {showNext && (

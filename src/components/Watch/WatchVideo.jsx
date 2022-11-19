@@ -71,9 +71,6 @@ const WatchVideo = () => {
                     setThumbnailUrl(URL.createObjectURL(res.data))
                     setLoading(false)
                 })
-                // if (Hlsjs.isSupported() && videoData.id) {
-                //     setVideoData({ id: videoID, data: videoData.data, hls: `https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoData.id}/manifest/video.m3u8` })
-                // }
             } catch (error) {
                 setLoading(false)
                 console.log(video.PostHashHex, 'thumbnail', error)
