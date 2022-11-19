@@ -1,13 +1,13 @@
 import { timeNow } from '@app/utils/functions'
 import { LinkifyOptions } from '@app/utils/functions/getLinkifyOptions'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
-import Tooltip from '@components/UIElements/Tooltip'
 import clsx from 'clsx'
 import Linkify from 'linkify-react'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import "linkify-plugin-hashtag"
+import "linkify-plugin-mention"
 import { useEffect, useState } from 'react'
-import { AiFillHeart, AiOutlinePlayCircle } from 'react-icons/ai'
+import { AiOutlinePlayCircle } from 'react-icons/ai'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 import IsVerified from '../Common/IsVerified'
 import Reactions from './Reactions'
@@ -65,8 +65,9 @@ const Comment = ({ comment }) => {
                     <span className="flex items-center mb-1 space-x-1">
                         <Link
                         href={`/${userProfile.Username}`}
-                        className="flex items-center space-x-1 text-sm font-medium"
+                        className="flex items-center space-x-1.5 text-sm font-medium"
                         >
+                            
                             <span>{userProfile.Username}</span>
                             {userProfile.IsVerified ? <IsVerified size="xs" /> : null}
                         </Link>

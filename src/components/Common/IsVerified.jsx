@@ -1,11 +1,7 @@
 import clsx from 'clsx'
-import { MdVerified } from 'react-icons/md'
-import { GoVerified } from "react-icons/go";
-import { BsFillPatchCheckFill, BsPatchCheckFill } from 'react-icons/bs';
 import { HiCheckCircle } from 'react-icons/hi';
-import { HiCheckBadge } from "react-icons/hi2";
 
-const IsVerified = ({ id, size = 'sm', color }) => {
+const IsVerified = ({size = 'sm', color, className }) => {
   return (
     <div>
       {size === 'xs' ? (
@@ -18,9 +14,12 @@ const IsVerified = ({ id, size = 'sm', color }) => {
               'text-xs': size === 'xs',
               'text-sm': size === 'sm',
               'text-base': size === 'base',
-              'text-lg': size === 'lg'
+              'text-lg': size === 'lg',
+              'text-xl': size === 'xl',
+              'text-2xl': size === '2xl'
             },
-            color
+            color,
+            className
           )}
         />
       )}

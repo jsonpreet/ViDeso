@@ -111,12 +111,20 @@ body{
   @apply dark:text-gray-400 text-gray-600;
 }
 
-.text-primary-hover{
+.text-light {
+  @apply dark:text-gray-400 text-gray-500;
+}
+
+.text-primary-hover {
   @apply dark:hover:text-[#fff] hover:text-gray-900;
 }
 
 .text-secondary{
   @apply dark:text-[#fff] text-gray-900;
+}
+
+.text-secondary-hover {
+  @apply dark:hover:text-brand-400 hover:text-pink-500;
 }
 
 .light-button {
@@ -145,7 +153,7 @@ body{
 }
 
 .header-glassy {
-  @apply dark:bg-[#0f0f0f]/80 bg-white bg-opacity-80 bg-clip-padding backdrop-blur-xl backdrop-filter;
+  @apply dark:bg-[#0f0f0f]/70 bg-white bg-opacity-70 bg-clip-padding backdrop-blur-xl backdrop-filter;
 }
 
 .header {

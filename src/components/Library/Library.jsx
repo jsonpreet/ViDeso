@@ -21,10 +21,11 @@ function Library() {
     
     if (videos?.length === 0) {
         return (
-            <NoDataFound
+            <NoDataFound 
                 isCenter
                 withImage
-                text="No videos found, Please watch videos."
+                title="Something went wrong"
+                description="We are unable to fetch the latest videos. Please try again later."
             />
         )
     }

@@ -12,6 +12,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import ThumbnailOverlays from '../Common/ThumbnailOverlays'
 import VideoOptions from '../Common/VideoCard/VideoOptions'
 import { DESO_CONFIG } from '@app/utils/constants'
+import Tooltip from '../UIElements/Tooltip'
 
 const SuggestedVideoCard = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
@@ -96,9 +97,9 @@ const SuggestedVideoCard = ({ video }) => {
                                     href={`/${userProfile.Username}`}
                                     className="text-sm truncate hover:opacity-100 opacity-80"
                                 >
-                                    <div className="flex items-center space-x-0.5">
-                                        <span>{userProfile.Username}</span>
-                                        {userProfile.IsVerified ? <IsVerified size="xs" /> : null}
+                                    <div className="flex items-center space-x-1.5">
+                                        <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip>
+                                        {userProfile.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="xs" /></span></Tooltip> : null}
                                     </div>
                                 </Link>
                             </div>

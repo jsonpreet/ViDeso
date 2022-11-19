@@ -14,6 +14,7 @@ import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 import ShareModal from '../ShareModal'
 import { DESO_CONFIG } from '@app/utils/constants'
+import Tooltip from '@app/components/UIElements/Tooltip'
 
 
 const VideoCard = ({ video, userProfile }) => {
@@ -113,10 +114,10 @@ const VideoCard = ({ video, userProfile }) => {
                     </Link>
                     <Link
                       href={`/${userProfile.Username}`}
-                      className="flex w-fit items-center space-x-0.5 text-[14px] hover:opacity-100 opacity-70"
+                      className="flex w-fit items-center space-x-1.5 text-[14px] hover:opacity-100 opacity-70"
                     >
-                      <span>{userProfile.Username}</span>
-                      {userProfile.IsVerified ? <IsVerified size="xs" /> : null}
+                      <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip>
+                      {userProfile.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="xs" /></span></Tooltip> : null}
                     </Link>
                     <div className="flex overflow-hidden text-[13px] opacity-70">
                       <span className="whitespace-nowrap">

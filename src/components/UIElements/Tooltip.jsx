@@ -2,16 +2,18 @@ import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
 import 'tippy.js/themes/material.css'
 
-import Tippy from '@tippyjs/react'
+//import Tippy from '@tippyjs/react'
+import Tippy from '@tippyjs/react/headless'
 import clsx from 'clsx'
 import { useTheme } from 'next-themes'
 import React from 'react'
 
 const Tooltip = ({
-  children,
-  content,
+  render,
+  title,
   visible = true,
   placement = 'bottom',
+  contentClass = '',
   ...props
 }) => {
   const { resolvedTheme } = useTheme()
@@ -19,17 +21,23 @@ const Tooltip = ({
     <Tippy
       {...props}
       placement={placement}
-      content={content}
-      theme={resolvedTheme === 'dark' ? 'material' : 'light'}
+      theme='material'
       className={clsx(
-        'hidden !font-normal !text-xs tracking-wide !rounded-md !px-0.5',
+        'hidden !font-normal tracking-wide !rounded-md !px-0.5',
         {
           'sm:block': visible
         }
       )}
-    >
-      {children}
-    </Tippy>
+      render={(attrs, content) => (
+        <div className={clsx(
+            "bg-gray-700 px-3 py-2 rounded-md text-gray-200 tracking-wide text-[13px] font-medium",
+            contentClass,
+          )}
+        tabIndex="-1" {...attrs} >
+          {title}
+        </div>
+      )}
+    />
   )
 }
 

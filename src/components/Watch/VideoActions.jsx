@@ -8,11 +8,12 @@ import { Button } from '../UIElements/Button'
 import Reactions from './Reactions'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 import VideoOptions from '../Common/VideoCard/VideoOptions'
-import { BsThreeDotsVertical } from 'react-icons/bs'
+import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs'
 import DropMenu from '../UIElements/DropMenu'
 import clsx from 'clsx'
 import usePersistStore from '@app/store/persist'
 import { APP } from '@app/utils/constants'
+import Tooltip from '@app/components/UIElements/Tooltip'
 
 const VideoActions = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
@@ -32,16 +33,18 @@ const VideoActions = ({ video }) => {
             {/* <TipModal show={showTip} setShowTip={setShowTip} video={video} />*/}
             <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
             <Reactions video={video} />
-            <Button
-                variant="light"
-                onClick={() => setShowShare(true)}
-                className='md:h-10' 
-            >
-                <span className="flex items-center space-x-3">
-                    <RiShareForwardLine size={22} />
-                    <span>Share</span>
-                </span>
-            </Button>
+            <Tooltip title="Share">
+                <Button
+                    variant="light"
+                    onClick={() => setShowShare(true)}
+                    className='md:h-10' 
+                >
+                    <span className="flex items-center space-x-3">
+                        <RiShareForwardLine size={22} />
+                        <span>Share</span>
+                    </span>
+                </Button>
+            </Tooltip>    
             {/* <Button
                 onClick={() => {
                     setShowReport(true)
@@ -56,13 +59,21 @@ const VideoActions = ({ video }) => {
             </Button> */}
             <DropMenu
                 trigger={
-                    <div
-                    className={clsx(
-                        'hover-primary rounded-full w-9 h-9 flex items-center justify-center md:text-inherit outline-none ring-0 group-hover:visible transition duration-150 ease-in-out -mr-4 focus:outline-none focus:ring-0'
-                    )}
+                    // <div
+                    // className={clsx(
+                    //     'hover-primary rounded-full w-9 h-9 flex items-center justify-center md:text-inherit outline-none ring-0 group-hover:visible transition duration-150 ease-in-out focus:outline-none focus:ring-0'
+                    // )}
+                    // >
+                    //     <BsThreeDots size={22} />
+                    // </div>
+                    <Button
+                        variant="light"
+                        className='!p-0 w-10 h-10' 
                     >
-                    <BsThreeDotsVertical size={22} />
-                    </div>
+                        <span className="flex items-center space-x-3">
+                            <BsThreeDots size={22} />
+                        </span>
+                    </Button>
                 }
                 >
                 <div className="py-2 my-1 overflow-hidden rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 w-44">

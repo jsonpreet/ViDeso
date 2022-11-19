@@ -9,6 +9,7 @@ import IsVerified from '../Common/IsVerified'
 import { Button } from '../UIElements/Button'
 import party from "party-js"
 import { DESO_CONFIG } from '@app/utils/constants'
+import Tooltip from '../UIElements/Tooltip'
 
 function ChannelInfo({ video, channel }) {
     const [followers, setFollowers] = useState(0)
@@ -119,11 +120,13 @@ function ChannelInfo({ video, channel }) {
                     <div className='flex flex-col'>
                         <Link
                             href={`/${channel.Username}`}
-                            className="flex items-center w-fit space-x-0.5 font-medium"
+                            className="flex items-center w-fit space-x-1.5 font-medium"
                         >
-                            <span>{channel.Username}</span>
-                            {channel.IsVerified ? <IsVerified size="lg" /> : null}
-                        </Link>
+                            <Tooltip placement='top' contentClass='text-[12px]' title={channel.Username}>
+                                <span>{channel.Username}</span>
+                            </Tooltip>    
+                            {channel.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="lg" /></span></Tooltip> : null}
+                            </Link>
                         {!loading ?
                             <span className="text-[13px] leading-4 text-secondary">
                                 {formatNumber(followers)} subscribers

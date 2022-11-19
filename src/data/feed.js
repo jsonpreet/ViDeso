@@ -37,7 +37,6 @@ export const FetchInfiniteFollowingFeed = (reader, limit) => {
                 if(lastPage === null) {
                     return null;
                 } else {
-                    console.log(pages)
                     let last = lastPage.length > 0 ? lastPage[lastPage.length - 1]: lastPage;
                     return last.PostHashHex;
                 }

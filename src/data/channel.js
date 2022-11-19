@@ -32,8 +32,7 @@ import axios from "axios";
 //     }
 // }
 
-export const GetProfileFeed = async ({queryKey}) => {
-    const [_key, { publicKey, reader, lastPost, limit, output = 32 }] = queryKey;
+export const GetProfileFeed = async (publicKey, limit, reader, lastPost, output = 32) => {
     const endpoint = 'get-posts-for-public-key';
     const nLimit = (limit && limit !== -1) ? limit : 2500
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
@@ -60,22 +59,6 @@ export const GetProfileFeed = async ({queryKey}) => {
     }
 }
 
-export const FetchProfileFeed = (publicKey, reader) => {
-    return useInfiniteQuery([['single-profile-feed', publicKey], ({ pageParam : '', publicKey : publicKey, reader : reader })], GetProfileFeed,
-        {
-            enabled: !!publicKey, 
-            getNextPageParam: (lastPage, pages) => {
-                if(lastPage === null) {
-                    return null;
-                } else {
-                    console.log(lastPage);
-                    return 0;
-                }
-            }
-        }
-    );
-}
-
 export const GetSingleProfile = async ({ queryKey }) => {
     const [_key, { username }] = queryKey;
     const endpoint = 'get-single-profile';
@@ -92,6 +75,28 @@ export const GetSingleProfile = async ({ queryKey }) => {
 
 export const FetchProfile = (username) => {
     return useQuery([['single-profile', username], { username }], GetSingleProfile,
+        {
+            enabled: !!username,
+            keepPreviousData: true,
+        }
+    );
+}
+
+export const GetSingleProfileStats = async (username) => {
+    const endpoint = 'get-single-profile';
+    const requestURL = 'https://desocialworld.com/microservice-enriched/v1/get-single-profile';
+    const response = await axios.post(requestURL, {
+        Username: username,
+    }).then(res => {
+        const userAge = response.data.Profile.UserAge;
+        const UserGeo = response.data.Profile.UserGeo;
+        const UserLanguages = response.data.UserLanguages;
+        return { userAge, UserGeo, UserLanguages }
+    });
+}
+
+export const FetchProfileStats = (username) => {
+    return useQuery([['single-profile-stats', username], { username }], GetSingleProfileStats,
         {
             enabled: !!username,
             keepPreviousData: true,
