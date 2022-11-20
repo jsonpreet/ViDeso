@@ -20,7 +20,7 @@ const VideoOptions = ({
   const reporterID = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
   const isVideoOwner = isLoggedIn ? user.profile.PublicKeyBase58Check === video?.ProfileEntryResponse?.PublicKeyBase58Check : false
   const [alreadyAddedToWatchLater, setAlreadyAddedToWatchLater] = useState(false)
-  const reader = user.profile.PublicKeyBase58Check
+  const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
 
   useEffect(() => {
     if (video) {
