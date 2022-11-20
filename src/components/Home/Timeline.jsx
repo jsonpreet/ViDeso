@@ -13,8 +13,7 @@ const Timeline = () => {
   const { ref, inView } = useInView()
   const user = usePersistStore((state) => state.user)
   const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
-  const reader = isLoggedIn ? user.PublicKeyBase58Check : APP.PublicKeyBase58Check;
-  console.log(reader);
+  const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
   const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data:videos } = FetchInfiniteLatestFeed( -1, reader );
 
   useEffect(() => {

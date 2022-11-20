@@ -45,27 +45,8 @@ const VideoActions = ({ video }) => {
                     </span>
                 </Button>
             </Tooltip>    
-            {/* <Button
-                onClick={() => {
-                    setShowReport(true)
-                }}
-                variant="light"
-                className='h-10 hidden md:block'
-                >
-                <span className="flex items-center space-x-3">
-                    <FiFlag size={18} />
-                    <span>Report</span>
-                </span>
-            </Button> */}
             <DropMenu
                 trigger={
-                    // <div
-                    // className={clsx(
-                    //     'hover-primary rounded-full w-9 h-9 flex items-center justify-center md:text-inherit outline-none ring-0 group-hover:visible transition duration-150 ease-in-out focus:outline-none focus:ring-0'
-                    // )}
-                    // >
-                    //     <BsThreeDots size={22} />
-                    // </div>
                     <Button
                         variant="light"
                         className='!p-0 w-10 h-10' 
