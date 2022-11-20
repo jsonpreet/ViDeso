@@ -13,8 +13,10 @@ import { SETTINGS } from '@app/utils/paths';
 import { BASE_URI, DESO_CONFIG } from '@app/utils/constants';
 import IsVerified from '../IsVerified';
 import ThemeSwitch from '../ThemeSwitch';
+import { useRouter } from 'next/router';
 
 function UserMenu() {
+    const router = useRouter()
     const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()
     const [loading, setLoading] = useState(false)
 
@@ -49,8 +51,6 @@ function UserMenu() {
         }
     }
 
-    
-
     const logout = async () => {
         const request = user.profile.PublicKeyBase58Check;
         try {
@@ -60,6 +60,7 @@ function UserMenu() {
                 toast.success("Logout Successfully!");
                 setUser({});
                 setLoggedIn(false);
+                router.push('/');
         } else {
             console.log(response);
         }
