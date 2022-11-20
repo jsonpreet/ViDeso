@@ -5,11 +5,15 @@ import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
 import { NoDataFound } from '../UIElements/NoDataFound';
 import { getShuffleArray } from '@app/utils/functions/getShuffleArray';
+import usePersistStore from '@app/store/persist';
 
 
 const Timeline = () => {
   const { ref, inView } = useInView()
-  const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data:videos } = FetchInfiniteLatestFeed( -1 );
+  const user = usePersistStore((state) => state.user)
+  const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
+  const reader = isLoggedIn ? user.PublicKeyBase58Check : '';
+  const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data:videos } = FetchInfiniteLatestFeed( -1, reader );
 
   useEffect(() => {
     if (inView && hasNextPage) {

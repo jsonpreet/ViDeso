@@ -116,10 +116,7 @@ export const FetchInfiniteHotFeed = (limit) => {
     );
 }
 
-export const FetchInfiniteLatestFeed = (limit) => {
-    const user = usePersistStore((state) => state.user)
-    const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
-    const reader = isLoggedIn ? user.PublicKeyBase58Check : '';
+export const FetchInfiniteLatestFeed = (limit, reader) => {
     return useInfiniteQuery(['infinite-latest-feed'], ({ pageParam = 0 }) => GetLatestFeed(limit, reader, pageParam),
         {
             getNextPageParam: (lastPage, pages) => {
