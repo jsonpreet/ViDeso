@@ -92,7 +92,7 @@ function About({ stats, channel }) {
                                             <div>
                                                 <Tooltip placement='bottom' contentClass='text-[12px]' title='Report User'>
                                                     <Link
-                                                        href={`#`}
+                                                        href={`https://desoreporting.aidaform.com/account?ReporterPublicKey=${reporterID}&ReportedAccountPublicKey=${channel.PublicKeyBase58Check}&ReportedAccountUsername=${channel.Username}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="-ml-2 flex h-10 w-10 justify-center items-center rounded-full hover-primary"

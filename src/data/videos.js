@@ -1,6 +1,6 @@
 
 import usePersistStore from "@app/store/persist";
-import { BASE_URI } from "@app/utils/constants";
+import { APP, BASE_URI } from "@app/utils/constants";
 import { getShuffleArray } from "@app/utils/functions/getShuffleArray";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -170,7 +170,7 @@ export const getSinglePost = async ({ queryKey }) => {
 export const FetchSinglePost = ({id}) => {
     const user = usePersistStore((state) => state.user)
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
-    const reader = isLoggedIn ? user.PublicKeyBase58Check : '';
+    const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
     return useQuery([['single-post', id], { id, reader }], getSinglePost, {
         keepPreviousData: true,
     });

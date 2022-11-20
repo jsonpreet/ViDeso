@@ -1,7 +1,7 @@
 
 import useAppStore from '@app/store/app'
 import usePersistStore from '@app/store/persist'
-import { DESO_CONFIG } from '@app/utils/constants'
+import { APP, DESO_CONFIG } from '@app/utils/constants'
 import CommentsShimmer from '@components/Shimmers/CommentsShimmer'
 import { Loader } from '@components/UIElements/Loader'
 import { NoDataFound } from '@components/UIElements/NoDataFound'
@@ -21,7 +21,7 @@ const Comment = dynamic(() => import('./Comment'))
 const VideoComments = ({ video }) => {
     const {isLoggedIn, user } = usePersistStore((state) => state)
     const [loading, setLoading] = useState(true)
-    const userPublicKey = isLoggedIn ? user.profile.PublicKeyBase58Check : "BC1YLhBLE1834FBJbQ9JU23JbPanNYMkUsdpJZrFVqNGsCe7YadYiUg";
+    const userPublicKey = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
     const [post, setPost] = useState([])
 
     useEffect(() => {

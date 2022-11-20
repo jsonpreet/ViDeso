@@ -30,7 +30,7 @@ const WatchVideo = () => {
     const setVideoWatchTime = useAppStore((state) => state.setVideoWatchTime)
     const user = usePersistStore((state) => state.user)
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
-    const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : '';
+    const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
     const [videoData, setVideoData] = useState(null)
     const [thumbnailUrl, setThumbnailUrl] = useState('')
     const [loading, setLoading] = useState(true)

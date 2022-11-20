@@ -99,14 +99,14 @@ const NextVideo = ({ video, playNext, cancelPlayNext }) => {
                                     className="overflow-hidden md:text-lg"
                                 >
                                     <span className="flex md:font-medium line-clamp-2">
-                                        {getVideoTitle(video)}
+                                        {getVideoTitle(video, userProfile)}
                                     </span>
                                 </Link>
                                 </div>
                                 <div className="flex items-center space-x-1 text-[13px] truncate md:text-sm opacity-80">
                                     <span>{userProfile.Username}</span>
                                     {userProfile.IsVerified ? (
-                                        <IsVerified size="xs" className='text-gray-200' />
+                                        <IsVerified size="xs" />
                                     ) : null}
                                 </div>
                             </div>

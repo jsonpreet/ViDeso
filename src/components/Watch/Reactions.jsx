@@ -14,7 +14,7 @@ import Tooltip from '../UIElements/Tooltip'
 import logger from '@app/utils/logger'
 
 const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = true}) => {
-    const {isLoggedIn, user } = usePersistStore((state) => state)
+    const {isLoggedIn, user } = usePersistStore()
     const selectedChannel = useAppStore((state) => state.selectedChannel)
     const [showTipModal, setShowTipModal] = useState(false)
     const [liking, setLiking] = useState(false)
