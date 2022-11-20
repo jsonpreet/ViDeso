@@ -1,6 +1,7 @@
 import { FetchInfiniteHotFeed, FetchSuggestedFeed, GetSuggestedFeed, getSuggestedFeed } from '@app/data/videos'
 import useAppStore from '@app/store/app'
 import usePersistStore from '@app/store/persist'
+import { getShuffleArray } from '@app/utils/functions/getShuffleArray'
 import logger from '@app/utils/logger'
 import { Loader } from '@components/UIElements/Loader'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -56,17 +57,22 @@ const SuggestedVideos = ({ currentVideoId }) => {
     return (
         <>
             {isSuccess ? (
-                <div className="pb-3">
-                    <div className="space-y-1 flex flex-col">
-                        {videos.pages.map(page => 
-                            page.map(video => {
-                                if (video.PostHashHex !== currentVideoId) {
-                                    return (
-                                        !video.IsHidden && <SuggestedVideoCard video={video} key={video?.PostHashHex} />
-                                    )
-                                }
-                            })
-                        )}
+                <div className="pt-3 md:pt-0 pb-3">
+                    <div className="space-y-2 flex flex-col">
+                        <div className='px-4 md:px-0'>
+                            <h2 className="text-lg font-semibold">Up Next</h2>
+                        </div>
+                        <div className='space-y-1'>
+                            {videos.pages.map(page => 
+                                getShuffleArray(page).map(video => {
+                                    if (video.PostHashHex !== currentVideoId) {
+                                        return (
+                                            !video.IsHidden && <SuggestedVideoCard video={video} key={video?.PostHashHex} />
+                                        )
+                                    }
+                                })
+                            )}
+                        </div>
                     </div>
                     {isFetchingNextPage && <div><SuggestedVideosShimmer/></div>}
                 </div>

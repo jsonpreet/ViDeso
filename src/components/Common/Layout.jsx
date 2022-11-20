@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast'
 //import Header from './Header'
 import Sidebar from './Sidebar'
 import dynamic from 'next/dynamic'
+import MobileMenu from './Menu/MobileMenu'
 
 const Header = dynamic(() => import('./Header'), { ssr: false })
 //const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false })
@@ -36,6 +37,9 @@ const Layout = ({ children }) => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className='md:hidden flex flex-shrink-0'>
+                        <MobileMenu/>
                     </div>
                 </div>
             </div>

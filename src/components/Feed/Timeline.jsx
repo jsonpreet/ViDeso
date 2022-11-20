@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
 import { FetchInfiniteFollowingFeed } from '@app/data/feed';
 import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '../UIElements/NoDataFound';
+import { NoDataFound } from '@app/components/UIElements/NoDataFound';
 
 
 const Timeline = () => {

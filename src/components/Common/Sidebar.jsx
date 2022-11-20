@@ -32,7 +32,6 @@ const Sidebar = () => {
   const isActiveCategory = (category) => router.query.category === category
   return (
     <>
-      {/* {!getShowFullScreen(router.pathname) && <MobileBottomNav />} */}
       <div className="flex flex-col w-64 primaryBg h-screen p-4 pr-0 items-start justify-start overflow-hidden z-10 pt-16 text-[14px] font-light tracking-wide">
         <SimpleBar forceVisible="y" style={{ height: `100%`, width: `100%` }}>
           <div className="flex flex-col w-full overflow-hidden pr-4">
@@ -69,7 +68,7 @@ const Sidebar = () => {
                 href={STORI}
                 className={clsx('rounded-lg px-3 py-2 group', {
                   'bg-gray-100 font-bold dark:bg-[#181818]':
-                    isActivePath(STORI) || router.pathname === '/stori/[id]',
+                    isActivePath(STORI) || router.pathname === '/stori',
                   'hover:bg-gray-100 dark:hover:bg-[#181818]':
                     !isActivePath(STORI) && router.pathname !== '/stori/[id]'
                 })}

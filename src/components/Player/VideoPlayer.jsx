@@ -3,14 +3,8 @@ import useAppStore from '@app/store/app'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
-
 import NextVideo from './NextVideo'
 import PlayerContextMenu from './PlayerContextMenu'
-
-import dynamic from 'next/dynamic'
-// const VimePlayer = dynamic(() => import('./PlayerInstance'), {
-//   ssr: false,
-// })
 
 import {
   DefaultControls,
@@ -18,16 +12,8 @@ import {
   DefaultUi,
   Hls,
   Player,
-  Scrim,
-  Controls,
-  ControlSpacer,
-  MuteControl,
-  PlaybackControl,
-  TimeProgress,
   Poster,
 } from '@vime/react'
-
-// import VimePlayer from './PlayerInstance'
 
 const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
   const router = useRouter()
@@ -129,7 +115,7 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
         relative: showNext
       })}
     >
-      <div className="relative z-[5]">
+      <div className={`md:relative z-[5] aspect-[16/9]`}>
         {/* <VimePlayer playerRef={playerRef} ratio={ratio} hls={hls} poster={poster} /> */}
         <Player
             tabIndex={1}
@@ -147,7 +133,6 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
               <DefaultControls hideOnMouseLeave activeDuration={2000} />
               <DefaultSettings />
           </DefaultUi>
-                
         </Player>
       </div>
       {showNext && (

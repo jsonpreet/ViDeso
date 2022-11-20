@@ -1,17 +1,20 @@
 
 import usePersistStore from "@app/store/persist";
 import { BASE_URI } from "@app/utils/constants";
+import { getShuffleArray } from "@app/utils/functions/getShuffleArray";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const GetHotFeed = async (limit, reader, lastPost, output) => {
+export const GetHotFeed = async ({ queryKey }) => {
+    const [_key, { reader }] = queryKey
+    const limit = -1;
+    const output = 40;
     const endpoint = 'get-hot-feed';
-    const lastid = (lastPost !== 0 && lastPost !== undefined) ? `${lastPost}` : ``;
-    const nLimit = (limit && limit !== -1) ? limit : 500
+    const nLimit = (limit && limit !== -1) ? limit : 1500
     const response = await axios.post(`${BASE_URI}/${endpoint}`, {
         ReaderPublicKeyBase58Check: reader,
-        SeenPosts: [lastid],
-        SortByNew: true,
+        SeenPosts: [],
+        SortByNew: false,
         ResponseLimit: nLimit,
     });
     if (response === null) {
@@ -24,6 +27,7 @@ export const GetHotFeed = async (limit, reader, lastPost, output) => {
                 return post
             }
         });
+
 
         return filtered.splice(0, output)
     }
@@ -56,7 +60,6 @@ export const GetLatestFeed = async (limit, reader, lastPost, output = 32) => {
 
 export const GetSuggestedFeed = async (limit, reader, output = 32, seenPosts) => {
     const endpoint = 'get-hot-feed';
-    //const lastid = (lastPost !== 0 && lastPost !== undefined) ? `${lastPost}` : ``;
     const seenPostLists = seenPosts.map(
         (post) => post.PostHashHex
     );
@@ -79,25 +82,27 @@ export const GetSuggestedFeed = async (limit, reader, output = 32, seenPosts) =>
         });
         
         let offset = seenPostLists.length > 0 ? seenPostLists.length : 0;
-        //const random = filtered[Math.floor(Math.random() * filtered.length)];
         return filtered.splice(0, output)
     }
 }
 
 export const FetchLatestFeed = ({limit}) => {
-    return useQuery(['latest-feed', limit], ({limit}) => GetLatestFeed({limit}), {
+    return useQuery(['latest-feed'], ({ pageParam = 1 }) => GetLatestFeed(limit, pageParam), {
         keepPreviousData: true,
     });
 }
 
-export const FetchHotFeed = ({limit}) => {
-    return useQuery(['hot-feed', limit], ({limit}) => GetHotFeed({limit}), {
-        keepPreviousData: true,
-    });
+export const FetchHotFeed = (reader) => {
+    return useQuery([['hot-feed'], { reader }], GetHotFeed,
+        {
+            enabled: !!reader,
+            keepPreviousData: true,
+        }
+    );
 }
 
-export const FetchInfiniteHotFeed = (limit, output) => {
-    return useInfiniteQuery(['infinite-hot-feed'], ({ pageParam = 0 }) => GetHotFeed(limit, pageParam, output),
+export const FetchInfiniteHotFeed = (limit) => {
+    return useInfiniteQuery(['infinite-hot-feed'], ({ pageParam = '' }) => GetHotFeed(limit, pageParam),
         {
             getNextPageParam: (lastPage, pages) => {
                 if(lastPage === null) {

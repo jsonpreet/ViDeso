@@ -1,7 +1,7 @@
 import MetaTags from '@components/Common/MetaTags'
 import { useRouter } from 'next/router'
-import Custom500 from 'pages/404'
-import Custom404 from 'pages/500'
+import Custom500 from '@app/pages/404'
+import Custom404 from '@app/pages/500'
 import React, { useEffect, useState } from 'react'
 import { WatchVideoShimmer } from '@components/Shimmers/WatchVideoShimmer'
 import usePersistStore from '@app/store/persist'
@@ -87,11 +87,11 @@ const WatchVideo = () => {
         if (isLoggedIn && video) {
             async function addToHistory() {
                 try {
-                    const { data: post, error } = await supabase.from('history').select('*').eq('posthash', video.PostHashHex).eq('publickey', reader);
+                    const { data: post, error } = await supabase.from('history').select('*').eq('posthash', video.PostHashHex).eq('user', reader);
                     if (post.length > 0) {
-                        await supabase.from('history').update({ lastwatched: new Date() }).eq('posthash', video.PostHashHex).eq('publickey', reader);
+                        await supabase.from('history').update({ lastwatched: new Date() }).eq('posthash', video.PostHashHex).eq('user', reader);
                     } else {
-                        const request = { publickey: reader, posthash: video.PostHashHex, post: JSON.stringify(video), lastwatched: new Date() }
+                        const request = { user: reader, posthash: video.PostHashHex, lastwatched: new Date() }
 
                         supabase.from('history').insert([request]).then((res) => {
                             if (res.error) {

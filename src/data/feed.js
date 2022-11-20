@@ -19,13 +19,18 @@ export const GetFollowingFeed = async (limit, reader, lastPost, output = 32) => 
     } else {
         const posts = response.data.PostsFound;
 
-        const filtered = posts.filter(post => {
-            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '' && post.ProfileEntryResponse !== null) {
-                return post
-            }
-        });
+        if (posts !== null) {
+            const filtered = posts.filter(post => {
+                if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '') {
+                    return post
+                }
+            });
 
-        return filtered.splice(0, output)
+            const filteredPosts = filtered.splice(0, output)
+            
+            return filteredPosts
+        }
+        return []
     }
 }
 

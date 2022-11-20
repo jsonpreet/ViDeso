@@ -47,15 +47,18 @@ export const GetProfileFeed = async (publicKey, limit, reader, lastPost, output 
     } else {
         const posts = response.data.Posts;
 
-        const filtered = posts.filter(post => {
-            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '') {
-                return post
-            }
-        });
+        if (posts !== null) {
+            const filtered = posts.filter(post => {
+                if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '') {
+                    return post
+                }
+            });
 
-        const filteredPosts = filtered.splice(0, output)
-        
-        return filteredPosts
+            const filteredPosts = filtered.splice(0, output)
+            
+            return filteredPosts
+        }
+        return []
     }
 }
 

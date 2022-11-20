@@ -61,26 +61,26 @@ function ChannelInfo({ following, followers, channel }) {
     }
     return (
         <>
-            <div className="flex flex-col mb-5 md:-mt-5">
+            <div className="flex flex-col w-full md:-mt-5">
                 <div style={{
                     backgroundImage: `url(${cover})`,
                     backgroundPosition: 'center',
                     
-                }} className="bg-gray-300 bg-no-repeat bg-cover object-cover w-full relative md:h-72 h-44 dark:bg-gray-700">
+                }} className="bg-gray-300 bg-no-repeat w-full bg-cover object-cover relative md:h-72 h-28 dark:bg-gray-700">
                     <ChannelLinks channel={channel} />
                 </div>
-                <div className="relative z-10 max-w-7xl w-full mx-auto flex items-center space-x-5">
-                    <div className="w-20 h-20 hidden md:block border-white border-4 dark:border-gray-900 rounded-full md:-mt-10 md:w-32 md:h-32 dark:bg-gray-700">
+                <div className="relative z-10 max-w-7xl w-full mx-auto flex items-center md:space-x-5">
+                    <div className="w-[56px] h-[56px] bg-white border-white border-4 dark:border-gray-900 rounded-full md:relative md:-mt-10 -mt-0 absolute -top-6 md:w-32 md:h-32 md:ml-0 ml-4 dark:bg-gray-700">
                         <img src={avatar} alt="cover" className="w-full h-full object-cover rounded-full" />
                     </div>
-                    <div className="flex-1 flex flex-col space-y-2">
-                        <div className='flex space-x-10 justify-end w-full -mb-1 -mt-2 items-center'>
-                            <div className='flex flex-col space-y-1 flex-1 items-start'>
+                    <div className="flex-none md:flex-1 md:p-0 p-4 flex flex-col mt-5 md:mt-0 space-y-2">
+                        <div className='flex space-x-10 items-center justify-start md:justify-end w-full -mb-0 -mt-0 md:-mb-1 md:-mt-2'>
+                            <div className='flex flex-col space-y-1 mb-2 flex-none md:flex-1 items-start'>
                                 <div className='flex items-center'>
                                     <Tooltip placement='top' contentClass='text-[12px]' title={channel.Username}>
-                                        <span className='text-2xl mr-2 tracking-wide leading-0 hover:opacity-100 opacity-80'>{channel.Username}</span>
+                                        <span className='text-xl md:text-2xl mr-2 tracking-wide leading-0 hover:opacity-100 opacity-80'>{channel.Username}</span>
                                     </Tooltip>    
-                                    {channel.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified className='mt-0' color='text-gray-600' size="xl" /></span></Tooltip> : null}
+                                    {channel.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified className='mt-0 md:w-5 md:h-5' color='text-gray-600' /></span></Tooltip> : null}
                                 </div>
                                 <div className='flex items-center'>
                                     <span className="leading-none text-light">
@@ -90,7 +90,7 @@ function ChannelInfo({ following, followers, channel }) {
                             </div>
                             {isLoggedIn ?
                                 channel.PublicKeyBase58Check !== user.profile.PublicKeyBase58Check ?
-                                <div className='justify-end' ref={followRef}>
+                                <div className='justify-start md:justify-end' ref={followRef}>
                                     {!follow ?
                                         <Button className={`${subscribing ? `animate-pulse` : ``}`} variant="dark" onClick={() => onFollow(follow)}>
                                             <span>Subscribe</span>
@@ -103,7 +103,7 @@ function ChannelInfo({ following, followers, channel }) {
                                     }
                                 </div>
                                     :
-                                    <div className='justify-end'>
+                                    <div className='justify-start md:justify-end'>
                                         <Link
                                             className='relative inline-block disabled:opacity-50 rounded-full group px-5 md:py-2 py-1.5 text-sm font-medium primary-button md:rounded-full'
                                             href={`/${channel.Username}/settings`}>

@@ -4,6 +4,7 @@ import { FetchInfiniteLatestFeed } from '@app/data/videos';
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
 import { NoDataFound } from '../UIElements/NoDataFound';
+import { getShuffleArray } from '@app/utils/functions/getShuffleArray';
 
 
 const Timeline = () => {

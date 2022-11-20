@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps }) {
                 <Component {...pageProps} />
               </Layout>
             </SessionContextProvider>
-            <Devtools />
+            {/* <Devtools /> */}
           </Hydrate>
         </QueryClientProvider>
       </ThemeProvider>

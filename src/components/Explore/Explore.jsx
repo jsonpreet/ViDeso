@@ -2,7 +2,7 @@ import VideoCard from '@components/Common/VideoCard/VideoCard'
 import { FetchInfiniteLatestFeed } from '@app/data/videos';
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
-import Custom500 from 'pages/404';
+import Custom500 from '@app/pages/404';
 import usePersistStore from '@app/store/persist';
 import { NoDataFound } from '@components/UIElements/NoDataFound';
 import MetaTags from '@components/Common/MetaTags';

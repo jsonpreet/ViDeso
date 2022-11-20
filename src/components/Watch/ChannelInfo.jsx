@@ -31,11 +31,8 @@ function ChannelInfo({ video, channel }) {
                     GetEntriesFollowingUsername: true
                 };
                 const response = await deso.social.getFollowsStateless(request);
-                if (response && response.NumFollowers) {
-                    setFollowers(response.NumFollowers);
-                    setLoading(false);
-                }
-                    
+                setFollowers(response.NumFollowers);
+                setLoading(false);
             } catch (error) {
                 logger.error(error);
                 toast.error("Something went wrong!");

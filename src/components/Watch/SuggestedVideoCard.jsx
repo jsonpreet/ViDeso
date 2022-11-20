@@ -13,6 +13,7 @@ import ThumbnailOverlays from '../Common/ThumbnailOverlays'
 import VideoOptions from '../Common/VideoCard/VideoOptions'
 import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '../UIElements/Tooltip'
+import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 
 const SuggestedVideoCard = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
@@ -79,37 +80,49 @@ const SuggestedVideoCard = ({ video }) => {
                         </div>
                     </Link>
                 </div>
-                <div className="px-3 py-3 md:py-0 md:px-2.5 flex flex-row md:justify-between w-full">
-                    <div className="flex flex-col md:w-auto w-full items-start pb-1">
-                        <div className="break-words w-full md:mb-0 mb-1 overflow-hidden">
-                            <Link
-                                href={`/watch/${video.PostHashHex}`}
-                                className="text-sm font-medium line-clamp-1"
-                            >
-                                <span className="flex line-clamp-2">
-                                    {getVideoTitle(video)}
-                                </span>
+                <div className="px-3 py-3 md:py-0 md:px-2.5 flex flex-row justify-between w-full">
+                    <div className='flex space-x-2.5 md:space-x-0'>
+                        <div className="md:hidden flex flex-col">
+                            <Link href={`/@${userProfile.Username}`} className="mt-0.5">
+                                <img
+                                className="w-9 h-9 rounded-full"
+                                src={getProfilePicture(userProfile)}
+                                alt={`${userProfile.Username} Picture`}
+                                draggable={false}
+                                />
                             </Link>
                         </div>
-                        <div className='flex md:flex-col flex-row md:items-start items-center'>
-                            <div className="truncate">
+                        <div className="flex flex-col md:w-auto items-start">
+                            <div className="break-words w-full md:mb-0 overflow-hidden">
                                 <Link
-                                    href={`/@${userProfile.Username}`}
-                                    className="text-sm truncate hover:opacity-100 opacity-80"
+                                    href={`/watch/${video.PostHashHex}`}
+                                    className="text-sm font-medium line-clamp-1"
                                 >
-                                    <div className="flex items-center space-x-1.5">
-                                        <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip>
-                                        {userProfile.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="xs" /></span></Tooltip> : null}
-                                    </div>
+                                    <span className="flex line-clamp-2">
+                                        {getVideoTitle(video)}
+                                    </span>
                                 </Link>
                             </div>
-                            <span className="middot md:hidden inline-flex" />
-                            <div className="flex truncate items-center text-xs opacity-80 mt-0.5">
-                                <span className="whitespace-nowrap">
-                                    {video.LikeCount} likes
-                                </span>
-                                <span className="middot" />
-                                <span>{timeNow(video.TimestampNanos)}</span>
+                            <div className='flex md:flex-col flex-row md:items-start items-center'>
+                                <div className="truncate">
+                                    <Link
+                                        href={`/@${userProfile.Username}`}
+                                        className="text-sm truncate hover:opacity-100 opacity-80"
+                                    >
+                                        <div className="flex items-center space-x-1.5">
+                                            <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip>
+                                            {userProfile.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="xs" /></span></Tooltip> : null}
+                                        </div>
+                                    </Link>
+                                </div>
+                                <span className="middot md:hidden inline-flex" />
+                                <div className="flex truncate items-center text-xs opacity-80 mt-0.5">
+                                    <span className="whitespace-nowrap">
+                                        {video.LikeCount} likes
+                                    </span>
+                                    <span className="middot" />
+                                    <span>{timeNow(video.TimestampNanos)}</span>
+                                </div>
                             </div>
                         </div>
                     </div>

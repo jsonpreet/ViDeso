@@ -107,6 +107,10 @@ body{
   @apply dark:bg-[#fff]/[0.1] bg-gray-100;
 }
 
+.active-secondary {
+  @apply dark:text-brand-500 text-brand2-600;
+}
+
 .text-primary {
   @apply dark:text-gray-400 text-gray-600;
 }
