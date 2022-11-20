@@ -65,7 +65,7 @@ const VideoCard = ({ video, userProfile }) => {
   }, [videoData, video])
 
   return (
-    <div className="group" data-id={video.PostHashHex} data-duration={videoData.Duration}>
+    <div className="group">
       {video.IsHidden ? (
         <div className="grid h-full place-items-center">
           <span className="text-xs">Video Hidden by User</span>
