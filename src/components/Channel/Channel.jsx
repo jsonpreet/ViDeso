@@ -115,7 +115,7 @@ const Channel = () => {
                 toast.error("Something went wrong!");
             }
         }
-        if (isFetched) {
+        if (isFetched && channel) {
             getFollowers()
             if (isLoggedIn) {
                 checkFollowing()
@@ -124,7 +124,7 @@ const Channel = () => {
     }, [isFetched, channel, isLoggedIn, reader])
 
     useEffect(() => {
-        if (isFetched) {
+        if (isFetched && channel) {
             FetchProfileStats(channel.Username);
         }
     }, [isFetched, channel])

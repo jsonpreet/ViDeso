@@ -134,7 +134,7 @@ export const FetchInfiniteLatestFeed = (limit, reader) => {
 export const FetchSuggestedFeed = (limit, output) => {
     const user = usePersistStore((state) => state.user)
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
-    const reader = isLoggedIn ? user.PublicKeyBase58Check : '';
+    const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
     const recentlyWatched = usePersistStore((state) => state.recentlyWatched)
     return useInfiniteQuery(['suggested-feed'], ({ pageParam = recentlyWatched }) => GetSuggestedFeed(limit, reader, output, pageParam),
         {
