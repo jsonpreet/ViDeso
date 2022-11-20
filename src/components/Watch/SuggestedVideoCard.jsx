@@ -94,7 +94,7 @@ const SuggestedVideoCard = ({ video }) => {
                         <div className='flex md:flex-col flex-row md:items-start items-center'>
                             <div className="truncate">
                                 <Link
-                                    href={`/${userProfile.Username}`}
+                                    href={`/@${userProfile.Username}`}
                                     className="text-sm truncate hover:opacity-100 opacity-80"
                                 >
                                     <div className="flex items-center space-x-1.5">

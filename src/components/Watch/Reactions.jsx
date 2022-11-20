@@ -11,6 +11,7 @@ import party from "party-js"
 import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
 import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '../UIElements/Tooltip'
+import logger from '@app/utils/logger'
 
 const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = true}) => {
     const {isLoggedIn, user } = usePersistStore((state) => state)
@@ -23,14 +24,6 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
     const [likes, setLikes] = useState(video.LikeCount);
     const likeRef = useRef(null);
     const [deso, setDeso] = useState();
-
-    // useEffect(() => {
-    //     if (video && video.PostEntryReaderState) {
-    //         setLikes(video.PostEntryReaderState.LikeCount)
-    //         setLiked(video.PostEntryReaderState.LikedByReader)
-    //         setDiamondBestowed(video.PostEntryReaderState.DiamondLevelBestowed)
-    //     }
-    // }, [video])
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -66,7 +59,7 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
                 setLiking(false)
             }
         } catch (error) {
-            console.log(error);
+            logger.error('error', error);
             setLiking(false)
             toast.error(`Error: ${error.message}`);
         }

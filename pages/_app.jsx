@@ -6,16 +6,19 @@ import { lazy, Suspense, useEffect, useState } from 'react'
 import MetaTags from '@app/components/Common/MetaTags';
 import { Devtools } from '@app/components/DevTools';
 import { queryConfig, queryConfigAuto } from '@app/utils/constants';
-
-import '@styles/globals.scss'
 import { useRouter } from 'next/router';
 import Layout from '@app/components/Common/Layout';
 import FullPageLoader from '@app/components/Common/FullPageLoader';
 import '@vidstack/player/hydrate.js';
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
+
+import '@styles/globals.scss'
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [config, setConfig] = useState(queryConfig);
+  const [supabase] = useState(() => createBrowserSupabaseClient())
 
   useEffect(() => {
     if (router.pathname === '/watch/[id]') {
@@ -32,9 +35,14 @@ function MyApp({ Component, pageProps }) {
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <NextNProgress color="#db2777" showOnShallow={true} />
+            <SessionContextProvider
+              supabaseClient={supabase}
+              initialSession={pageProps.initialSession}
+            >
               <Layout>
                 <Component {...pageProps} />
               </Layout>
+            </SessionContextProvider>
             <Devtools />
           </Hydrate>
         </QueryClientProvider>

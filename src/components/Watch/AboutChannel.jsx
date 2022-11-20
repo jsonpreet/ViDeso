@@ -1,21 +1,10 @@
 import { LinkifyOptions } from '@app/utils/functions/getLinkifyOptions'
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
-// import InterweaveContent from '@components/Common/InterweaveContent'
-import IsVerified from '@components/Common/IsVerified'
-// import SubscribeActions from '@components/Common/SubscribeActions'
-import { Button } from '@components/UIElements/Button'
-import clsx from 'clsx'
 import Linkify from 'linkify-react'
 import "linkify-plugin-hashtag"
 import "linkify-plugin-mention"
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import { AiOutlineRetweet } from 'react-icons/ai'
+import { useEffect, useState } from 'react'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 import { timeNow } from '@app/utils/functions'
-
-// import CollectVideo from './CollectVideo'
-// import MetaInfo from './MetaInfo'
 
 const AboutChannel = ({ video }) => {
   const channel = video.ProfileEntryResponse

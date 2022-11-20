@@ -10,24 +10,17 @@ import { Button } from '../UIElements/Button'
 import party from "party-js"
 import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '../UIElements/Tooltip'
+import logger from '@app/utils/logger'
 
 function ChannelInfo({ video, channel }) {
     const [followers, setFollowers] = useState(0)
     const [loading, setLoading] = useState(true)
     const [subscribing, setSubscribing] = useState(false)
-    //const [deso, setDeso] = useState()
     const followRef = useRef(null);
     const [follow, setFollow] = useState(false)
     const user = usePersistStore((state) => state.user)
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
     const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : '';
-
-    // useEffect(() => {
-    //     const deso = new Deso();
-    //     if (deso) {
-    //         setDeso(deso);
-    //     }
-    // }, [])
 
     useEffect(() => {
         const deso = new Deso(DESO_CONFIG);
@@ -44,7 +37,7 @@ function ChannelInfo({ video, channel }) {
                 }
                     
             } catch (error) {
-                console.log(error);
+                logger.error(error);
                 toast.error("Something went wrong!");
                 setLoading(false);
             }
@@ -60,7 +53,7 @@ function ChannelInfo({ video, channel }) {
                 setFollow(response.data.IsFollowing);
 
             } catch (error) {
-                console.log(error);
+                logger.error(error);
                 toast.error("Something went wrong!");
             }
         }
@@ -85,7 +78,6 @@ function ChannelInfo({ video, channel }) {
             };
             const response = await deso.social.createFollowTxnStateless(request);
             if (response && response.TxnHashHex !== null) {
-                console.log('response', response);
                 if (!isFollow) {
                     party.confetti(followRef.current, {
                         count: party.variation.range(50, 100),
@@ -100,6 +92,7 @@ function ChannelInfo({ video, channel }) {
             }
         }  catch (error) {
             setSubscribing(false)
+            logger.error(error);
             toast.error('Something went wrong');
         }
     }
@@ -108,7 +101,7 @@ function ChannelInfo({ video, channel }) {
         <>
             <div className='flex items-center space-x-3'>
                 <div className='flex space-x-2'>
-                    <Link href={`/${channel.Username}`} className="flex-none">
+                    <Link href={`/@${channel.Username}`} className="flex-none">
                         <img
                             className="w-10 h-10 rounded-full"
                             src={getProfilePicture(channel)}
@@ -118,7 +111,7 @@ function ChannelInfo({ video, channel }) {
                     </Link>
                     <div className='flex flex-col'>
                         <Link
-                            href={`/${channel.Username}`}
+                            href={`/@${channel.Username}`}
                             className="flex items-center w-fit space-x-1.5 font-medium"
                         >
                             <Tooltip placement='top' contentClass='text-[12px]' title={channel.Username}>

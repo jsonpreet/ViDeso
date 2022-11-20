@@ -51,7 +51,7 @@ const Comment = ({ comment }) => {
         <div className="flex items-start justify-between">
             <div className="flex items-start justify-between">
                 <Link
-                href={`/${userProfile.Username}`}
+                href={`/@${userProfile.Username}`}
                 className="flex-none mr-3 mt-0.5"
                 >
                 <img
@@ -64,7 +64,7 @@ const Comment = ({ comment }) => {
                 <div className="flex flex-col items-start mr-2">
                     <span className="flex items-center mb-1 space-x-1">
                         <Link
-                        href={`/${userProfile.Username}`}
+                        href={`/@${userProfile.Username}`}
                         className="flex items-center space-x-1.5 text-sm font-medium"
                         >
                             

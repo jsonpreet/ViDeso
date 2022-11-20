@@ -15,6 +15,7 @@ import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 import ShareModal from '../ShareModal'
 import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '@app/components/UIElements/Tooltip'
+import logger from '@app/utils/logger'
 
 
 const VideoCard = ({ video, userProfile }) => {
@@ -35,7 +36,7 @@ const VideoCard = ({ video, userProfile }) => {
         const videoData = await deso.media.getVideoStatus(request)
         setVideoData(videoData.data)
       } catch (error) {
-        console.log(video.PostHashHex, error)
+        logger.error(video.PostHashHex, error)
       }
     }
     if (video.VideoURLs[0] !== null) {
@@ -55,7 +56,7 @@ const VideoCard = ({ video, userProfile }) => {
             setThumbnailUrl(URL.createObjectURL(res.data))
           })
         } catch (error) {
-          console.log(video.PostHashHex, error)
+          logger.error(video.PostHashHex, error)
       }
     }
     if (videoData) {
@@ -95,7 +96,7 @@ const VideoCard = ({ video, userProfile }) => {
           </Link>
           <div className="p-2">
             <div className="flex items-start space-x-2.5">
-              <Link href={`/${userProfile.Username}`} className="flex-none mt-0.5">
+              <Link href={`/@${userProfile.Username}`} className="flex-none mt-0.5">
                 <img
                   className="w-9 h-9 rounded-full"
                   src={getProfilePicture(userProfile)}
@@ -113,7 +114,7 @@ const VideoCard = ({ video, userProfile }) => {
                         {getVideoTitle(video, userProfile)}
                     </Link>
                     <Link
-                      href={`/${userProfile.Username}`}
+                      href={`/@${userProfile.Username}`}
                       className="flex w-fit items-center space-x-1.5 text-[14px] hover:opacity-100 opacity-70"
                     >
                       <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip>

@@ -13,17 +13,18 @@ import SuggestedVideos from './SuggestedVideos'
 import Video from './Video'
 import VideoComments from './VideoComments'
 import Deso from 'deso-protocol'
-import { getThumbDuration } from '@app/utils/functions'
 import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 import { FetchSinglePost, getSinglePost } from '@app/data/videos'
 import { useQuery } from '@tanstack/react-query'
-import { getIsHlsSupported } from '@app/utils/functions/getIsHlsSupported'
-import Hlsjs from 'hls.js';
+import logger from '@app/utils/logger'
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { APP } from '@app/utils/constants'
 
 const WatchVideo = () => {
     const router = useRouter()
     const { id, t } = router.query
+    const supabase = useSupabaseClient()
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
     const selectedChannel = useAppStore((state) => state.selectedChannel)
     const setVideoWatchTime = useAppStore((state) => state.setVideoWatchTime)
@@ -73,7 +74,7 @@ const WatchVideo = () => {
                 })
             } catch (error) {
                 setLoading(false)
-                console.log(video.PostHashHex, 'thumbnail', error)
+                logger.error(video.PostHashHex, 'thumbnail', error);
             }
         }
         if (video && isSuccess) {
@@ -81,6 +82,31 @@ const WatchVideo = () => {
             getVideo()
         }
     }, [video, isSuccess, addToRecentlyWatched])
+
+    useEffect(() => {
+        if (isLoggedIn && video) {
+            async function addToHistory() {
+                try {
+                    const { data: post, error } = await supabase.from('history').select('*').eq('posthash', video.PostHashHex).eq('publickey', reader);
+                    if (post.length > 0) {
+                        await supabase.from('history').update({ lastwatched: new Date() }).eq('posthash', video.PostHashHex).eq('publickey', reader);
+                    } else {
+                        const request = { publickey: reader, posthash: video.PostHashHex, post: JSON.stringify(video), lastwatched: new Date() }
+
+                        supabase.from('history').insert([request]).then((res) => {
+                            if (res.error) {
+                                logger.error(video.PostHashHex, 'watched', res.error);
+                            }
+                        })
+                    }
+                    
+                } catch (error) {
+                    logger.error(video.PostHashHex, 'watched', error);
+                }
+            }
+            addToHistory()
+        }
+    }, [video, isLoggedIn, reader])
 
     // useEffect(() => {
     //     setVideoWatchTime(Number(t))

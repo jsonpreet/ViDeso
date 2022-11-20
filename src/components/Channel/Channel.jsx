@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { Suspense, useEffect, useState } from 'react';
 import dynamic from "next/dynamic";
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import Custom404 from 'pages/500';
 import { Tab } from '@headlessui/react';
 import { FetchProfile } from '@app/data/channel';
@@ -15,6 +15,7 @@ import toast from 'react-hot-toast';
 import usePersistStore from '@app/store/persist';
 import Deso from 'deso-protocol';
 import { DESO_CONFIG } from '@app/utils/constants';
+import logger from '@app/utils/logger';
 
 const ChannelVideos = dynamic(() => import("./Tabs/Videos"), {
   suspense: true,
@@ -37,30 +38,42 @@ const About = dynamic(() => import("./Tabs/About"), {
 });
 
 const Channel = () => {
-    const { query } = useRouter();
+    const router = useRouter();
+    const { query } = router;
     const { isLoggedIn, user } = usePersistStore();
     const [channelStats, setChannelStats] = useState(false)
     const [isLoading, setisLoading] = useState(true)
     const [follow, setFollow] = useState(false)
+    const [selectedTab, setSelectedTab] = useState(0)
     const [followers, setFollowers] = useState(0)
-    const username = query.channel;
+    const [username, setUsername] = useState('')
+    const [routeTab, setRouteTab] = useState('')
+    const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : '';
     const { data: channel, isError, error, isFetched } = FetchProfile(username);
 
-    const getDefaultTab = () => {
-        switch (query.tab) {
-        case 'stori':
-            return 1
-        case 'community':
-            return 2
-        case 'channels':
-            return 3
-        case 'about':
-            return 4
-        default:
-            return 0
-        }
+    const channelTabs = {
+        0: "Videos",
+        1: "Stori",
+        2: "Community",
+        3: "Channels",
+        4: "About",
     }
-    const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : '';
+
+    const getDefaultTab = () => {
+        if (routeTab) {
+            return Object.keys(channelTabs).find(key => channelTabs[key].toLowerCase() === routeTab.toLowerCase());
+        }
+        return 0;
+    }
+
+    useEffect(() => {
+        if (query.channel) {
+            setUsername(query.channel.replace('@', ""));
+        }
+        if (query.tab) {
+            setRouteTab(query.tab)
+        }
+    }, [query])
 
     useEffect(() => {
         const deso = new Deso(DESO_CONFIG);
@@ -77,7 +90,7 @@ const Channel = () => {
                 }
                     
             } catch (error) {
-                console.log(error);
+                logger.error(error);
                 toast.error("Something went wrong!");
             }
         }
@@ -93,7 +106,7 @@ const Channel = () => {
                 setisLoading(false)
 
             } catch (error) {
-                console.log(error);
+                logger.error(error);
                 toast.error("Something went wrong!");
             }
         }
@@ -127,6 +140,12 @@ const Channel = () => {
             console.log(error);
             toast.error('Something went wrong');
         }
+    }
+
+    const changeTab = (index) => {
+        setSelectedTab(index);
+        const tab = channelTabs[index].toLowerCase()
+        router.replace(`/@${username}/${tab}`, `/@${username}/${tab}`, { shallow: true });
     }
 
     if (isError) {
@@ -170,16 +189,18 @@ const Channel = () => {
     if (isFetched) {
         return (
             <>
-                <MetaTags />
+                <MetaTags title={`${channel?.Username}`} />
                 <div className="">
                     <ChannelInfo followers={followers} following={follow} channel={channel}/>
-                    <Tab.Group as="div" className="w-full" defaultIndex={getDefaultTab()}>
-                        <Tab.List className="flex border-b theme-border px-16 overflow-x-auto no-scrollbar mb-5">
-                            <TabItem title="Videos" />
-                            <TabItem title="Stori" />
-                            <TabItem title="Community" />
-                            <TabItem title="Channels" />
-                            <TabItem title="About" />
+                    <Tab.Group as="div" className="w-full" defaultIndex={getDefaultTab()} onChange={index => changeTab(index)}>
+                        <Tab.List className="border-b theme-border overflow-x-auto no-scrollbar mb-5">
+                            <div className='flex max-w-7xl mx-auto'>
+                                <TabItem title="Videos" />
+                                <TabItem title="Stori" />
+                                <TabItem title="Community" />
+                                <TabItem title="Channels" />
+                                <TabItem title="About" />
+                            </div>
                         </Tab.List>
                         <Tab.Panels>
                             <Tab.Panel className="py-3 px-16 focus:outline-none">

@@ -1,6 +1,7 @@
 import { FetchInfiniteHotFeed, FetchSuggestedFeed, GetSuggestedFeed, getSuggestedFeed } from '@app/data/videos'
 import useAppStore from '@app/store/app'
 import usePersistStore from '@app/store/persist'
+import logger from '@app/utils/logger'
 import { Loader } from '@components/UIElements/Loader'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
@@ -36,6 +37,7 @@ const SuggestedVideos = ({ currentVideoId }) => {
     );
     if (isError) {
         console.log('error', error)
+        logger.error('error', error);
     }
 
     useEffect(() => {

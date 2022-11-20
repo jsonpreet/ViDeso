@@ -7,7 +7,7 @@ const MetaTags = (props) => {
   const router = useRouter()
 
   const meta = {
-    title: title ?? APP.Name,
+    title: title ? `${title} - ${APP.Name}` : APP.Name,
     description: description ?? APP.Description,
     image: image ?? `/images/seo/og.png`,
     type: 'website'

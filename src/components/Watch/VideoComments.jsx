@@ -9,6 +9,7 @@ import Deso from 'deso-protocol'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { AiOutlineComment } from 'react-icons/ai'
 import { BiComment } from 'react-icons/bi'
 import Alert from '../UIElements/Alert'
@@ -18,9 +19,6 @@ import Alert from '../UIElements/Alert'
 const Comment = dynamic(() => import('./Comment'))
 
 const VideoComments = ({ video }) => {
-    const { query: { id } } = useRouter()
-    const selectedChannelId = usePersistStore((state) => state.selectedChannelId)
-    const selectedChannel = useAppStore((state) => state.selectedChannel)
     const {isLoggedIn, user } = usePersistStore((state) => state)
     const [loading, setLoading] = useState(true)
     const userPublicKey = isLoggedIn ? user.profile.PublicKeyBase58Check : "BC1YLhBLE1834FBJbQ9JU23JbPanNYMkUsdpJZrFVqNGsCe7YadYiUg";
@@ -51,7 +49,8 @@ const VideoComments = ({ video }) => {
                     
             } catch (error) {
                 console.log(error);
-                toast.error("Something went wrong!", toastOptions);
+                logger.error('error', error);
+                toast.error("Something went wrong!");
                 setLoading(false);
             }
         }

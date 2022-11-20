@@ -17,11 +17,7 @@ import { IoDiamondOutline } from "react-icons/io5";
 import { APP } from '@app/utils/constants'
 import { useState } from 'react'
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
-import usePersistStore from '@app/store/persist'
-import { Button } from '../UIElements/Button'
 import SimpleBar from 'simplebar-react';
-import TrendingTags from './TrendingTags'
-//import SidebarLoginMessage from './SidebarLoginMessage'
 import dynamic from 'next/dynamic'
 
 const SidebarLoginMessage = dynamic(() => import('./SidebarLoginMessage'), { ssr: false })

@@ -42,31 +42,35 @@ function ChannelVideos({channel}) {
           />
     } 
     
-    if(isLoading) return <TimelineShimmer cols={28} />
+    if (isLoading) return (
+        <div className='max-w-7xl w-full mx-auto'><TimelineShimmer cols={28} /></div>
+    )
     if (isFetched) {
         return (
             <>
-                <div className="grid gap-x-4 lg:grid-cols-4 md:gap-y-4 gap-y-2 2xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-col-1">
-                    {videos.pages.map(page =>
-                        page.map(video => {
-                            return (
-                                <VideoCard userProfile={channel} key={`${video.PostHashHex}`} video={video} />
-                            )
-                        })
-                    )}
-                </div>
-                {isFetchingNextPage && hasNextPage && <div><TimelineShimmer cols={28} /></div>}
-                <div className='loadMore flex items-center justify-center mt-6'>
-                    <div className='loadMoreButton'>
-                        <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage} className='btn'>
-                            {isFetchingNextPage
-                                ? 'Loading more...'
-                                : hasNextPage
-                                    ? 'Load More'
-                                    : 'Nothing more to load'}
-                        </button>
+                <div className='max-w-7xl mx-auto'>
+                    <div className="grid gap-x-4 lg:grid-cols-4 md:gap-y-4 gap-y-2 2xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-col-1">
+                        {videos.pages.map(page =>
+                            page.map(video => {
+                                return (
+                                    <VideoCard userProfile={channel} key={`${video.PostHashHex}`} video={video} />
+                                )
+                            })
+                        )}
                     </div>
-                </div>
+                    {isFetchingNextPage && hasNextPage && <div><TimelineShimmer cols={28} /></div>}
+                    <div className='loadMore flex items-center justify-center mt-6'>
+                        <div className='loadMoreButton'>
+                            <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage} className='btn'>
+                                {isFetchingNextPage
+                                    ? 'Loading more...'
+                                    : hasNextPage
+                                        ? 'Load More'
+                                        : 'Nothing more to load'}
+                            </button>
+                        </div>
+                    </div>
+                </div>    
             </>
         )
     }

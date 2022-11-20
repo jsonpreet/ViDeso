@@ -11,6 +11,8 @@ import { formatNumber } from '@app/utils/functions';
 import { getCoverPicture } from '@app/utils/functions/getCoverPicture';
 import { Button } from '../UIElements/Button';
 import Link from 'next/link';
+import logger from '@app/utils/logger';
+import party from "party-js"
 
 function ChannelInfo({ following, followers, channel }) {
     const channelExtra = channel.ExtraData || {};
@@ -38,7 +40,6 @@ function ChannelInfo({ following, followers, channel }) {
             };
             const response = await deso.social.createFollowTxnStateless(request);
             if (response && response.TxnHashHex !== null) {
-                console.log('response', response);
                 if (!isFollow) {
                     party.confetti(followRef.current, {
                         count: party.variation.range(50, 100),
@@ -47,12 +48,13 @@ function ChannelInfo({ following, followers, channel }) {
                 }
                 setSubscribing(false)
                 setFollow(!isFollow)
-                toast.success('Unfollowed successfully');
             } else {
+                logger.error(`ChanneInfo: ${channel.Username} Something went wrong!`);
                 toast.error("Something went wrong!");
                 setSubscribing(false)
             }
         }  catch (error) {
+            logger.error(error);
             setSubscribing(false)
             toast.error('Something went wrong');
         }
@@ -67,7 +69,7 @@ function ChannelInfo({ following, followers, channel }) {
                 }} className="bg-gray-300 bg-no-repeat bg-cover object-cover w-full relative md:h-72 h-44 dark:bg-gray-700">
                     <ChannelLinks channel={channel} />
                 </div>
-                <div className="relative z-10 flex items-center space-x-5 md:px-16">
+                <div className="relative z-10 max-w-7xl w-full mx-auto flex items-center space-x-5">
                     <div className="w-20 h-20 hidden md:block border-white border-4 dark:border-gray-900 rounded-full md:-mt-10 md:w-32 md:h-32 dark:bg-gray-700">
                         <img src={avatar} alt="cover" className="w-full h-full object-cover rounded-full" />
                     </div>
@@ -115,7 +117,7 @@ function ChannelInfo({ following, followers, channel }) {
                             }
                         </div>
                     </div>
-                </div>
+                </div>    
             </div>
         </>
     )

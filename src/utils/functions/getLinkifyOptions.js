@@ -8,7 +8,7 @@ export const LinkifyRenderLink = ({ attributes, content }) => {
 export const LinkifyOptions = {
     formatHref: {
         hashtag: (href) => "/explore/hashtag/" + href.substr(1).toLowerCase(),
-        mention: (href) => "/" + href.substr(1).toLowerCase(),
+        mention: (href) => "/@" + href.substr(1).toLowerCase(),
     },
     render: {
         mention: LinkifyRenderLink,

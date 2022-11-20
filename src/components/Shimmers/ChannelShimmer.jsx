@@ -6,7 +6,7 @@ const ChannelShimmer = () => {
   return (
     <div className="w-full rounded-none md:rounded-md">
         <div className="flex flex-col md:space-x-4 animate-pulse">
-            <div className="bg-gray-300 rounded-none md:rounded-lg md:h-72 h-44 dark:bg-gray-700" />
+            <div className="bg-gray-300 md:h-72 h-44 dark:bg-gray-700" />
             <div className="flex items-center p-2 space-x-4">
                 <div className="w-20 h-20 bg-gray-300 border-4 dark:border-gray-900 rounded-full md:-mt-12 md:w-32 md:h-32 dark:bg-gray-700" />
                 <div className="flex-1 py-5 space-y-4">
@@ -17,7 +17,7 @@ const ChannelShimmer = () => {
                 </div>
             </div>
         </div>
-        <div className="mt-4 md:mt-6">
+        <div className="mt-4 md:mt-6 px-16">
             <TimelineShimmer />
         </div>
     </div>
