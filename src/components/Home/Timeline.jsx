@@ -7,6 +7,7 @@ import { NoDataFound } from '../UIElements/NoDataFound';
 import { getShuffleArray } from '@app/utils/functions/getShuffleArray';
 import usePersistStore from '@app/store/persist';
 import { APP } from '@app/utils/constants';
+import { Loader2 } from '../UIElements/Loader';
 
 
 const Timeline = () => {
@@ -46,13 +47,13 @@ const Timeline = () => {
               )}
             </div>
             {isFetchingNextPage && hasNextPage && <div><TimelineShimmer cols={28} /></div>}
-            <div className='loadMore flex items-center justify-center mt-6'>
+            <div className='loadMore flex items-center justify-center mt-20 md:mt-6'>
               <div className='loadMoreButton'>
                 <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage}  className='btn'>
                   {isFetchingNextPage
-                  ? 'Loading more...'
+                  ? <Loader2/>
                   : hasNextPage
-                  ? 'Load More'
+                  ? <Loader2/>
                   : 'Nothing more to load'}
                 </button>
               </div>

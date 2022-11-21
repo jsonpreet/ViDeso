@@ -12,11 +12,11 @@ import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
 import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '../UIElements/Tooltip'
 import logger from '@app/utils/logger'
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
-const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = true}) => {
+const Reactions = ({ showTip, setShowTip, video, iconSize = '21', isVertical = false, showButton = true}) => {
     const {isLoggedIn, user } = usePersistStore()
     const selectedChannel = useAppStore((state) => state.selectedChannel)
-    const [showTipModal, setShowTipModal] = useState(false)
     const [liking, setLiking] = useState(false)
     const [postReader, setPostReader] = useState()
     const [liked, setLiked] = useState(video.PostEntryReaderState.LikedByReader)
@@ -68,11 +68,11 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
         <div
             className={'  flex items-center justify-end space-x-2.5 md:space-x-4'}
         >
-            <Tooltip title={`${liked ? `Unlike` : `I like this`}`}>
+            {isBrowser ? <Tooltip visible={false} title={`${liked ? `Unlike` : `I like this`}`}>
                 <Button ref={likeRef} variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `md:h-10` : `!p-0`}`} onClick={() => { likeVideo(liked) }}>
                     <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 space-x-2 outline-none', {
-                            'text-brand2-500 dark:text-brand2-400 font-semibold': liked
-                        },
+                        'text-brand2-500 dark:text-brand2-400 font-semibold': liked
+                    },
                         { 'space-x-3': showButton },
                         { 'mt-1.5': !showButton }
                     )}>
@@ -83,53 +83,79 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
                             })}
                         /> :
                             <FaRegThumbsUp size={iconSize}
-                            className={clsx({
-                                'text-brand2-500 dark:text-brand2-400': liked,
-                                'animate-bounce': liking
-                            })}
+                                className={clsx({
+                                    'text-brand2-500 dark:text-brand2-400': liked,
+                                    'animate-bounce': liking
+                                })}
                             />
                         }
 
                         <span
                             className={clsx({
-                            'text-brand2-500 dark:text-brand2-400': liked
+                                'text-brand2-500 dark:text-brand2-400': liked
                             })}
                         >
                             {likes > 0
-                            ? formatNumber(likes)
-                            : 'Like'}
+                                ? formatNumber(likes)
+                                : 'Like'}
                         </span>
                     </span>
                 </Button>
             </Tooltip>
-            {/* <Button variant="secondary" className="!p-0">
-                <span
-                    className={clsx('flex items-center space-x-1 outline-none', {
-                    'flex-col space-y-1': isVertical
-                    })}
-                >
-                    <AiOutlineDislike
-                    className={clsx({
-                        'text-xs': iconSize === 'xs',
-                        'text-xl': iconSize === 'xl',
-                        'text-2xl': iconSize === '2xl',
-                    })}
-                    />
-                    {showLabel && (
-                    <span
-                        className={clsx({'text-xs': textSize === 'xs'})}
-                    >
-                        {'Dislike'}
+                :
+                <Button ref={likeRef} variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `md:h-10` : `!p-0`}`} onClick={() => { likeVideo(liked) }}>
+                    <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 space-x-2 outline-none', {
+                        'text-brand2-500 dark:text-brand2-400 font-semibold': liked
+                    },
+                        { ' space-x-2 md:space-x-3': showButton },
+                        { 'mt-1.5': !showButton }
+                    )}>
+                        {liked ? <FaThumbsUp size={iconSize}
+                            className={clsx({
+                                'text-brand2-500 dark:text-brand2-400': liked,
+                                'animate-bounce': liking
+                            })}
+                        /> :
+                            <FaRegThumbsUp size={iconSize}
+                                className={clsx({
+                                    'text-brand2-500 dark:text-brand2-400': liked,
+                                    'animate-bounce': liking
+                                })}
+                            />
+                        }
+
+                        <span
+                            className={clsx({
+                                'text-brand2-500 dark:text-brand2-400': liked
+                            })}
+                        >
+                            {likes > 0
+                                ? formatNumber(likes)
+                                : 'Like'}
+                        </span>
                     </span>
-                    )}
-                </span>
-            </Button> */}
+                </Button>
+            }
             
-            <Tooltip title="Diamonds">
-                <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `md:h-10` : `!p-0`}`} onClick={() => { setShowTipModal(!showTipModal) }}>
+            
+            {isBrowser ? <Tooltip title="Diamonds">
+                <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `md:h-10` : `!p-0`}`} onClick={() => { setShowTip(!showTip) }}>
                     <span className={clsx('flex items-center group-hover:text-brand2-500 dark:group-hover:text-brand2-400 space-x-2 outline-none', {
-                            'text-brand2-500 dark:text-brand2-400 font-semibold': diamondBestowed > 0
-                        },
+                        'text-brand2-500 dark:text-brand2-400 font-semibold': diamondBestowed > 0
+                    },
+                        { 'space-x-2 md:space-x-3': showButton },
+                        { 'mt-1.5': !showButton }
+                    )}>
+                        <IoDiamondOutline size={iconSize} />
+                        <span>{video.DiamondCount}</span>
+                    </span>
+                </Button>
+            </Tooltip> :
+                
+                <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `md:h-10` : `!p-0`}`} onClick={() => { setShowTip(!showTip) }}>
+                    <span className={clsx('flex items-center group-hover:text-brand2-500 dark:group-hover:text-brand2-400 space-x-2 outline-none', {
+                        'text-brand2-500 dark:text-brand2-400 font-semibold': diamondBestowed > 0
+                    },
                         { 'space-x-3': showButton },
                         { 'mt-1.5': !showButton }
                     )}>
@@ -137,7 +163,7 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
                         <span>{video.DiamondCount}</span>
                     </span>
                 </Button>
-            </Tooltip>    
+            }
         </div>
     )
 }

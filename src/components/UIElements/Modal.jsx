@@ -2,6 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 import { FC, Fragment } from 'react'
 import { MdOutlineClose } from 'react-icons/md'
+import { Button } from './Button'
 
 const Modal = ({
   show,
@@ -48,7 +49,7 @@ const Modal = ({
                 )}
               >
                 {title && (
-                  <div className="flex items-center justify-between pb-2">
+                  <div className="flex items-center justify-between pb-4">
                     <Dialog.Title
                       as="h3"
                       className="text-lg font-medium leading-6"
@@ -56,13 +57,13 @@ const Modal = ({
                       {title}
                     </Dialog.Title>
                     {onClose && (
-                      <button
-                        type="button"
-                        className="p-1 bg-gray-100 rounded-md focus:outline-none dark:bg-gray-900"
+                      <Button
+                        variant="light"
                         onClick={() => onClose?.()}
+                        className='md:!p-0 md:w-10 max-w-[40px] h-auto w-auto md:h-10' 
                       >
-                        <MdOutlineClose />
-                      </button>
+                        <MdOutlineClose size={22} />
+                      </Button>
                     )}
                   </div>
                 )}

@@ -11,6 +11,7 @@ import party from "party-js"
 import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '../UIElements/Tooltip'
 import logger from '@app/utils/logger'
+import { isBrowser } from 'react-device-detect'
 
 function ChannelInfo({ video, channel }) {
     const [followers, setFollowers] = useState(0)
@@ -111,9 +112,9 @@ function ChannelInfo({ video, channel }) {
                             href={`/@${channel.Username}`}
                             className="flex items-center w-fit space-x-1.5 font-medium"
                         >
-                            <Tooltip placement='top' contentClass='text-[12px]' title={channel.Username}>
+                            {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={channel.Username}>
                                 <span>{channel.Username}</span>
-                            </Tooltip>    
+                            </Tooltip> : <span>{channel.Username}</span>}    
                             {channel.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="lg" /></span></Tooltip> : null}
                             </Link>
                         {!loading ?

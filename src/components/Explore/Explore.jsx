@@ -7,6 +7,7 @@ import usePersistStore from '@app/store/persist';
 import { NoDataFound } from '@components/UIElements/NoDataFound';
 import MetaTags from '@components/Common/MetaTags';
 import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
+import { Loader2 } from '../UIElements/Loader';
 
 function Explore() {
     const { user, isLoggedIn } = usePersistStore();
@@ -53,9 +54,9 @@ function Explore() {
                             <div className='loadMoreButton'>
                                 <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage}  className='btn'>
                                     {isFetchingNextPage
-                                    ? 'Loading more...'
+                                    ? <Loader2/>
                                     : hasNextPage
-                                    ? 'Load More'
+                                    ? <Loader2/>
                                     : 'Nothing more to load'}
                                 </button>
                             </div>

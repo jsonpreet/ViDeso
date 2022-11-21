@@ -1,18 +1,23 @@
 import usePersistStore from '@app/store/persist'
 import { DESO_CONFIG } from '@app/utils/constants'
 import Deso from 'deso-protocol'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Button } from '../UIElements/Button'
 
 function SidebarLoginMessage() {
   const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()
   const [loading, setLoading] = useState(false)
+  const [deso, setDeso] = useState(null)
+
+  useEffect(() => {
+    const deso = new Deso(DESO_CONFIG);
+    setDeso(deso)
+  }, [])
 
   const loginWithDeso = async () => {
     setLoading(true)
     try {
-      const deso = new Deso(DESO_CONFIG);
       const request = 3;
       const response = await deso.identity.login(request);
       if (response) {

@@ -23,10 +23,7 @@ import {
   TumblrShareButton,
   TumblrIcon,
 } from 'next-share';
-// import { AiOutlineRetweet } from 'react-icons/ai'
-import { useDetectClickOutside } from 'react-detect-click-outside'
 import { BiCopy } from 'react-icons/bi';
-import { Button } from '../UIElements/Button';
 
 const ShareModal = ({ rootRef, show, setShowShare, video }) => {
   const [copy] = useCopyToClipboard()

@@ -18,7 +18,7 @@ const Header = ({ className }) => {
 
   return (
     <>
-      <div className='fixed items-center flex justify-between flex-row z-20 left-0 right-0 top-0 flex-shrink-0 header-glassy h-16 px-4'>
+      <div className='fixed items-center flex justify-between flex-row z-50 left-0 right-0 top-0 flex-shrink-0 header-glassy h-16 px-4'>
         <div className="md:w-56 flex md:justify-center py-4">
           <Link
             href={HOME}

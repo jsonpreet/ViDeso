@@ -19,11 +19,16 @@ function UserMenu() {
     const router = useRouter()
     const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()
     const [loading, setLoading] = useState(false)
+    const [deso, setDeso] = useState(null)
+
+    useEffect(() => {
+        const deso = new Deso(DESO_CONFIG);
+        setDeso(deso)
+    }, [])
 
     const loginWithDeso = async () => {
         setLoading(true)
         try {
-            const deso = new Deso(DESO_CONFIG);
             const request = 3;
             const response = await deso.identity.login(request);
             if (response) {
@@ -54,7 +59,6 @@ function UserMenu() {
     const logout = async () => {
         const request = user.profile.PublicKeyBase58Check;
         try {
-            const deso = new Deso(DESO_CONFIG);
             const response = await deso.identity.logout(request);
             if (response) {
                 toast.success("Logout Successfully!");

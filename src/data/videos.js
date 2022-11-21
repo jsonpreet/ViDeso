@@ -163,7 +163,11 @@ export const getSinglePost = async ({ queryKey }) => {
         return null
     } else {
         const post = response.data.PostFound;
-        return post
+        if (post.VideoURLs !== null && post.VideoURLs.length > 0) {
+            return post
+        } else {
+            return null
+        }
     }
 }
 

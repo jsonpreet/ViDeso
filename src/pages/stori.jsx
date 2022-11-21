@@ -1,3 +1,3 @@
-import { Feed } from '@app/components/Feed'
+import { Stori } from '@app/components/Stori'
 
-export default Feed;
+export default Stori;

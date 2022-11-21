@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { FetchInfiniteFollowingFeed } from '@app/data/feed';
 import usePersistStore from '@app/store/persist';
 import { NoDataFound } from '@app/components/UIElements/NoDataFound';
+import { Loader2 } from '../UIElements/Loader';
 
 
 const Timeline = () => {
@@ -47,9 +48,9 @@ const Timeline = () => {
                     <div className='loadMoreButton'>
                         <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage}  className='btn'>
                         {isFetchingNextPage
-                        ? 'Loading more...'
+                        ? <Loader2/>
                         : hasNextPage
-                        ? 'Load More'
+                        ? <Loader2/>
                         : 'Nothing more to load'}
                         </button>
                     </div>

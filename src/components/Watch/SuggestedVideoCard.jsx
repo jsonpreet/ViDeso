@@ -14,6 +14,7 @@ import VideoOptions from '../Common/VideoCard/VideoOptions'
 import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '../UIElements/Tooltip'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
+import { isBrowser } from 'react-device-detect'
 
 const SuggestedVideoCard = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
@@ -110,7 +111,7 @@ const SuggestedVideoCard = ({ video }) => {
                                         className="text-sm truncate hover:opacity-100 opacity-80"
                                     >
                                         <div className="flex items-center space-x-1.5">
-                                            <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip>
+                                            {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip> : <span>{userProfile.Username}</span>}
                                             {userProfile.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="xs" /></span></Tooltip> : null}
                                         </div>
                                     </Link>

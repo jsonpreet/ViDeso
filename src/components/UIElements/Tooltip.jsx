@@ -11,12 +11,11 @@ import React from 'react'
 const Tooltip = ({
   render,
   title,
-  visible = true,
+  visible = false,
   placement = 'bottom',
   contentClass = '',
   ...props
 }) => {
-  const { resolvedTheme } = useTheme()
   return (
     <Tippy
       {...props}

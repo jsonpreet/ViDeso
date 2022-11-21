@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
                 </div>
                 <div className='flex flex-col mx-auto flex-1'>
                     <Header />
-                    <div className='relative overflow-y-scroll overflow-x-hidden'>
+                    <div className='relative overflow-y-scroll overflow-x-hidden md:mb-0 md:pb-0 pb-20 mb-10'>
                         <div className="pt-16 pb-0 lg:pb-12">
                             <div className="min-h-screen">
                                 <div className='max-w-full w-full mx-auto md:pl-0 p-0 md:p-5'>

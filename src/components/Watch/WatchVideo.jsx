@@ -38,7 +38,7 @@ const WatchVideo = () => {
     
     ///const { data: video, isLoading, isFetching, isFetched, error, isError } = FetchSinglePost({ id });
 
-    const { isSuccess, isLoading, isError, error, refetch, isFetching, status, fetchStatus, data: video } = useQuery([['single-post', posthash], { id: posthash, reader: reader }], getSinglePost, { enabled: !!posthash, })
+    const { isLoading, isError, error, isFetched, data: video } = useQuery([['single-post', posthash], { id: posthash, reader: reader }], getSinglePost, { enabled: !!posthash, })
 
     useEffect(() => {
         const { id, t } = router.query
@@ -77,14 +77,14 @@ const WatchVideo = () => {
                 logger.error(video.PostHashHex, 'thumbnail', error);
             }
         }
-        if (video && isSuccess) {
+        if (video && isFetched) {
             addToRecentlyWatched(video)
             getVideo()
         }
-    }, [video, isSuccess, addToRecentlyWatched])
+    }, [router, video, isFetched, addToRecentlyWatched])
 
     useEffect(() => {
-        if (isLoggedIn && video) {
+        if (isLoggedIn && video && video.VideoURLs !== null) {
             async function addToHistory() {
                 try {
                     const { data: post, error } = await supabase.from('history').select('*').eq('posthash', video.PostHashHex).eq('user', reader);
@@ -108,18 +108,20 @@ const WatchVideo = () => {
         }
     }, [video, isLoggedIn, reader])
 
-    // useEffect(() => {
-    //     setVideoWatchTime(Number(t))
-    // }, [t, setVideoWatchTime])
-
     if (isError) {
         return <Custom500 />
     }
-    if (loading || isFetching || !video || !videoData) return <WatchVideoShimmer />
+
+    if (isFetched && !video) {
+        return <Custom404 />
+    }
+
+
+    if (loading || !videoData) return <WatchVideoShimmer />
     return (
         <>
             <MetaTags title={video ? getVideoTitle(video) : 'Watch'} />
-            {!isFetching && !loading && !isError && videoData && video ? (
+            {isFetched && !loading && !isError && videoData && video ? (
                 <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
                         <Video videoData={videoData} video={video} poster={thumbnailUrl} />
