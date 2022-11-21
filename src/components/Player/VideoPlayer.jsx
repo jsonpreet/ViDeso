@@ -115,7 +115,7 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
         relative: showNext
       })}
     >
-      <div className={`md:relative z-[5] aspect-[16/9]`}>
+      <div className={`md:relative`}>
         {/* <VimePlayer playerRef={playerRef} ratio={ratio} hls={hls} poster={poster} /> */}
         <Player
             tabIndex={1}
