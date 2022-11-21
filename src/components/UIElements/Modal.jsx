@@ -16,7 +16,7 @@ const Modal = ({
     <Transition appear show={show} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-20"
+        className="relative z-50"
         onClose={() => (autoClose ? null : onClose?.())}
       >
         <Transition.Child

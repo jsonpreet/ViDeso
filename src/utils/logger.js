@@ -10,7 +10,7 @@ const logger = {
   },
   error: (message, error) => {
     //console.error(message, error)
-    log.error(message, error)
+    log.error(message, error.message)
   }
 }
 

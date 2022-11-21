@@ -9,12 +9,13 @@ import MetaTags from '@app/components/Common/MetaTags';
 import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
 import { APP } from '@app/utils/constants';
 import { getShuffleArray } from '@app/utils/functions/getShuffleArray';
+import { GetHotFeed } from '@app/data/hot';
 
 function Category() {
     const { user, isLoggedIn } = usePersistStore();
     const { ref, inView } = useInView()
     const reader = user.profile ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
-    const { isError, error, isLoading, isFetched, data:videos } = FetchHotFeed( reader );
+    const { isError, error, isLoading, isFetched, data:videos } = GetHotFeed( reader );
     
     if (videos?.length === 0) {
         return (

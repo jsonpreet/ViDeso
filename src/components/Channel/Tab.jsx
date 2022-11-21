@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 import { Suspense, useEffect, useState } from 'react';
 import dynamic from "next/dynamic";
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Custom404 from '@app/pages/500';
-import { Tab } from '@headlessui/react';
 import { FetchProfile } from '@app/data/channel';
 import MetaTags from '@app/components/Common/MetaTags'
 import ChannelShimmer from '@app/components/Shimmers/ChannelShimmer';
@@ -16,11 +15,8 @@ import usePersistStore from '@app/store/persist';
 import Deso from 'deso-protocol';
 import { DESO_CONFIG } from '@app/utils/constants';
 import logger from '@app/utils/logger';
-import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
-import DropMenu from '../UIElements/DropMenu';
-import Link from 'next/link';
+import { BsThreeDots } from 'react-icons/bs';
 import { Button } from '../UIElements/Button';
-import { FiFlag } from 'react-icons/fi';
 import MoreTabsModal from '../Common/MoreTabsModal';
 
 const ChannelVideos = dynamic(() => import("./Tabs/Videos"), {
@@ -43,7 +39,7 @@ const About = dynamic(() => import("./Tabs/About"), {
   suspense: true,
 });
 
-const Channel = () => {
+const Tab = () => {
     const router = useRouter();
     const { query } = router;
     const { isLoggedIn, user } = usePersistStore();
@@ -54,7 +50,7 @@ const Channel = () => {
     const [selectedTab, setSelectedTab] = useState(0)
     const [followers, setFollowers] = useState(0)
     const [username, setUsername] = useState('')
-    const [routeTab, setRouteTab] = useState('videos')
+    const [routeTab, setRouteTab] = useState('')
     const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : '';
     const { data: channel, isError, error, isFetched } = FetchProfile(username);
 
@@ -76,13 +72,8 @@ const Channel = () => {
     useEffect(() => {
         if (query.channel) {
             setUsername(query.channel.replace('@', ""));
-        }
-        if (query.tab) {
             setRouteTab(query.tab)
             setSelectedTab(getDefaultTab(query.tab))
-        } else {
-            setRouteTab('videos')
-            setSelectedTab(0)
         }
     }, [query])
 
@@ -154,7 +145,7 @@ const Channel = () => {
     const changeTab = (index) => {
         setSelectedTab(index);
         const tab = channelTabs[index].toLowerCase()
-        router.replace(`/@${username}/${tab}`);
+        router.replace(`/@${username}/${tab}`, `/@${username}/${tab}`, { shallow: true });
     }
 
     if (isError) {
@@ -179,7 +170,7 @@ const Channel = () => {
     }
 
     const TabItem = ({ selected, index, title, isHidden = false }) => {
-        const isSelected = selected === index ? true : false;
+        const isSelected = selected === index;
         return (
             <div
                 className={
@@ -217,6 +208,7 @@ const Channel = () => {
             </>
         )
     }
+
     
     if (isFetched) {
         return (
@@ -250,6 +242,12 @@ const Channel = () => {
                                     )
                                 })}
                                 <TabButton/>
+                                    {/* <TabItem index='0' title="Videos" />
+                                    <TabItem title="Stori" />
+                                    <TabItem title="Community" />
+                                    <TabItem isHidden={true} title="Channels" />
+                                    <TabItem isHidden={true} title="About" />
+                                    <TabButton/> */}
                             </div>
                         </div>
                         <div className="md:py-3 p-0 md:px-16 focus:outline-none">
@@ -287,4 +285,4 @@ const Channel = () => {
     }
 }
 
-export default Channel
+export default Tab

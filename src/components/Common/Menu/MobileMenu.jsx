@@ -1,10 +1,10 @@
-import { EXPLORE, HOME, STORI } from '@app/utils/paths'
+import { EXPLORE, FEED, HOME, LIBRARY, STORI } from '@app/utils/paths'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FiHome } from 'react-icons/fi'
 import { GiFilmSpool } from 'react-icons/gi'
-import { MdOutlineSubscriptions, MdSlowMotionVideo } from 'react-icons/md'
+import { MdOutlineSubscriptions, MdOutlineVideoLibrary, MdSlowMotionVideo } from 'react-icons/md'
 
 const MobileMenu = () => {
   const router = useRouter()
@@ -24,7 +24,7 @@ const MobileMenu = () => {
         >
           <FiHome size={21} 
             className={clsx({
-              'active-secondary': isActivePath('/')
+              'active-secondary': isActivePath(HOME)
             })}
           />
           <span className="text-xs">Home</span>
@@ -42,26 +42,26 @@ const MobileMenu = () => {
           <span className="text-xs">Stori</span>
         </Link>
         <Link
-          href={EXPLORE}
-          className="flex flex-col space-y-1 items-center justify-center w-full"
-        >
-          <GiFilmSpool size={21}
-            className={clsx({
-              'active-secondary': isActivePath('/explore')
-            })}
-          />
-          <span className="text-xs">Explore</span>
-        </Link>
-        <Link
-          href="/feed"
+          href={FEED}
           className="flex flex-col space-y-1 items-center justify-center w-full"
         >
           <MdOutlineSubscriptions size={21}
             className={clsx({
-              'active-secondary': isActivePath('/feed')
+              'active-secondary': isActivePath(FEED)
             })}
           />
           <span className="text-xs">Subscriptions</span>
+        </Link>
+        <Link
+          href={LIBRARY}
+          className="flex flex-col space-y-1 items-center justify-center w-full"
+        >
+          <MdOutlineVideoLibrary size={21}
+            className={clsx({
+              'active-secondary': isActivePath(LIBRARY)
+            })}
+          />
+          <span className="text-xs">Library</span>
         </Link>
       </div>
     </div>

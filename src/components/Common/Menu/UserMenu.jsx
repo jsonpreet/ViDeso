@@ -82,7 +82,7 @@ function UserMenu() {
                 <DropMenu
                     trigger={
                         <Button
-                        className="!p-0 flex-none"
+                        className="!p-0 ml-1.5 flex-none"
                         >
                         <img
                             src={`${BASE_URI}/get-single-profile-picture/${user.profile.PublicKeyBase58Check}`}
@@ -115,7 +115,7 @@ function UserMenu() {
                             <div className="pt-2 text-sm">
                                 <Menu.Item
                                     as={NextLink}
-                                    href={`/${user.profile.Username}`}
+                                    href={`/@${user.profile.Username}`}
                                     className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                                 >
                                     <FaRegUserCircle size="20" />

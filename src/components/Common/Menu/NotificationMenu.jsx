@@ -18,7 +18,7 @@ function NotificationMenu() {
                     </button>
                 }
                 >
-                <div className="py-2 my-1 overflow-hidden rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 divide-y dropdown-shadow max-h-96 bg-dropdown theme-divider border theme-border w-80">
+                <div className="py-2 my-1 overflow-hidden rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 divide-y dropdown-shadow max-h-96 bg-dropdown theme-divider border theme-border w-56 md:w-80">
                     <div className="flex flex-col space-y-1 text-sm transition duration-150 ease-in-out rounded-lg">
                         <div className="inline-flex items-center p-2 py-3 space-x-2 rounded-lg">
                             <div className='flex items-center space-x-1'>
