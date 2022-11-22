@@ -12,7 +12,7 @@ function Library() {
             <MetaTags title='Library' />
             {isLoggedIn ?
                 <>
-                    <div className='flex flex-col space-y-4 px-16'>
+                    <div className='flex flex-col space-y-4 px-0 md:px-16'>
                         <div className='space-y-4'>
                             <h3 className="text-2xl font-bold">History</h3>
                             <Timeline isLibrary={true} />

@@ -6,6 +6,7 @@
 @import '@vime/core/themes/default.css';
 html {
   @apply overflow-y-scroll;
+  scroll-behavior: smooth;
 }
 
 .customBorder {
@@ -36,9 +37,9 @@ html {
 }
 
 html, body{
-    height: 100%;
-    position: relative;
-    overflow: hidden;
+  // height: 100%;
+  // position: relative;
+  // overflow: hidden;
 }
 
 body{

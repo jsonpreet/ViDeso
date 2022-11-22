@@ -7,12 +7,15 @@ import { Toaster } from 'react-hot-toast'
 import Sidebar from './Sidebar'
 import dynamic from 'next/dynamic'
 import MobileMenu from './Menu/MobileMenu'
+import { useState } from 'react'
 
 const Header = dynamic(() => import('./Header'), { ssr: false })
-//const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false })
+//const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false }) md:min-h-screen  h-full md:h-screen
 
 const Layout = ({ children }) => {
     const { theme } = useTheme()
+    const [isSidebarCollapsed, setSidebarCollapsed] = useState(false)
+
 
     return (
         <>
@@ -23,16 +26,16 @@ const Layout = ({ children }) => {
                 position="bottom-right"
                 toastOptions={toastOptions}
             />
-            <div className='bg-primary h-screen flex'>
-                <div className='hidden md:flex md:flex-shrink-0'>
-                    <Sidebar />
+            <div className='bg-primary flex'>
+                <div className='hidden fixed top-0 left-0 md:flex md:flex-shrink-0'>
+                    <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
                 </div>
                 <div className='flex flex-col mx-auto flex-1'>
-                    <Header />
-                    <div className='relative overflow-y-scroll overflow-x-hidden md:mb-0 md:pb-0 pb-20 mb-10'>
+                    <Header isSidebarCollapsed={isSidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed} />
+                    <div className={`relative ml-64 md:mb-0 md:pb-0 pb-20 mb-10`}>
                         <div className="pt-16 pb-0 lg:pb-12">
-                            <div className="min-h-screen">
-                                <div className='max-w-full w-full mx-auto md:pl-0 p-0 md:p-5'>
+                            <div className="">
+                                <div className={`max-w-full w-full mx-auto md:pl-0 p-0 md:p-5 `}>
                                     {children}
                                 </div>
                             </div>

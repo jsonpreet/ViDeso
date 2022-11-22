@@ -11,7 +11,7 @@ function History() {
             <MetaTags title='History' />
             {isLoggedIn ?
                 <>
-                    <div className=' px-16'><Timeline /></div>
+                    <div className='px-0 md:px-16'><Timeline /></div>
                 </>
                 :
                 <NoDataFound

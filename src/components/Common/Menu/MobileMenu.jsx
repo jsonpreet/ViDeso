@@ -1,13 +1,14 @@
+import usePersistStore from '@app/store/persist'
 import { EXPLORE, FEED, HOME, LIBRARY, STORI } from '@app/utils/paths'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FiHome } from 'react-icons/fi'
-import { GiFilmSpool } from 'react-icons/gi'
 import { MdOutlineSubscriptions, MdOutlineVideoLibrary, MdSlowMotionVideo } from 'react-icons/md'
 
 const MobileMenu = () => {
   const router = useRouter()
+  const { isLoggedIn } = usePersistStore()
 
   const isActivePath = (path) => router.pathname === path
 
@@ -15,7 +16,11 @@ const MobileMenu = () => {
     <div className="fixed inset-x-0 bottom-0 dropdown-shadow z-10 md:hidden">
       <div
         className={clsx(
-          'grid grid-cols-4 py-2 bg-dropdown space-between'
+          'grid py-2 bg-dropdown space-between',
+          {
+            'grid-cols-4': isLoggedIn,
+            'grid-cols-3' : !isLoggedIn,
+          }
         )}
       >
         <Link
@@ -41,7 +46,7 @@ const MobileMenu = () => {
           />
           <span className="text-xs">Stori</span>
         </Link>
-        <Link
+        {/* <Link
           href={FEED}
           className="flex flex-col space-y-1 items-center justify-center w-full"
         >
@@ -51,18 +56,31 @@ const MobileMenu = () => {
             })}
           />
           <span className="text-xs">Subscriptions</span>
-        </Link>
+        </Link> */}
         <Link
-          href={LIBRARY}
+          href={EXPLORE}
           className="flex flex-col space-y-1 items-center justify-center w-full"
         >
-          <MdOutlineVideoLibrary size={21}
+          <MdOutlineSubscriptions size={21}
             className={clsx({
-              'active-secondary': isActivePath(LIBRARY)
+              'active-secondary': isActivePath(EXPLORE)
             })}
           />
-          <span className="text-xs">Library</span>
+          <span className="text-xs">Explore</span>
         </Link>
+        {isLoggedIn ?
+          <Link
+            href={LIBRARY}
+            className="flex flex-col space-y-1 items-center justify-center w-full"
+          >
+            <MdOutlineVideoLibrary size={21}
+              className={clsx({
+                'active-secondary': isActivePath(LIBRARY)
+              })}
+            />
+            <span className="text-xs">Library</span>
+          </Link>
+          : null}
       </div>
     </div>
   )

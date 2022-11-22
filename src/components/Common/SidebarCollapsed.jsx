@@ -22,7 +22,7 @@ import dynamic from 'next/dynamic'
 
 const SidebarLoginMessage = dynamic(() => import('./SidebarLoginMessage'), { ssr: false })
 
-const Sidebar = ({isSidebarCollapsed}) => {
+const SidebarCollapsed = ({isSidebarCollapsed}) => {
   const router = useRouter()
   const [showMore, setShowMore] = useState(false)
   const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 6;
@@ -32,83 +32,93 @@ const Sidebar = ({isSidebarCollapsed}) => {
   const isActiveCategory = (category) => router.query.category === category
   return (
     <>
-      <div className={`flex flex-col w-64 p-4 primaryBg h-screen pr-0 items-start justify-start overflow-hidden z-10 pt-16 text-[14px] font-light tracking-wide`}>
+      <div className={`flex flex-col ${isSidebarCollapsed ? `w-[92px] p-2` : `w-64 p-4`} primaryBg h-screen pr-0 items-start justify-start overflow-hidden z-10 pt-16 text-[14px] font-light tracking-wide`}>
         <SimpleBar forceVisible="y" style={{ height: `100%`, width: `100%` }}>
           <div className="flex flex-col w-full overflow-hidden pr-4">
             <div className="flex flex-col w-full space-y-1">
               <Link
                 href={HOME}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg group hover-primary',
                   {
+                    'px-1 w-[84px] py-4 text-xs font-normal': isSidebarCollapsed,
+                    'px-3 py-2': !isSidebarCollapsed,
                     'active-primary font-bold ': isActivePath(HOME),
                   },
                 )}
               >
-                <div className={`flex items-center`}>
+                <div className={`flex ${isSidebarCollapsed ? `flex-col space-y-2` : ``}  items-center`}>
                   <FiHome size={21} />
-                   <p className={`flex ml-6`}>Home</p>
+                   <p className={`flex ${isSidebarCollapsed ? `` : `ml-6`} `}>Home</p>
                 </div>
               </Link>
               <Link
                 href={FEED}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg group hover-primary',
                   {
+                    'px-1 w-[84px] py-4 text-xs font-normal': isSidebarCollapsed,
+                    'px-3 py-2': !isSidebarCollapsed,
                     'active-primary font-bold ': isActivePath(FEED),
                   },
                 )}
               >
-                <div className={`flex items-center`}>
+                <div className={`flex ${isSidebarCollapsed ? `flex-col space-y-2` : ``}  items-center`}>
                   <MdOutlineSubscriptions size={20} />
-                  <p className={`flex ml-6`}>Subscriptions</p>
+                  <p className={`flex ${isSidebarCollapsed ? `` : `ml-6`} `}>Subscriptions</p>
                 </div>
               </Link>
               <Link
                 href={STORI}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg group hover-primary',
                   {
+                    'px-0 w-[84px] py-4 text-xs font-normal': isSidebarCollapsed,
+                    'px-3 py-2': !isSidebarCollapsed,
                     'active-primary font-bold ': isActivePath(STORI) || router.pathname === '/stori' || router.pathname === '/stori/[id]',
                   },
                 )}
               >
-                <div className={`flex items-center`}>
+                <div className={`flex ${isSidebarCollapsed ? `flex-col space-y-2` : ``}  items-center`}>
                   <MdSlowMotionVideo size={21} />
-                  <p className={`flex ml-6`}>Stori</p>
+                  <p className={`flex ${isSidebarCollapsed ? `` : `ml-6`} `}>Stori</p>
                 </div>
               </Link>
               <Link
                 href={LIBRARY}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg group hover-primary',
                   {
+                    'px-0  w-[84px] py-4 text-xs font-normal': isSidebarCollapsed,
+                    'px-3 py-2': !isSidebarCollapsed,
                     'active-primary font-bold ': isActivePath(LIBRARY),
                   },
                 )}
               >
-                <div className={`flex items-center`}>
+                <div className={`flex ${isSidebarCollapsed ? `flex-col space-y-2` : ``}  items-center`}>
                   <MdOutlineVideoLibrary size={21} />
-                  <p className={`flex ml-6`}>Library</p>
+                  <p className={`flex ${isSidebarCollapsed ? `` : `ml-6`} `}>Library</p>
                 </div>
               </Link>
               <Link
                 href={HISTORY}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg group hover-primary',
                   {
+                    'px-0  w-[84px] py-4 text-xs font-normal': isSidebarCollapsed,
+                    'px-3 py-2': !isSidebarCollapsed,
                     'active-primary font-bold ': isActivePath(HISTORY),
                   },
                 )}
               >
-                <div className={`flex items-center`}>
+                <div className={`flex ${isSidebarCollapsed ? `flex-col space-y-2` : ``}  items-center`}>
                   <MdHistory size={21} />
-                  <p className={`flex ml-6`}>History</p>
+                  <p className={`flex ${isSidebarCollapsed ? `` : `ml-6`} `}>History</p>
                 </div>
               </Link>
             </div>
             {/* <SidebarLoginMessage /> */}
-            
+            {!isSidebarCollapsed ?
               <>
                 <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
                 <div className="flex flex-col w-full mb-3 px-3">
@@ -225,6 +235,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   <p>© 2022 {APP.Name}</p>
                 </div>
               </>
+              : null}
           </div>
         </SimpleBar>
       </div>
@@ -232,4 +243,4 @@ const Sidebar = ({isSidebarCollapsed}) => {
   )
 }
 
-export default Sidebar
+export default SidebarCollapsed
