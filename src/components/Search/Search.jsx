@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import Deso from 'deso-protocol';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react'
+import { useDetectClickOutside } from 'react-detect-click-outside';
 import { AiOutlineSearch } from 'react-icons/ai'
 import { BiUser } from 'react-icons/bi';
 import { useDebounce } from 'use-debounce';
@@ -29,32 +30,33 @@ const Search = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onSearch = async (e) => {
-    const prefix = e.target.value
-    setKeyword(prefix)
+  useEffect(() => {
     setLoading(true)
-    if (prefix.trim().length > 0) {
-      const request = {
-        "UsernamePrefix": prefix,
-      }
-      try {
-        const profiles = await deso.user.getProfiles(request);
-        if (profiles && profiles.ProfilesFound !== null) {
-          setShowResults(true);
-          setLoading(false);
-          setResults(profiles.ProfilesFound.slice(0, 10));
+    const getData = setTimeout(async() => {
+      if (keyword.length > 0) {
+        const request = {
+            "UsernamePrefix": keyword,
         }
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
+        try {
+            const profiles = await deso.user.getProfiles(request);
+            if (profiles && profiles.ProfilesFound !== null) {
+              setShowResults(true);
+              setLoading(false);
+              setResults(profiles.ProfilesFound.slice(0, 10));
+            }
+        } catch (error) {
+          setLoading(false);
+          setResults('');
+          console.log(error);
+        }
+      } else {
         setResults('');
+        setShowResults(false);
+        setLoading(false);
       }
-    } else {
-      setResults('');
-      setShowResults(false);
-      setLoading(false);
-    }
-  }
+    }, 700)
+    return () => clearTimeout(getData)
+  }, [keyword])
 
   const clearSearch = () => {
     setKeyword('')
@@ -64,15 +66,17 @@ const Search = () => {
     setShowSearchModal(false);
   }
 
+  const ref = useDetectClickOutside({ onTriggered: clearSearch });
+
   return (
     <>
       <div className="md:w-[728px] hidden md:flex" style={{flex: '0 1 728'}}>
-        <div ref={resultsRef} className='w-full mx-auto'>
+        <div ref={ref} className='w-full mx-auto'>
           <div className="relative mt-1">
             <div className="relative w-full overflow-hidden cursor-default border shadow-inner customBorder bg-primary dark:border-gray-800 rounded-full">
               <input
                 className="w-full py-2.5 pl-3 pr-10 bg-transparent focus:outline-none"
-                onChange={onSearch}
+                onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Search"
                 value={keyword}
               />
@@ -141,7 +145,7 @@ const Search = () => {
         <div className="relative w-full overflow-hidden cursor-default border shadow-inner customBorder bg-primary dark:border-gray-800 mb-3 rounded-full">
           <input
             className="w-full py-2.5 pl-3 pr-10 bg-transparent focus:outline-none"
-            onChange={onSearch}
+            onChange={(e) => setKeyword(e.target.value)}
             placeholder="Search"
             value={keyword}
           />
