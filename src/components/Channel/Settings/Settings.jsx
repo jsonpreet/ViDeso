@@ -1,7 +1,7 @@
 import IsVerified from '@app/components/Common/IsVerified';
 import { Button } from '@app/components/UIElements/Button';
 import usePersistStore from '@app/store/persist';
-import { APP } from '@app/utils/constants';
+import { APP, DESO_CONFIG } from '@app/utils/constants';
 import { getCoverPicture } from '@app/utils/functions/getCoverPicture';
 import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData';
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
@@ -9,13 +9,14 @@ import Deso from 'deso-protocol';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react'
 import toast from 'react-hot-toast';
-import { BiUpload } from 'react-icons/bi';
+import { BiCopy, BiUpload } from 'react-icons/bi';
 import party from "party-js"
+import useCopyToClipboard from '@app/utils/hooks/useCopyToClipboard';
 
 function Settings() {
-    const router = useRouter();
-    const { query } = router;
     const { user, setUser } = usePersistStore();
+    const rootRef = useRef(null)
+    const [copy] = useCopyToClipboard()
     const [newCover, setCover] = useState(null)
     const [newAvatar, setAvatar] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -38,7 +39,10 @@ function Settings() {
     const [customTitle, setCustomTitle] = useState(extraData?.CustomTitle || '')
     const [customLink, setCustomLink] = useState(extraData?.CustomURL || '')
 
-    const rootRef = useRef(null)
+    const onCopyChannelUrl = async () => {
+        await copy(`${APP.URL}/@${channel.Username}`)
+        toast.success('Link copied to clipboard')
+    }
 
     const handleCover = async () => {
         setUploadingCover(true);
@@ -176,7 +180,7 @@ function Settings() {
     
     const updateChannel = async () => {
         setLoading(true);
-        const deso = new Deso();
+        const deso = new Deso(DESO_CONFIG);
         const payload = {
             ProfileImage: extraData.ProfileImage,
             CoverImage: extraData.CoverImage,
@@ -211,7 +215,6 @@ function Settings() {
                     const profile = await deso.user.getSingleProfile({PublicKeyBase58Check: user.profile.PublicKeyBase58Check});
                     if(profile && profile.Profile !== undefined) {
                         setUser({ profile: profile.Profile });
-                        
                         party.confetti(rootRef.current, {
                             count: party.variation.range(100, 2000),
                             size: party.variation.range(0.2, 1.5),
@@ -253,22 +256,22 @@ function Settings() {
                                 </div>
                             </div>
                         </div>
-                        <div className='max-w-7xl w-full mx-auto'>
-                            <div className='flex -mt-20 space-x-3 items-center'>
+                        <div className='max-w-7xl w-full mx-auto md:px-0 px-4'>
+                            <div className='flex -mt-10 md:-mt-20 space-x-3 items-center'>
                                 <div
-                                    className={`${uploadingAvatar ? `animate-pulse` : ``} w-36 h-36 my-2 group rounded-full relative z-20 flex items-center justify-center dark:border-[#2D2D33] border-white border-4`}
+                                    className={`${uploadingAvatar ? `animate-pulse` : ``} w-20 h-20 md:w-36 md:h-36 my-2 group rounded-full relative z-20 flex items-center justify-center dark:border-[#2D2D33] border-white border-4`}
                                     style={{
                                     backgroundImage: `url(${newAvatar ? newAvatar : avatar})`,
                                     backgroundPosition: "center",
                                     backgroundSize: "cover",
                                     backgroundRepeat: "no-repeat",
                                 }}>
-                                    <button onClick={handleAvatar} className='bg-white/[.7] hidden group-hover:flex rounded-full px-2 py-2 hover:bg-white/[.9]'>
+                                    <button onClick={handleAvatar} className='bg-white/[.7] dark:bg-black/[.7] hidden group-hover:flex rounded-full px-2 py-2 hover:bg-white/[.9]'>
                                         <BiUpload size={24} />
                                     </button>
                                 </div>
                             </div>
-                            <div className='flex w-full space-x-10 mt-5'>
+                            <div className='flex w-full md:flex-row flex-col space-x-0 space-y-0 md:space-y-0 md:space-x-10 mt-5'>
                                 <div className='flex w-full flex-col'>
                                     <div className='mb-4 flex flex-col space-y-2'>
                                         <label className='font-bold text-sm'>Name</label>
@@ -277,7 +280,7 @@ function Settings() {
                                             placeholder='Display Name'
                                             value={displayName}
                                             onChange={(e) => setDisplayName(e.target.value)}
-                                            className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                            className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                         />
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
@@ -287,7 +290,7 @@ function Settings() {
                                             readOnly
                                             defaultValue={channel?.Username}
                                             placeholder='Set your handle'
-                                            className="w-full text-sm py-2.5 px-3 bg-gray-50 border theme-border rounded-md focus:outline-none"
+                                            className="w-full text-sm py-2.5 px-3 active-primary border theme-border rounded-md focus:outline-none"
                                         />
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
@@ -297,7 +300,7 @@ function Settings() {
                                             onChange={(e) => setDescription(e.target.value)}
                                             value={description ? description : channel?.Description}
                                             placeholder='Tell viewers about your channel. Your description will appear in the About section of your channel and search results, among other places.'
-                                            className="w-full text-sm py-2.5 px-3 resize-none h-36 bg-white border theme-border rounded-md focus:outline-none"
+                                            className="w-full text-sm py-2.5 px-3 resize-none h-36 bg-secondary border theme-border rounded-md focus:outline-none"
                                         >
                                         </textarea>
                                     </div>
@@ -308,7 +311,7 @@ function Settings() {
                                             value={languages}
                                             onChange={(e) => setLanguages(e.target.value)}
                                             placeholder='Add Language'
-                                            className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                            className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                         />
                                     </div>
                                     <div className='mb-6 flex flex-col space-y-2'>
@@ -318,10 +321,10 @@ function Settings() {
                                             value={location}
                                             onChange={(e) => setLocation(e.target.value)}
                                             placeholder='Add Location'
-                                            className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                            className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                         />
                                     </div>
-                                    <div>
+                                    <div className='hidden md:block'>
                                         <Button
                                             variant='primary'
                                             size='md'
@@ -335,13 +338,24 @@ function Settings() {
                                 <div className='flex w-full flex-col'>
                                     <div className='mb-4 flex flex-col space-y-2'>
                                         <label className='font-bold text-sm'>Channel URL</label>
-                                        <input
-                                            type='text'
-                                            placeholder='Channel URL'
-                                            readOnly
-                                            defaultValue={`${APP.URL}/@${channel?.Username}`}
-                                            className="w-full text-sm py-2.5 px-3 bg-gray-50 border theme-border rounded-md focus:outline-none"
-                                        />
+                                        <div className='flex relative items-center'>
+                                            <input
+                                                type='text'
+                                                placeholder='Channel URL'
+                                                readOnly
+                                                defaultValue={`${APP.URL}/@${channel?.Username}`}
+                                                className="w-full text-sm py-2.5 px-3 active-primary border theme-border rounded-md focus:outline-none"
+                                            />
+                                            <span className='absolute right-3'>
+                                                <button
+                                                    type="button"
+                                                    onClick={onCopyChannelUrl}
+                                                    className="flex items-center justify-center"
+                                                >
+                                                    <BiCopy size={23} />
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
                                         <label className='font-bold text-sm'>Twitter</label>
@@ -351,7 +365,7 @@ function Settings() {
                                                 value={twitterLink}
                                                 onChange={(e) => setTwitterLink(e.target.value)}
                                                 placeholder='Set your twitter username'
-                                                className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                                className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                             />
                                         </div>
                                     </div>
@@ -363,7 +377,7 @@ function Settings() {
                                                 onChange={(e) => setInstagramLink(e.target.value)}
                                                 value={instagramLink}
                                                 placeholder='Set your instagram username'
-                                                className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                                className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                             />
                                         </div>
                                     </div>
@@ -375,7 +389,7 @@ function Settings() {
                                                 value={youtubeLink}
                                                 onChange={(e) => setYoutubeLink(e.target.value)}
                                                 placeholder='Set your youtube url'
-                                                className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                                className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                             />
                                         </div>
                                     </div>
@@ -387,20 +401,20 @@ function Settings() {
                                                 value={discordLink}
                                                 onChange={(e) => setDiscordLink(e.target.value)}
                                                 placeholder='Set your discord url'
-                                                className="w-full flex-1 text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                                className="w-full flex-1 text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                             />
                                         </div>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
                                         <label className='font-bold text-sm'>Website</label>
-                                        <div className='flex space-x-3'>
-                                            <div className='max-w-[200px]'>
+                                        <div className='flex md:flex-row flex-col space-x-0 space-y-2 md:space-y-0 md:space-x-3'>
+                                            <div className='w-full md:max-w-[200px]'>
                                                 <input
                                                     type='text'
                                                     value={websiteTitle}
                                                     onChange={(e) => setWebsiteTitle(e.target.value)}
                                                     placeholder='Set title'
-                                                    className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                                    className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                                 />
                                             </div>
                                             <div className='flex flex-1'>
@@ -409,21 +423,21 @@ function Settings() {
                                                     value={websiteLink}
                                                     onChange={(e) => setWebsiteLink(e.target.value)}
                                                     placeholder='Set your website url'
-                                                    className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                                    className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                                 />
                                             </div>
                                         </div>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
                                         <label className='font-bold text-sm'>Custom</label>
-                                        <div className='flex space-x-3'>
-                                            <div className='max-w-[200px]'>
+                                        <div className='flex md:flex-row flex-col space-x-0 space-y-2 md:space-y-0 md:space-x-3'>
+                                            <div className='w-full md:max-w-[200px]'>
                                                 <input
                                                     type='text'
                                                     value={customTitle}
                                                     onChange={(e) => setCustomTitle(e.target.value)}
                                                     placeholder='Set title'
-                                                    className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                                    className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                                 />
                                             </div>
                                             <div className='flex flex-1'>
@@ -432,10 +446,20 @@ function Settings() {
                                                     value={customLink}
                                                     onChange={(e) => setCustomLink(e.target.value)}
                                                     placeholder='Set your custom url'
-                                                    className="w-full text-sm py-2.5 px-3 bg-white border theme-border rounded-md focus:outline-none"
+                                                    className="w-full text-sm py-2.5 px-3 bg-secondary border theme-border rounded-md focus:outline-none"
                                                 />
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className='block md:hidden'>
+                                        <Button
+                                            variant='primary'
+                                            size='md'
+                                                loading = { loading }
+                                            onClick={updateChannel}
+                                        >
+                                            Update
+                                        </Button>
                                     </div>
                                 </div>
                             </div>

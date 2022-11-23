@@ -12,8 +12,8 @@ function NewVideoMenu() {
         <>
             <DropMenu
                 trigger={
-                    <button className="text-secondary hover-primary flex items-center border theme-border mr-3 px-3 py-1.5 justify-center space-x-2 rounded-sm flex-none">
-                        <RiVideoAddLine className='h-5 w-5 text-brand2-700' /> <span className='text-gray-700 font-medium'>Create</span>
+                    <button className="text-secondary md:light-button-secondary light-button-secondary-hover flex items-center border-0 md:border theme-border mr-0 md:mr-3 px-2 md:px-3 md:py-1.5 py-2 justify-center space-x-2 rounded-full flex-none">
+                        <RiVideoAddLine className='md:h-5 md:w-5 w-6 h-6 md:text-brand2-700' /> <span className='hidden md:inline-flex font-medium'>Create</span>
                     </button>
                 }
             >

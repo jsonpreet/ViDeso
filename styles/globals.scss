@@ -107,6 +107,18 @@ body{
   @apply dark:bg-[#fff]/[0.1] bg-gray-100;
 }
 
+.active-primary-hover {
+  @apply dark:hover:bg-[#1b1b1b] hover:bg-gray-200;
+}
+
+.light-button-secondary {
+  @apply dark:bg-[#1b1b1b] bg-white;
+}
+
+.light-button-secondary-hover {
+  @apply dark:hover:bg-[#fff]/[0.1] hover:bg-gray-200;
+}
+
 .active-secondary {
   @apply dark:text-brand-500 text-brand2-600;
 }
@@ -123,7 +135,7 @@ body{
   @apply dark:hover:text-[#fff] hover:text-gray-900;
 }
 
-.text-secondary{
+.text-secondary {
   @apply dark:text-[#fff] text-gray-900;
 }
 

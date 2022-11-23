@@ -95,9 +95,7 @@ const Reactions = ({ showTip, setShowTip, video, iconSize = '21', isVertical = f
                                 'text-brand2-500 dark:text-brand2-400': liked
                             })}
                         >
-                            {likes > 0
-                                ? formatNumber(likes)
-                                : 'Like'}
+                            {likes > 0 ? formatNumber(likes) : 'Like'}
                         </span>
                     </span>
                 </Button>
@@ -131,7 +129,7 @@ const Reactions = ({ showTip, setShowTip, video, iconSize = '21', isVertical = f
                         >
                             {likes > 0
                                 ? formatNumber(likes)
-                                : 'Like'}
+                                : '0'}
                         </span>
                     </span>
                 </Button>

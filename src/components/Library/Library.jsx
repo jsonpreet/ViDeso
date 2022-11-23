@@ -14,11 +14,11 @@ function Library() {
                 <>
                     <div className='flex flex-col space-y-4 px-0 md:px-16'>
                         <div className='space-y-4'>
-                            <h3 className="text-2xl font-bold">History</h3>
+                            <h3 className="text-2xl px-4 font-bold">History</h3>
                             <Timeline isLibrary={true} />
                         </div>
                         <div className='space-y-4'>
-                            <h3 className="text-2xl font-bold">Watch Later</h3>
+                            <h3 className="text-2xl px-4 font-bold">Watch Later</h3>
                             <WatchLater />
                         </div>
                     </div>

@@ -71,26 +71,26 @@ function ChannelInfo({ following, followers, channel }) {
                     <ChannelLinks channel={channel} />
                 </div>
                 <div className="relative z-10 max-w-7xl w-full mx-auto flex items-center md:space-x-5">
-                    <div className="w-[56px] h-[56px] bg-white border-white border-4 dark:border-gray-900 rounded-full md:relative md:-mt-10 -mt-0 absolute -top-2 md:w-32 md:h-32 md:ml-0 ml-4 dark:bg-gray-700">
+                    <div className="w-20 h-20 bg-white border-white border-4 dark:border-gray-900 rounded-full md:relative md:-mt-10 -mt-7 absolute -top-2 md:w-32 md:h-32 md:ml-0 ml-4 dark:bg-gray-700">
                         <img src={avatar} alt="cover" className="w-full h-full object-cover rounded-full" />
                     </div>
                     <div className="flex-none md:flex-1 md:p-0 p-4 flex flex-col mt-5 md:mt-2 space-y-2">
                         <div className='flex space-x-10 items-center justify-start md:justify-end w-full -mb-0 -mt-0 md:-mb-1'>
-                            <div className='flex flex-col mb-2 flex-none md:flex-1 items-start'>
+                            <div className='flex flex-col mt-4 md:mt-0 mb-2 flex-none md:flex-1 items-start'>
                                 <div className='flex items-center'>
                                     <Tooltip placement='top' contentClass='text-[12px]' title={channel.Username}>
-                                        <h3 className='text-xl md:text-2xl mr-2 tracking-wide leading-0 hover:opacity-100 opacity-80'>{getProfileName(channel)}</h3>
+                                        <h3 className='text-xl md:text-2xl mr-1 md:mr-2 tracking-wide leading-0 hover:opacity-100 opacity-80'>{getProfileName(channel)}</h3>
                                     </Tooltip>    
                                     {channel.IsVerified ?
                                         <Tooltip placement='top' contentClass='text-[12px]' title='Verified'>
-                                            <span><IsVerified className='mt-0.5 md:w-5 md:h-5' color='text-gray-600' /></span>
+                                            <span><IsVerified className='mt-0.5 w-4 h-4 md:w-5 md:h-5' color='text-gray-600' /></span>
                                         </Tooltip>
                                     : null}
                                 </div>
-                                <div className='flex items-center'>
+                                <div className='flex md:-mt-0 -mt-1 items-center'>
                                     <p className='text-sm tracking-wide text-light leading-0'>@{channel.Username}</p>
                                 </div>
-                                <div className='flex mt-1.5 items-center'>
+                                <div className='flex mt-2 md:mt-1.5 items-center'>
                                     <span className="leading-none text-light">
                                         {formatNumber(followers)} subscribers
                                     </span>

@@ -43,7 +43,7 @@ const VideoActions = ({ video }) => {
                 >
                     <span className="flex items-center space-x-2 md:space-x-3">
                         <RiShareForwardLine size={22} />
-                        <span>Share</span>
+                        <span className='md:block hidden'>Share</span>
                     </span>
                 </Button>
             }

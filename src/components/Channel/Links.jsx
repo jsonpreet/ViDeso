@@ -20,7 +20,7 @@ function ChannelLinks({channel}) {
     const CustomURL = channelExtra.CustomURL !== null ? channelExtra.CustomURL : null;
     return (
         <>
-            <div className="absolute bottom-4 right-4">
+            <div className="absolute bottom-4 right-4 md:block hidden">
                 <div className="flex space-x-2 p-2 rounded-lg text-white bg-white bg-opacity-70">
                     <div>
                         <Link

@@ -41,7 +41,7 @@ const Header = ({ setSidebarCollapsed, isSidebarCollapsed }) => {
           </Link>
         </div>
         <Search />
-        <div className="flex flex-row items-center justify-end md:w-56">
+        <div className="flex mr-[2px] flex-row items-center justify-end md:w-56">
           {isLoggedIn ? (
             <>
               {/* <NotificationMenu/> */}
