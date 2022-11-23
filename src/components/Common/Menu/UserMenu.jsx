@@ -14,6 +14,8 @@ import { BASE_URI, DESO_CONFIG } from '@app/utils/constants';
 import IsVerified from '../IsVerified';
 import ThemeSwitch from '../ThemeSwitch';
 import { useRouter } from 'next/router';
+import { getProfileName } from '@app/utils/functions/getProfileName';
+import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
 
 function UserMenu() {
     const router = useRouter()
@@ -85,8 +87,8 @@ function UserMenu() {
                         className="!p-0 ml-1.5 flex-none"
                         >
                         <img
-                            src={`${BASE_URI}/get-single-profile-picture/${user.profile.PublicKeyBase58Check}`}
-                            alt={user.profile.PublicKeyBase58Check}
+                            src={getProfilePicture(user.profile)}
+                            alt={getProfileName(user.profile)}
                             className='object-cover rounded-full bg-dropdown w-8 h-8 md:w-9 md:h-9'
                         />
                         </Button>
@@ -97,16 +99,16 @@ function UserMenu() {
                             <div className="flex flex-col space-y-1 text-sm transition duration-150 ease-in-out rounded-lg">
                                 <div className="inline-flex items-center p-2 py-3 space-x-2 rounded-lg">
                                     <img
-                                        src={`${BASE_URI}/get-single-profile-picture/${user.profile.PublicKeyBase58Check}`}
-                                        alt={user.profile.PublicKeyBase58Check}
+                                        src={getProfilePicture(user.profile)}
+                                        alt={getProfileName(user.profile)}
                                         className='object-cover bg-dropdown rounded-full w-9 md:h-9'
                                     />
                                     <div className='flex items-center space-x-1'>
                                         <h3
-                                            title={user.profile.Username}
+                                            title={getProfileName(user.profile)}
                                             className="text-base truncate leading-4"
                                         >
-                                            {user.profile.Username}
+                                            {getProfileName(user.profile)}
                                         </h3>
                                         {user.profile.IsVerified ? <IsVerified size="xs" /> : null}
                                     </div>
@@ -125,7 +127,7 @@ function UserMenu() {
                                 </Menu.Item>
                                 
                                 <Link
-                                    href={SETTINGS}
+                                    href={`/@${user.profile.Username}/${SETTINGS}`}
                                     className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                                 >
                                     <HiOutlineCog size="20" />

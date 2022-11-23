@@ -39,7 +39,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
               <Link
                 href={HOME}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg px-3 font-medium py-2 group hover-primary',
                   {
                     'active-primary font-bold ': isActivePath(HOME),
                   },
@@ -53,7 +53,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
               <Link
                 href={FEED}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg px-3 font-medium py-2 group hover-primary',
                   {
                     'active-primary font-bold ': isActivePath(FEED),
                   },
@@ -67,7 +67,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
               <Link
                 href={STORI}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg px-3 font-medium py-2 group hover-primary',
                   {
                     'active-primary font-bold ': isActivePath(STORI) || router.pathname === '/stori' || router.pathname === '/stori/[id]',
                   },
@@ -81,7 +81,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
               <Link
                 href={LIBRARY}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg px-3 font-medium py-2 group hover-primary',
                   {
                     'active-primary font-bold ': isActivePath(LIBRARY),
                   },
@@ -95,7 +95,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
               <Link
                 href={HISTORY}
                 className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
+                  'rounded-lg px-3 font-medium py-2 group hover-primary',
                   {
                     'active-primary font-bold ': isActivePath(HISTORY),
                   },
@@ -112,7 +112,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
               <>
                 <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
                 <div className="flex flex-col w-full mb-3 px-3">
-                  <div className='text-base'>Explore</div>
+                  <div className='text-base font-semibold'>Explore</div>
                 </div>
                 <div className="flex flex-col space-y-1">
                   {Object.keys(CREATOR_VIDEO_CATEGORIES.slice(0, loadCount)).map((categories) => {
@@ -122,7 +122,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
                         <Link key={category.tag.toLowerCase()}
                           href={`/explore/${category.tag.toLowerCase()}`}
                           className={clsx(
-                            'rounded-lg px-3 py-2 group',
+                            'rounded-lg font-medium px-3 py-2 group',
                             isActiveCategory(category.tag.toLowerCase())
                               ? 'active-primary font-bold'
                               : 'hover-primary'
@@ -139,14 +139,14 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   
                   {
                     !showMore ?
-                      <div key={`showMore`} onClick={() => setShowMore(!showMore)} className="cursor-pointer rounded-lg px-3 py-2 group hover-primary">
+                      <div key={`showMore`} onClick={() => setShowMore(!showMore)} className="cursor-pointer font-medium rounded-lg px-3 py-2 group hover-primary">
                         <div className="flex items-center">
                           <BsChevronDown size={20} />
                           <p className='ml-6'>Show More</p>
                         </div>
                       </div>
                       :
-                      <div key={`showMore`} onClick={() => setShowMore(!showMore)} className="cursor-pointer rounded-lg px-3 py-2 group hover-primary">
+                      <div key={`showMore`} onClick={() => setShowMore(!showMore)} className="cursor-pointer font-medium rounded-lg px-3 py-2 group hover-primary">
                         <div className="flex items-center">
                           <BsChevronUp size={20} />
                           <p className='ml-6'>Show Less</p>
@@ -159,7 +159,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
                 <div className="flex flex-col space-y-1">
                   <a
                     href='https://twitter.com/VidesoApp' target='_blank' rel="noreferrer"
-                    className={'rounded-lg px-3 py-2 group hover-primary'}
+                    className={'rounded-lg px-3 font-medium py-2 group hover-primary'}
                   >
                     <div className="flex items-center">
                       <FaTwitter size={21} />
@@ -168,7 +168,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   </a>
                   <a
                     href='https://diamondapp.com/Videso' rel="noreferrer"
-                    className={'rounded-lg px-3 py-2 group hover-primary'}
+                    className={'rounded-lg px-3 font-medium py-2 group hover-primary'}
                   >
                     <div className="flex items-center">
                       <IoDiamondOutline size={21} />
@@ -177,7 +177,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   </a>
                   <a
                     href='#' rel="noreferrer"
-                    className={'rounded-lg px-3 py-2 group hover-primary'}
+                    className={'rounded-lg px-3 font-medium py-2 group hover-primary'}
                   >
                     <div className="flex items-center">
                       <MdOutlineFeedback size={21} />
@@ -190,21 +190,21 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   <Link
                     href={`/about`}
                     rel="noreferrer noopener"
-                    className="text-primary text-primary-hover text-sm font-medium"
+                    className="text-primary text-primary-hover text-sm font-semibold"
                   >
                     <p>About</p>
                   </Link>
                   <Link
                     href={`/privacy`}
                     rel="noreferrer noopener"
-                    className="text-primary text-primary-hover text-sm font-medium"
+                    className="text-primary text-primary-hover text-sm font-semibold"
                   >
                     <p>Privacy</p>
                   </Link>
                   <Link
                     href={`/copyright`}
                     rel="noreferrer noopener"
-                    className="text-primary text-primary-hover text-sm font-medium"
+                    className="text-primary text-primary-hover text-sm font-semibold"
                   >
                     <p>Copyright</p>
                   </Link>
@@ -212,7 +212,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
                 <div className='flex w-full px-3 text-sm text-primary mt-4 space-x-1'>
                   <span>Powered by</span>
                   <Link
-                    className="text-primary text-primary-hover text-sm font-medium"
+                    className="text-primary text-primary-hover text-sm font-semibold"
                     href={`https://vercel.com/?utm_source=${APP.Name}&utm_campaign=oss`}
                     rel="noreferrer noopener"
                     target="_blank"

@@ -1,19 +1,23 @@
+import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData';
 import Link from 'next/link'
-import { FaDiscord, FaGithub, FaGlobe, FaInstagram, FaLinkedin, FaLinkedinIn, FaTelegram, FaTwitter } from 'react-icons/fa';
+import { FaDiscord, FaExternalLinkSquareAlt, FaGithub, FaGlobe, FaInstagram, FaLinkedin, FaLinkedinIn, FaTelegram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { HiOutlineGlobe } from 'react-icons/hi'
 import { IoDiamondOutline } from 'react-icons/io5';
 import { RiTwitterLine } from 'react-icons/ri'
 import Tooltip from '../UIElements/Tooltip';
 
 function ChannelLinks({channel}) {
-    const channelExtra = channel.ExtraData || {};
+    const channelExtra = getProfileExtraData(channel);
     const DiscordURL = channelExtra.DiscordURL !== null ? channelExtra.DiscordURL : null;
     const GithubURL = channelExtra.GithubURL !== null ? channelExtra.GithubURL : null;
     const InstagramURL = channelExtra.InstagramURL !== null ? channelExtra.InstagramURL : null;
     const LinkedinURL = channelExtra.LinkedinURL !== null ? channelExtra.LinkedinURL : null;
-    const WebsiteURL = channelExtra.WebsiteURL !== null ? channelExtra.WebsiteURL : null;
     const TwitterURL = channelExtra.TwitterURL !== null ? channelExtra.TwitterURL : null;
-    const TelegramURL = channelExtra.TelegramURL !== null ? channelExtra.TelegramURL : null;
+    const YoutubeURL = channelExtra.YoutubeURL !== null ? channelExtra.YoutubeURL : null;
+    const WebsiteURL = channelExtra.WebsiteURL !== null ? channelExtra.WebsiteURL : null;
+    const WebsiteTitle = channelExtra.WebsiteTitle !== null ? channelExtra.WebsiteTitle : 'Website';
+    const CustomTitle = channelExtra.CustomTitle !== null ? channelExtra.CustomTitle : 'External Site';
+    const CustomURL = channelExtra.CustomURL !== null ? channelExtra.CustomURL : null;
     return (
         <>
             <div className="absolute bottom-4 right-4">
@@ -24,6 +28,7 @@ function ChannelLinks({channel}) {
                             target="_blank"
                             rel="noreferer noreferrer"
                             className='text-[#005bff]'
+                            title='Diamond App'
                         >
                             <IoDiamondOutline size={21} />
                         </Link> 
@@ -35,6 +40,7 @@ function ChannelLinks({channel}) {
                                 target="_blank"
                                 rel="noreferer noreferrer"
                                 className='text-[#1da1f2]'
+                                title='Twitter'
                             >
                                 <FaTwitter size={21} />
                             </Link> 
@@ -47,6 +53,7 @@ function ChannelLinks({channel}) {
                                 target="_blank"
                                 rel="noreferer noreferrer"
                                 className='text-[#e1306c]'
+                                title='Instagram'
                             >
                                 <FaInstagram size={21} />
                             </Link>    
@@ -59,6 +66,7 @@ function ChannelLinks({channel}) {
                                 target="_blank"
                                 rel="noreferer noreferrer"
                                 className='text-[#405de6]'
+                                title={WebsiteTitle}
                             >
                                 <FaGlobe size={21} />
                             </Link>  
@@ -71,6 +79,7 @@ function ChannelLinks({channel}) {
                                 target="_blank"
                                 rel="noreferer noreferrer"
                                 className='text-[#5865f2]'
+                                title='Discord'
                             >
                                 <FaDiscord size={21} />
                             </Link>
@@ -83,32 +92,35 @@ function ChannelLinks({channel}) {
                                 target="_blank"
                                 rel="noreferer noreferrer"
                                 className='text-[#0077b5]'
+                                title='Linkedin'
                             >
                                 <FaLinkedin size={21} />
                             </Link>
                         </div>
                     }
-                    {TelegramURL &&
+                    {YoutubeURL &&
                         <div>
                             <Link
-                                href={TelegramURL}
+                                href={YoutubeURL}
                                 target="_blank"
                                 rel="noreferer noreferrer"
-                                className='text-[#0088cc]'
+                                className='text-[#ff0000]'
+                                title='Youtube'
                             >
-                                <FaTelegram size={21} />
+                                <FaYoutube size={21} />
                             </Link> 
                         </div>
                     }
-                    {GithubURL &&
+                    {CustomURL &&
                         <div>
                             <Link
-                                href={GithubURL}
+                                href={CustomURL}
                                 target="_blank"
                                 rel="noreferer noreferrer"
                                 className='text-[#333]'
+                                title={CustomTitle}
                             >
-                                <FaGithub size={21} />
+                                <FaExternalLinkSquareAlt size={21} />
                             </Link> 
                         </div>
                     }

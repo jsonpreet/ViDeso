@@ -1,14 +1,12 @@
 import { ThemeProvider } from 'next-themes';
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import NextNProgress from 'nextjs-progressbar';
-import Head from 'next/head';
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import MetaTags from '@app/components/Common/MetaTags';
 import { Devtools } from '@app/components/DevTools';
 import { queryConfig, queryConfigAuto } from '@app/utils/constants';
 import { useRouter } from 'next/router';
 import Layout from '@app/components/Common/Layout';
-import FullPageLoader from '@app/components/Common/FullPageLoader';
 import '@vidstack/player/hydrate.js';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'

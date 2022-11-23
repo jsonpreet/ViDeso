@@ -11,6 +11,7 @@ import { AiOutlinePlayCircle } from 'react-icons/ai'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 import IsVerified from '../Common/IsVerified'
 import Reactions from './Reactions'
+import { getProfileName } from '@app/utils/functions/getProfileName'
 
 // const CommentOptions = dynamic(() => import('./CommentOptions'))
 // const Reactions = dynamic(() => import('./Reactions'))
@@ -57,7 +58,7 @@ const Comment = ({ comment }) => {
                 <img
                   className="w-9 h-9 rounded-full"
                   src={getProfilePicture(userProfile)}
-                  alt={`${userProfile.Username} Picture`}
+                  alt={`${getProfileName(userProfile)} Picture`}
                   draggable={false}
                 />
                 </Link>
@@ -68,7 +69,7 @@ const Comment = ({ comment }) => {
                         className="flex items-center space-x-1.5 text-sm font-medium"
                         >
                             
-                            <span>{userProfile.Username}</span>
+                            <span>{getProfileName(userProfile)}</span>
                             {userProfile.IsVerified ? <IsVerified size="xs" /> : null}
                         </Link>
                         <span className="middot" />

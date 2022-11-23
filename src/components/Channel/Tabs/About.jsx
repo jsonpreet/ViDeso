@@ -6,7 +6,7 @@ import "linkify-plugin-mention"
 import Link from 'next/link'
 import { useEffect, useState } from "react"
 import { BiChevronDown, BiChevronUp } from "react-icons/bi"
-import { FaDiscord, FaGithub, FaGlobe, FaInstagram, FaLinkedin, FaTelegram, FaTwitter } from 'react-icons/fa'
+import { FaDiscord, FaExternalLinkAlt, FaGithub, FaGlobe, FaInstagram, FaLinkedin, FaTelegram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { IoDiamondOutline } from 'react-icons/io5'
 import { FiFlag } from 'react-icons/fi'
 import usePersistStore from '@app/store/persist'
@@ -14,64 +14,39 @@ import Tooltip from '@app/components/UIElements/Tooltip'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import { APP } from '@app/utils/constants'
+import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData'
 
 dayjs.extend(advancedFormat)
 
 function About({ stats, channel }) {
     const { isLoggedIn, user } = usePersistStore();
     const reporterID = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
-    const channelExtra = channel.ExtraData || {};
+    const channelExtra = getProfileExtraData(channel);
     const DiscordURL = channelExtra.DiscordURL !== null ? channelExtra.DiscordURL : null;
     const GithubURL = channelExtra.GithubURL !== null ? channelExtra.GithubURL : null;
     const InstagramURL = channelExtra.InstagramURL !== null ? channelExtra.InstagramURL : null;
     const LinkedinURL = channelExtra.LinkedinURL !== null ? channelExtra.LinkedinURL : null;
-    const WebsiteURL = channelExtra.WebsiteURL !== null ? channelExtra.WebsiteURL : null;
     const TwitterURL = channelExtra.TwitterURL !== null ? channelExtra.TwitterURL : null;
-    const TelegramURL = channelExtra.TelegramURL !== null ? channelExtra.TelegramURL : null;
-    const [clamped, setClamped] = useState(false)
-    const [showMore, setShowMore] = useState(false)
-
-    useEffect(() => {
-        if (channel.Description.trim().length > 400) {
-            setClamped(true)
-            setShowMore(true)
-        }
-    }, [channel])
+    const YoutubeURL = channelExtra.YoutubeURL !== null ? channelExtra.YoutubeURL : null;
+    const WebsiteURL = channelExtra.WebsiteURL !== null ? channelExtra.WebsiteURL : null;
+    const WebsiteTitle = channelExtra.WebsiteTitle !== null ? channelExtra.WebsiteTitle : 'Website';
+    const CustomTitle = channelExtra.CustomTitle !== null ? channelExtra.CustomTitle : 'External Site';
+    const CustomURL = channelExtra.CustomURL !== null ? channelExtra.CustomURL : null;
     
     return (
         <>
-            <div className='max-w-7xl mx-auto'>
+            <div className='max-w-7xl mx-auto md:px-0 px-4'>
                 <div className='grid gap-4 md:grid-cols-4'>
                     <div className='col-span-3'>
                         <div className="flex flex-col">
                             <h3 className='mb-5'>Description</h3>
                             <div className={clsx(
-                                'overflow-hidden leading-6 text-sm break-words',
-                                clamped ? 'line-clamp-2' : ''
+                                'overflow-hidden leading-6 text-sm break-words'
                                 )}>
                                 <Linkify options={LinkifyOptions}>
-                                    {clamped ? channel.Description.trim().substring(0, 400) : channel.Description}
+                                    {channelExtra.Description !== null ? channelExtra.Description : channel.Description}
                                 </Linkify>
                             </div>
-                            {showMore && (
-                                <div className="inline-flex mt-3">
-                                    <button
-                                        type="button"
-                                        onClick={() => setClamped(!clamped)}
-                                        className="flex items-center mt-2 text-xs outline-none hover:opacity-100 opacity-60"
-                                    >
-                                        {clamped ? (
-                                            <>
-                                                Show more <BiChevronDown className="text-sm" />
-                                            </>
-                                        ) : (
-                                            <>
-                                                Show less <BiChevronUp className="text-sm" />
-                                            </>
-                                        )}
-                                    </button>
-                                </div>
-                            )}
                         </div>
                     </div>
                     <div className='col-span-1'>
@@ -84,9 +59,14 @@ function About({ stats, channel }) {
                                             <div>
                                                 <span className='text-sm text-primary'>Joined: {dayjs.unix(stats.UserAge.Timestamp).format('MMM DD, YYYY')}</span>
                                             </div>
-                                            {stats.UserGeo &&
+                                            {channelExtra.Location !== '' &&
                                                 <div>
-                                                    <span className='text-sm text-primary'>Location: {stats.UserGeo.geo_country}</span>
+                                                    <span className='text-sm text-primary'>Location: {channelExtra.Location}</span>
+                                                </div>
+                                            }
+                                            {channelExtra.Languages !== '' &&
+                                                <div>
+                                                    <span className='text-sm text-primary'>Language: {channelExtra.Languages}</span>
                                                 </div>
                                             }
                                             <div>
@@ -145,6 +125,19 @@ function About({ stats, channel }) {
                                             </Link>    
                                         </div>
                                     }
+                                    {YoutubeURL &&
+                                        <div>
+                                            <Link
+                                                href={YoutubeURL}
+                                                target="_blank"
+                                                rel="noreferer noreferrer"
+                                                className='text-secondary text-secondary-hover tracking-wide text-sm inline-flex space-x-1.5 items-center'
+                                            >
+                                                <FaYoutube size={18} />
+                                                <span className='ml-2'>Youtube</span>
+                                            </Link>    
+                                        </div>
+                                    }
                                     {WebsiteURL &&
                                         <div>
                                             <Link
@@ -154,7 +147,7 @@ function About({ stats, channel }) {
                                                 className='text-secondary text-secondary-hover tracking-wide text-sm inline-flex space-x-1.5 items-center'
                                             >
                                                 <FaGlobe size={18} />
-                                                <span className='ml-2'>Website</span>
+                                                <span className='ml-2'>{WebsiteTitle}</span>
                                             </Link>  
                                         </div>
                                     }
@@ -184,30 +177,17 @@ function About({ stats, channel }) {
                                             </Link>
                                         </div>
                                     }
-                                    {TelegramURL &&
+                                    {CustomURL &&
                                         <div>
                                             <Link
-                                                href={TelegramURL}
+                                                href={CustomURL}
                                                 target="_blank"
                                                 rel="noreferer noreferrer"
                                                 className='text-secondary text-secondary-hover tracking-wide text-sm inline-flex space-x-1.5 items-center'
                                             >
-                                                <FaTelegram size={17} />
-                                                <span className='ml-2'>Telegram</span>
-                                            </Link> 
-                                        </div>
-                                    }
-                                    {GithubURL &&
-                                        <div>
-                                            <Link
-                                                href={GithubURL}
-                                                target="_blank"
-                                                rel="noreferer noreferrer"
-                                                className='text-secondary text-secondary-hover tracking-wide text-sm inline-flex space-x-1.5 items-center'
-                                            >
-                                                <FaGithub size={18} />
-                                                <span className='ml-2'>Github</span>
-                                            </Link> 
+                                                <FaExternalLinkAlt size={17} />
+                                                <span className='ml-2'>{CustomTitle}</span>
+                                            </Link>
                                         </div>
                                     }
                                     {!stats && 

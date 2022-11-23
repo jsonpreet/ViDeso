@@ -184,7 +184,7 @@ const Channel = () => {
             <div
                 className={
                     clsx(
-                        'px-4 cursor-pointer md:px-8 py-3 flex items-center tracking-wider text-sm space-x-2 border-b-[3px] uppercase font-medium focus:outline-none',
+                        'px-4 cursor-pointer md:px-8 py-3 flex items-center tracking-wider text-sm space-x-2 border-b-[3px] uppercase font-semibold focus:outline-none',
                         isSelected
                         ? 'border-gray-700 dark:border-gray-500 opacity-100'
                             : 'border-transparent hover:text-brand2-500 dark:hover:text-brand-500',

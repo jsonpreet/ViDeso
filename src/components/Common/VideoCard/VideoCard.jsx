@@ -17,6 +17,7 @@ import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '@app/components/UIElements/Tooltip'
 import logger from '@app/utils/logger'
 import { isBrowser } from 'react-device-detect'
+import { getProfileName } from '@app/utils/functions/getProfileName'
 
 
 const VideoCard = ({ video, userProfile }) => {
@@ -101,7 +102,7 @@ const VideoCard = ({ video, userProfile }) => {
                 <img
                   className="w-9 h-9 rounded-full"
                   src={getProfilePicture(userProfile)}
-                  alt={`${userProfile.Username} Picture`}
+                  alt={getProfileName(userProfile)}
                   draggable={false}
                 />
               </Link>
@@ -118,7 +119,7 @@ const VideoCard = ({ video, userProfile }) => {
                       href={`/@${userProfile.Username}`}
                       className="flex w-fit items-center space-x-1.5 text-[14px] hover:opacity-100 opacity-70"
                     >
-                        {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip> : <span>{userProfile.Username}</span>}
+                        {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={getProfileName(userProfile)}><span>{getProfileName(userProfile)}</span></Tooltip> : <span>{getProfileName(userProfile)}</span>}
                       {userProfile.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="xs" /></span></Tooltip> : null}
                     </Link>
                     <div className="flex overflow-hidden text-[13px] opacity-70">

@@ -12,6 +12,7 @@ import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '../UIElements/Tooltip'
 import logger from '@app/utils/logger'
 import { isBrowser } from 'react-device-detect'
+import { getProfileName } from '@app/utils/functions/getProfileName'
 
 function ChannelInfo({ video, channel }) {
     const [followers, setFollowers] = useState(0)
@@ -103,7 +104,7 @@ function ChannelInfo({ video, channel }) {
                         <img
                             className="w-10 h-10 rounded-full"
                             src={getProfilePicture(channel)}
-                            alt={`${channel.Username} Picture`}
+                            alt={`${getProfileName(channel)} Picture`}
                             draggable={false}
                         />
                     </Link>
@@ -112,8 +113,8 @@ function ChannelInfo({ video, channel }) {
                             href={`/@${channel.Username}`}
                             className="flex items-center w-fit space-x-1.5 font-medium"
                         >
-                            {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={channel.Username}>
-                                <span>{channel.Username}</span>
+                            {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={getProfileName(channel)}>
+                                <span>{getProfileName(channel)}</span>
                             </Tooltip> : <span>{channel.Username}</span>}    
                             {channel.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="lg" /></span></Tooltip> : null}
                             </Link>

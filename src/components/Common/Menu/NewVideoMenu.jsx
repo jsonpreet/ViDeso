@@ -12,8 +12,8 @@ function NewVideoMenu() {
         <>
             <DropMenu
                 trigger={
-                    <button className="text-secondary hover-primary flex items-center justify-center w-10 h-10 rounded-full flex-none">
-                        <RiVideoAddLine className='h-6 w-6' />
+                    <button className="text-secondary hover-primary flex items-center border theme-border mr-3 px-3 py-1.5 justify-center space-x-2 rounded-sm flex-none">
+                        <RiVideoAddLine className='h-5 w-5 text-brand2-700' /> <span className='text-gray-700 font-medium'>Create</span>
                     </button>
                 }
             >
@@ -31,7 +31,7 @@ function NewVideoMenu() {
                         </Menu.Item>
                         <Menu.Item
                             as={NextLink}
-                            href={`/${user.profile.Username}/community`}
+                            href={`/@${user.profile.Username}/community`}
                             className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                         >
                             <TfiPencilAlt size="20" />

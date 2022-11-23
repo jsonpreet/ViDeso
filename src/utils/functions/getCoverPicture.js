@@ -1,6 +1,8 @@
+import { getProfileExtraData } from "./getProfileExtraData"
+
 export const getCoverPicture = (channel) => {
-  const channelExtra = channel.ExtraData || {};
-    const largeImage = channelExtra.FeaturedImageURL !== null ? channelExtra.FeaturedImageURL : null
-    const url = largeImage ? largeImage : `/backgrounds/4.jpg`
-    return url
+  const channelExtra = getProfileExtraData(channel);
+  const largeImage = channelExtra?.CoverImage !== null ? channelExtra?.CoverImage : null
+  const url = largeImage ? largeImage : `/backgrounds/4.jpg`
+  return url
 }
