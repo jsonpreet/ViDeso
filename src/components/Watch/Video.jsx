@@ -27,6 +27,7 @@ const Video = ({ videoData, video, poster }) => {
         source={videoUrl}
         videoData={videoData}
         hls={videoData.hls}
+        video={video}
         poster={poster}
       />
       <div className="md:px-0 px-3 flex flex-col">

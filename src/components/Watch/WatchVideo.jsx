@@ -26,7 +26,6 @@ const WatchVideo = () => {
     const { id, t } = router.query
     const supabase = useSupabaseClient()
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
-    const selectedChannel = useAppStore((state) => state.selectedChannel)
     const setVideoWatchTime = useAppStore((state) => state.setVideoWatchTime)
     const user = usePersistStore((state) => state.user)
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)

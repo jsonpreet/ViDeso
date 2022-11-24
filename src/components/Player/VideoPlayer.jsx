@@ -14,18 +14,30 @@ import {
   Player,
   Poster,
 } from '@vime/react'
+import { getCurrentDuration } from '@app/utils/functions/getCurrentDuration'
+import usePersistStore from '@app/store/persist'
+import { APP } from '@app/utils/constants'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { data } from 'autoprefixer'
+import { current } from 'tailwindcss/colors'
 
-const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
+const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
   const router = useRouter()
   const playerRef = useRef()
+  const supabase = useSupabaseClient()
+  const user = usePersistStore((state) => state.user)
+  const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
   const [showContextMenu, setShowContextMenu] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isVideoLoop, setIsVideoLoop] = useState(false)
+  const [isStarted, setisStarted] = useState(false)
   const { pathname } = useRouter()
   const upNextVideo = useAppStore((state) => state.upNextVideo)
   const videoWatchTime = useAppStore((state) => state.videoWatchTime)
   const [showNext, setShowNext] = useState(false)
   const currentVideo = document.getElementsByTagName('video')[0]
+  const currentDuration = getCurrentDuration(videoData.data.Duration);
+  const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
 
   const handleKeyboardShortcuts = () => {
     if (!playerRef.current) return
@@ -63,24 +75,33 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
   }
 
   useEffect(() => {
+    if (!isStarted) return
+    setNewView();
+  }, [isStarted])
+
+  useEffect(() => {
     if (!playerRef.current) return
     playerRef.current.currentTime = Number(videoWatchTime || 0)
   }, [playerRef, videoWatchTime])
 
   useEffect(() => {
     if (!currentVideo) return
+    currentVideo.onplay = () => {
+      setisStarted(true);
+      console.log('video started');
+    }
     currentVideo.onplaying = () => {
-        currentVideo.style.display = 'block'
-        setShowNext(false)
+      currentVideo.style.display = 'block'
+      setShowNext(false)
     }
     currentVideo.onended = () => {
-        if (upNextVideo) {
-            currentVideo.style.display = 'none'
-            setShowNext(true)
-        }
+      if (upNextVideo) {
+        currentVideo.style.display = 'none'
+        setShowNext(true)
+      }
     }
     currentVideo.onloadedmetadata = () => {
-        currentVideo.currentTime = Number(videoWatchTime || 0)
+      currentVideo.currentTime = Number(videoWatchTime || 0)
     }
     if (playerRef.current) handleKeyboardShortcuts()
   })
@@ -108,6 +129,28 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
     setShowNext(false)
   }
 
+
+  const onPlaybackStarted = () => {
+  };
+
+  const setNewView = () => {
+    const req = {
+      posthash: video.PostHashHex,
+      channel: video.ProfileEntryResponse.Username,
+      user: reader,
+      lastwatched: new Date()
+    }
+    console.log(req);
+    supabase.from('views').insert([req]).then((response) => {
+        console.log(response);
+        if (response.error) {
+            logger.error(video.PostHashHex, 'views', response.error);
+      }
+      return
+    })
+  }
+
+
   return (
     <div  data-video={`${videoData.id}`} data-src={`${videoData.hls}`}
       onContextMenu={onContextClick}
@@ -116,11 +159,11 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
       })}
     >
       <div className={`md:relative z-[5] aspect-[16/9]`}>
-        {/* <VimePlayer playerRef={playerRef} ratio={ratio} hls={hls} poster={poster} /> */}
         <Player
             tabIndex={1}
             ref={playerRef}
             aspectRatio={ratio}
+            onVmPlaybackStarted={onPlaybackStarted}
             autopause
             autoplay
             icons="material"
@@ -157,6 +200,7 @@ const PlayerInstance = ({ videoData, source, ratio, hls, poster }) => {
 
 const VideoPlayer = ({
   videoData,
+  video,
   source,
   poster,
   ratio = '16:9',
@@ -169,6 +213,7 @@ const VideoPlayer = ({
       <PlayerInstance
         videoData={videoData}
         source={source}
+        video={video}
         ratio={ratio}
         poster={poster}
         hls={hls}
