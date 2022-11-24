@@ -15,6 +15,9 @@ import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '../UIElements/Tooltip'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 import { isBrowser } from 'react-device-detect'
+import { getProfileName } from '@app/utils/functions/getProfileName'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import logger from '@app/utils/logger'
 
 const SuggestedVideoCard = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
@@ -24,6 +27,8 @@ const SuggestedVideoCard = ({ video }) => {
     const [userProfile, setUserProfile] = useState('')
     const [extraData, setExtraData] = useState('')
     const [error, setError] = useState(false)
+    const supabase = useSupabaseClient()
+    const [views, setViews] = useState(0)
 
     useEffect(() => {
         const deso = new Deso(DESO_CONFIG)
@@ -43,11 +48,10 @@ const SuggestedVideoCard = ({ video }) => {
                 })
             } catch (error) {
                 setError(true)
-             console.log('Video Thumbnail:', video.PostHashHex, error)
             }
         } catch (error) {
             setError(true)
-            console.log('Video Status:', video.PostHashHex, error)
+            logger.error(video.PostHashHex, 'Video Status:', res.error);
         }
         }
         if (video.VideoURLs[0] !== null) {
@@ -55,7 +59,19 @@ const SuggestedVideoCard = ({ video }) => {
         }
         setUserProfile(video.ProfileEntryResponse)
         setExtraData(video.ExtraData)
+        getViews()
     }, [video])   
+
+    
+  
+    function getViews() {
+        supabase.from('views').select('*', { count: 'exact' }).eq('posthash', video.PostHashHex).then((res) => {
+            setViews(res.count)
+            if (res.error) {
+                logger.error(video.PostHashHex, 'views', res.error);
+            }
+        })
+    }
   
     return (
         <div className="flex w-full justify-between group" data-id={video.PostHashHex} data-duration={videoData.Duration}>
@@ -93,7 +109,7 @@ const SuggestedVideoCard = ({ video }) => {
                                 />
                             </Link>
                         </div>
-                        <div className="flex flex-col md:w-auto items-start">
+                        <div className="flex md:space-y-1 space-y-0 flex-col md:w-auto items-start">
                             <div className="break-words w-full md:mb-0 overflow-hidden">
                                 <Link
                                     href={`/watch/${video.PostHashHex}`}
@@ -104,20 +120,24 @@ const SuggestedVideoCard = ({ video }) => {
                                     </span>
                                 </Link>
                             </div>
-                            <div className='flex flex-col items-start'>
+                            <div className='flex md:space-y-1 space-y-0 flex-col items-start'>
                                 <div className="truncate">
                                     <Link
                                         href={`/@${userProfile.Username}`}
                                         className="text-sm truncate text-light"
                                     >
                                         <div className="flex items-center space-x-1.5">
-                                            {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip> : <span>{userProfile.Username}</span>}
+                                            {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={getProfileName(userProfile)}><span>{getProfileName(userProfile)}</span></Tooltip> : <span>{userProfile.Username}</span>}
                                             {userProfile.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="xs" /></span></Tooltip> : null}
                                         </div>
                                     </Link>
                                 </div>
                                 <div>
-                                    <div className="flex truncate items-center text-xs text-light mt-0.5">
+                                    <div className="flex truncate items-center text-xs text-light">
+                                        <span className="whitespace-nowrap">
+                                            {views > 1 ? `${views} views` : `${views} view`}
+                                        </span>
+                                        <span className="middot" />
                                         <span className="whitespace-nowrap">
                                             {video.LikeCount} likes
                                         </span>

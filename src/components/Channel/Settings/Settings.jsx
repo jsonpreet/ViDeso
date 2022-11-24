@@ -274,7 +274,7 @@ function Settings() {
                             <div className='flex w-full md:flex-row flex-col space-x-0 space-y-0 md:space-y-0 md:space-x-10 mt-5'>
                                 <div className='flex w-full flex-col'>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Name</label>
+                                        <label className='font-medium text-sm'>Name</label>
                                         <input
                                             type='text'
                                             placeholder='Display Name'
@@ -284,7 +284,7 @@ function Settings() {
                                         />
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Handle</label>
+                                        <label className='font-medium text-sm'>Handle</label>
                                         <input
                                             type='text'
                                             readOnly
@@ -294,7 +294,7 @@ function Settings() {
                                         />
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Description</label>
+                                        <label className='font-medium text-sm'>Description</label>
                                         <textarea
                                             type='text'
                                             onChange={(e) => setDescription(e.target.value)}
@@ -305,7 +305,7 @@ function Settings() {
                                         </textarea>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Language</label>
+                                        <label className='font-medium text-sm'>Language</label>
                                         <input
                                             type='text'
                                             value={languages}
@@ -315,7 +315,7 @@ function Settings() {
                                         />
                                     </div>
                                     <div className='mb-6 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Location</label>
+                                        <label className='font-medium text-sm'>Location</label>
                                         <input
                                             type='text'
                                             value={location}
@@ -337,7 +337,7 @@ function Settings() {
                                 </div>
                                 <div className='flex w-full flex-col'>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Channel URL</label>
+                                        <label className='font-medium text-sm'>Channel URL</label>
                                         <div className='flex relative items-center'>
                                             <input
                                                 type='text'
@@ -358,7 +358,7 @@ function Settings() {
                                         </div>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Twitter</label>
+                                        <label className='font-medium text-sm'>Twitter</label>
                                         <div className='flex'>
                                             <input
                                                 type='text'
@@ -370,7 +370,7 @@ function Settings() {
                                         </div>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Instagram</label>
+                                        <label className='font-medium text-sm'>Instagram</label>
                                         <div className='flex'>
                                             <input
                                                 type='text'
@@ -382,7 +382,7 @@ function Settings() {
                                         </div>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Youtube</label>
+                                        <label className='font-medium text-sm'>Youtube</label>
                                         <div className='flex'>
                                             <input
                                                 type='text'
@@ -394,7 +394,7 @@ function Settings() {
                                         </div>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Discord</label>
+                                        <label className='font-medium text-sm'>Discord</label>
                                         <div className='flex'>
                                             <input
                                                 type='text'
@@ -406,7 +406,7 @@ function Settings() {
                                         </div>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Website</label>
+                                        <label className='font-medium text-sm'>Website</label>
                                         <div className='flex md:flex-row flex-col space-x-0 space-y-2 md:space-y-0 md:space-x-3'>
                                             <div className='w-full md:max-w-[200px]'>
                                                 <input
@@ -429,7 +429,7 @@ function Settings() {
                                         </div>
                                     </div>
                                     <div className='mb-4 flex flex-col space-y-2'>
-                                        <label className='font-bold text-sm'>Custom</label>
+                                        <label className='font-medium text-sm'>Custom</label>
                                         <div className='flex md:flex-row flex-col space-x-0 space-y-2 md:space-y-0 md:space-x-3'>
                                             <div className='w-full md:max-w-[200px]'>
                                                 <input

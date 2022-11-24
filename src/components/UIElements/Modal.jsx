@@ -60,7 +60,7 @@ const Modal = ({
                       <Button
                         variant="light"
                         onClick={() => onClose?.()}
-                        className='md:!p-0 md:w-10 max-w-[40px] h-auto w-auto md:h-10' 
+                        className='md:!p-0 md:w-10 max-w-[40px] w-auto h-10' 
                       >
                         <MdOutlineClose size={22} />
                       </Button>

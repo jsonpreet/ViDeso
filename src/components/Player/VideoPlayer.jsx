@@ -86,10 +86,10 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
 
   useEffect(() => {
     if (!currentVideo) return
-    currentVideo.onplay = () => {
-      setisStarted(true);
-      console.log('video started');
-    }
+    // currentVideo.onplay = () => {
+    //   setisStarted(true);
+    //   console.log('video started');
+    // }
     currentVideo.onplaying = () => {
       currentVideo.style.display = 'block'
       setShowNext(false)
@@ -129,8 +129,12 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
     setShowNext(false)
   }
 
-
-  const onPlaybackStarted = () => {
+  const onTimeUpdate = (event) => {
+    const seconds = Math.round(event.detail)
+    //console.log(seconds, currentDuration)
+    if (seconds === currentDuration) {
+      setisStarted(true);
+    }
   };
 
   const setNewView = () => {
@@ -140,11 +144,9 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
       user: reader,
       lastwatched: new Date()
     }
-    console.log(req);
     supabase.from('views').insert([req]).then((response) => {
-        console.log(response);
-        if (response.error) {
-            logger.error(video.PostHashHex, 'views', response.error);
+      if (response.error) {
+        logger.error(video.PostHashHex, 'views', response.error);
       }
       return
     })
@@ -163,7 +165,7 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
             tabIndex={1}
             ref={playerRef}
             aspectRatio={ratio}
-            onVmPlaybackStarted={onPlaybackStarted}
+            onVmCurrentTimeChange={onTimeUpdate}
             autopause
             autoplay
             icons="material"

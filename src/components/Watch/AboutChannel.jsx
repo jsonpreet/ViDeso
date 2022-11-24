@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 import { timeNow } from '@app/utils/functions'
 
-const AboutChannel = ({ video }) => {
+const AboutChannel = ({views, video }) => {
   const channel = video.ProfileEntryResponse
   const [clamped, setClamped] = useState(false)
   const [showMore, setShowMore] = useState(false)
@@ -21,8 +21,10 @@ const AboutChannel = ({ video }) => {
   return (
     <div className="flex items-start justify-between w-full bg-secondary p-4 rounded-none md:rounded-xl">
       <div className="flex flex-col flex-1 overflow-hidden break-words">
-        <div className='text-sm mb-3'>
-          <span>Uploaded {timeNow(video.TimestampNanos)}</span>
+        <div className='text-[13px] flex space-x-1 items-center font-medium mb-3'>
+          <span>{views > 1 ? `${views} views` : `${views} view`}</span>
+          <span className='middot'></span>
+          <span>{timeNow(video.TimestampNanos)}</span>
         </div>
         {video.Body !== null && (
           <div className="text-sm md:text-base">

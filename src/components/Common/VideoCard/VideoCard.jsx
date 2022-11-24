@@ -18,6 +18,7 @@ import Tooltip from '@app/components/UIElements/Tooltip'
 import logger from '@app/utils/logger'
 import { isBrowser } from 'react-device-detect'
 import { getProfileName } from '@app/utils/functions/getProfileName'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 
 const VideoCard = ({ video, userProfile }) => {
@@ -26,6 +27,8 @@ const VideoCard = ({ video, userProfile }) => {
   const [videoData, setVideoData] = useState('')
   const [thumbnailUrl, setThumbnailUrl] = useState('/default-black.jpg')
   const [extraData, setExtraData] = useState('')
+  const supabase = useSupabaseClient()
+  const [views, setViews] = useState(0)
 
   useEffect(() => {
     const deso = new Deso(DESO_CONFIG)
@@ -44,7 +47,8 @@ const VideoCard = ({ video, userProfile }) => {
     if (video.VideoURLs[0] !== null) {
       getVideoData()
     }
-      setExtraData(video.ExtraData)
+    setExtraData(video.ExtraData)
+    getViews()
   }, [video])
 
   useEffect(() => {
@@ -65,6 +69,16 @@ const VideoCard = ({ video, userProfile }) => {
       getThumbnail()
     }
   }, [videoData, video])
+
+  
+  function getViews() {
+    supabase.from('views').select('*', { count: 'exact' }).eq('posthash', video.PostHashHex).then((res) => {
+        setViews(res.count)
+        if (res.error) {
+            logger.error(video.PostHashHex, 'views', res.error);
+        }
+    })
+  }
 
   return (
     <div className="group">
@@ -124,7 +138,11 @@ const VideoCard = ({ video, userProfile }) => {
                     </Link>
                     <div className="flex overflow-hidden text-[13px] text-light">
                       <span className="whitespace-nowrap">
-                        {video.LikeCount} likes
+                        {views > 1 ? `${views} views` : `${views} view`}
+                      </span>
+                      <span className="middot" />
+                      <span className="whitespace-nowrap">
+                        {video.LikeCount > 1 ? `${video.LikeCount} likes` : `${video.LikeCount} like`}
                       </span>
                       <span className="middot" />
                         <span className="whitespace-nowrap">

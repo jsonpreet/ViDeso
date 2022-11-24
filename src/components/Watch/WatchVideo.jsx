@@ -31,6 +31,7 @@ const WatchVideo = () => {
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
     const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
     const [videoData, setVideoData] = useState(null)
+    const [views, setViews] = useState(0)
     const [thumbnailUrl, setThumbnailUrl] = useState('')
     const [loading, setLoading] = useState(true)
     const [posthash, setPosthash] = useState('')
@@ -79,9 +80,20 @@ const WatchVideo = () => {
         if (video && isFetched) {
             addToRecentlyWatched(video)
             getVideo()
+            getViews()
         }
     }, [router, video, isFetched, addToRecentlyWatched])
 
+    function getViews() {
+        supabase.from('views').select('*', { count: 'exact' }).eq('posthash', video.PostHashHex).then((res) => {
+            setViews(res.count)
+            console.log(res.count)
+            if (res.error) {
+                logger.error(video.PostHashHex, 'views', res.error);
+            }
+        })
+    }
+    
     useEffect(() => {
         if (isLoggedIn && video && video.VideoURLs !== null) {
             async function addToHistory() {
@@ -123,8 +135,8 @@ const WatchVideo = () => {
             {isFetched && !loading && !isError && videoData && video ? (
                 <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
-                        <Video videoData={videoData} video={video} poster={thumbnailUrl} />
-                        <AboutChannel video={video} />
+                        <Video views={views} videoData={videoData} video={video} poster={thumbnailUrl} />
+                        <AboutChannel views={views} video={video} />
                         <VideoComments video={video} />
                     </div>
                     <div className="w-full md:min-w-[300px] md:max-w-[400px]">

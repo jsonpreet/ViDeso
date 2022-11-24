@@ -14,7 +14,7 @@ import logger from '@app/utils/logger'
 import { isBrowser } from 'react-device-detect'
 import { getProfileName } from '@app/utils/functions/getProfileName'
 
-function ChannelInfo({ video, channel }) {
+function ChannelInfo({ views, video, channel }) {
     const [followers, setFollowers] = useState(0)
     const [loading, setLoading] = useState(true)
     const [subscribing, setSubscribing] = useState(false)

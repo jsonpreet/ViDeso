@@ -11,10 +11,11 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import IsVerified from '../Common/IsVerified'
 import { useRouter } from 'next/router'
+import { isMobile } from 'react-device-detect'
 
 
 const NextVideo = ({ video, playNext, cancelPlayNext }) => {
-    const [timeLeft, setTimeLeft] = useState(10)
+    const [timeLeft, setTimeLeft] = useState(isMobile ? 0 : 10) 
     const userProfile = video.ProfileEntryResponse;
     const [videoData, setVideoData] = useState('')
     const [thumbnailUrl, setThumbnailUrl] = useState('')
@@ -63,7 +64,7 @@ const NextVideo = ({ video, playNext, cancelPlayNext }) => {
     // const isSensitiveContent = getIsSensitiveContent(video.metadata, video.id)
     
     return (
-    <div className="absolute top-0 z-[7] w-full text-white h-3/4">
+    <div className="absolute top-0 z-[7] w-full text-white h-3/4 hidden md:block">
         <div className="flex items-center justify-center h-full">
             <div className="mx-auto w-72 mt-3 md:mt-5">
                 <p className="text-sm md:text-base">Up next in {timeLeft} seconds</p>

@@ -16,7 +16,7 @@ const VideoPlayer = dynamic(() => import('../Player/VideoPlayer'), {
   ssr: false
 })
 
-const Video = ({ videoData, video, poster }) => {
+const Video = ({ views, videoData, video, poster }) => {
   const userProfile = video.ProfileEntryResponse;
   const [videoUrl, setVideoUrl] = useState(getVideoUrl(video))
   const videoTitle = getVideoTitle(video)
@@ -40,7 +40,7 @@ const Video = ({ videoData, video, poster }) => {
           {/* <VideoMeta video={video} /> */}
         </div>
         <div className='flex md:flex-row flex-col justify-between md:items-center mt-3'>
-          <ChannelInfo channel={userProfile} video={video}/>
+          <ChannelInfo views={views} channel={userProfile} video={video}/>
           <div>
             <VideoActions video={video} />
           </div>

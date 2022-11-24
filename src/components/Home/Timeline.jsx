@@ -4,7 +4,6 @@ import { FetchInfiniteLatestFeed } from '@app/data/videos';
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
 import { NoDataFound } from '../UIElements/NoDataFound';
-import { getShuffleArray } from '@app/utils/functions/getShuffleArray';
 import usePersistStore from '@app/store/persist';
 import { APP } from '@app/utils/constants';
 import { Loader2 } from '../UIElements/Loader';
@@ -15,7 +14,7 @@ const Timeline = () => {
   const user = usePersistStore((state) => state.user)
   const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
   const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
-  const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data:videos } = FetchInfiniteLatestFeed( -1, reader );
+  const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data: videos } = FetchInfiniteLatestFeed(-1, reader);  
 
   useEffect(() => {
     if (inView && hasNextPage) {

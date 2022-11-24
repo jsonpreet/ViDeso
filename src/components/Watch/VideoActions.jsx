@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { FiFlag } from 'react-icons/fi'
 import { RiShareForwardLine } from 'react-icons/ri'
 import ShareModal from '../Common/ShareModal'
@@ -10,19 +10,16 @@ import usePersistStore from '@app/store/persist'
 import { APP } from '@app/utils/constants'
 import Tooltip from '@app/components/UIElements/Tooltip'
 import { isBrowser } from 'react-device-detect'
-import TipModal from '../Common/TipModal'
 
 const VideoActions = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
-    const [showTip, setShowTip] = useState(false)
     const { isLoggedIn, user } = usePersistStore();
     const reporterID = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
 
     return (
         <div className="flex items-center md:justify-end mt-4 space-x-2.5 md:space-x-4 md:mt-0">
-            <TipModal show={showTip} setShowTip={setShowTip} video={video} />
             <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
-            <Reactions showTip={showTip} setShowTip={setShowTip} video={video} />
+            <Reactions video={video} />
             {isBrowser ? <Tooltip title="Share">
                 <Button
                     variant="light"
