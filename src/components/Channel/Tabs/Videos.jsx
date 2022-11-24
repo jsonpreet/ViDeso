@@ -6,6 +6,7 @@ import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { NoDataFound } from '@app/components/UIElements/NoDataFound';
+import { Loader2 } from '@app/components/UIElements/Loader';
 
 function ChannelVideos({channel}) {
     const { ref, inView } = useInView()
@@ -58,16 +59,15 @@ function ChannelVideos({channel}) {
                             })
                         )}
                     </div>
-                    {isFetchingNextPage && hasNextPage && <div><TimelineShimmer cols={28} /></div>}
-                    <div className='loadMore flex items-center justify-center mt-6'>
+                    <div className='loadMore flex items-center justify-center mt-10'>
                         <div className='loadMoreButton'>
-                            <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage} className='btn'>
+                            <div ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage} className='btn'>
                                 {isFetchingNextPage
-                                    ? 'Loading more...'
+                                    ? <Loader2 />
                                     : hasNextPage
                                         ? 'Load More'
                                         : 'Nothing more to load'}
-                            </button>
+                            </div>
                         </div>
                     </div>
                 </div>    

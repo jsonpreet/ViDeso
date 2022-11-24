@@ -117,12 +117,12 @@ const VideoCard = ({ video, userProfile }) => {
                     </Link>
                     <Link
                       href={`/@${userProfile.Username}`}
-                      className="flex w-fit items-center space-x-1.5 text-[14px] hover:opacity-100 opacity-70"
+                      className="flex w-fit items-center space-x-1.5 text-[14px] text-light"
                     >
                         {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={getProfileName(userProfile)}><span>{getProfileName(userProfile)}</span></Tooltip> : <span>{getProfileName(userProfile)}</span>}
                       {userProfile.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="xs" /></span></Tooltip> : null}
                     </Link>
-                    <div className="flex overflow-hidden text-[13px] opacity-70">
+                    <div className="flex overflow-hidden text-[13px] text-light">
                       <span className="whitespace-nowrap">
                         {video.LikeCount} likes
                       </span>

@@ -104,11 +104,11 @@ const SuggestedVideoCard = ({ video }) => {
                                     </span>
                                 </Link>
                             </div>
-                            <div className='flex md:flex-col flex-row md:items-start items-center'>
+                            <div className='flex flex-col items-start'>
                                 <div className="truncate">
                                     <Link
                                         href={`/@${userProfile.Username}`}
-                                        className="text-sm truncate hover:opacity-100 opacity-80"
+                                        className="text-sm truncate text-light"
                                     >
                                         <div className="flex items-center space-x-1.5">
                                             {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={userProfile.Username}><span>{userProfile.Username}</span></Tooltip> : <span>{userProfile.Username}</span>}
@@ -116,13 +116,14 @@ const SuggestedVideoCard = ({ video }) => {
                                         </div>
                                     </Link>
                                 </div>
-                                <span className="middot md:hidden inline-flex" />
-                                <div className="flex truncate items-center text-xs opacity-80 mt-0.5">
-                                    <span className="whitespace-nowrap">
-                                        {video.LikeCount} likes
-                                    </span>
-                                    <span className="middot" />
-                                    <span>{timeNow(video.TimestampNanos)}</span>
+                                <div>
+                                    <div className="flex truncate items-center text-xs text-light mt-0.5">
+                                        <span className="whitespace-nowrap">
+                                            {video.LikeCount} likes
+                                        </span>
+                                        <span className="middot" />
+                                        <span>{timeNow(video.TimestampNanos)}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

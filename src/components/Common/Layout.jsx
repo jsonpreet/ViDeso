@@ -6,8 +6,12 @@ import { Toaster } from 'react-hot-toast'
 //import Header from './Header'
 import Sidebar from './Sidebar'
 import dynamic from 'next/dynamic'
-import MobileMenu from './Menu/MobileMenu'
+//import MobileMenu from './Menu/MobileMenu'
 import { useState } from 'react'
+
+
+
+const MobileMenu = dynamic(() => import('./Menu/MobileMenu'), { ssr: false })
 
 const Header = dynamic(() => import('./Header'), { ssr: false })
 //const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false }) md:min-h-screen  h-full md:h-screen

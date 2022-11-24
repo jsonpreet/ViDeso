@@ -8,16 +8,16 @@ import Tooltip from '../UIElements/Tooltip';
 
 function ChannelLinks({channel}) {
     const channelExtra = getProfileExtraData(channel);
-    const DiscordURL = channelExtra.DiscordURL !== null ? channelExtra.DiscordURL : null;
-    const GithubURL = channelExtra.GithubURL !== null ? channelExtra.GithubURL : null;
-    const InstagramURL = channelExtra.InstagramURL !== null ? channelExtra.InstagramURL : null;
-    const LinkedinURL = channelExtra.LinkedinURL !== null ? channelExtra.LinkedinURL : null;
-    const TwitterURL = channelExtra.TwitterURL !== null ? channelExtra.TwitterURL : null;
-    const YoutubeURL = channelExtra.YoutubeURL !== null ? channelExtra.YoutubeURL : null;
-    const WebsiteURL = channelExtra.WebsiteURL !== null ? channelExtra.WebsiteURL : null;
-    const WebsiteTitle = channelExtra.WebsiteTitle !== null ? channelExtra.WebsiteTitle : 'Website';
-    const CustomTitle = channelExtra.CustomTitle !== null ? channelExtra.CustomTitle : 'External Site';
-    const CustomURL = channelExtra.CustomURL !== null ? channelExtra.CustomURL : null;
+    const DiscordURL = channelExtra?.DiscordURL !== null ? channelExtra?.DiscordURL : null;
+    const GithubURL = channelExtra?.GithubURL !== null ? channelExtra?.GithubURL : null;
+    const InstagramURL = channelExtra?.InstagramURL !== null ? channelExtra?.InstagramURL : null;
+    const LinkedinURL = channelExtra?.LinkedinURL !== null ? channelExtra?.LinkedinURL : null;
+    const TwitterURL = channelExtra?.TwitterURL !== null ? channelExtra?.TwitterURL : null;
+    const YoutubeURL = channelExtra?.YoutubeURL !== null ? channelExtra?.YoutubeURL : null;
+    const WebsiteURL = channelExtra?.WebsiteURL !== null ? channelExtra?.WebsiteURL : null;
+    const WebsiteTitle = channelExtra?.WebsiteTitle !== null ? channelExtra?.WebsiteTitle : 'Website';
+    const CustomTitle = channelExtra?.CustomTitle !== null ? channelExtra?.CustomTitle : 'External Site';
+    const CustomURL = channelExtra?.CustomURL !== null ? channelExtra?.CustomURL : null;
     return (
         <>
             <div className="absolute bottom-4 right-4 md:block hidden">

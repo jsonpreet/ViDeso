@@ -49,16 +49,15 @@ function Explore() {
                                 })
                             )}
                         </div>
-                        {isFetchingNextPage && hasNextPage && <div><TimelineShimmer cols={28} /></div>}
-                        <div className='loadMore'>
+                        <div className='loadMore flex items-center justify-center mt-10'>
                             <div className='loadMoreButton'>
-                                <button ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage}  className='btn'>
+                                <div ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage} className='btn'>
                                     {isFetchingNextPage
-                                    ? <Loader2/>
-                                    : hasNextPage
-                                    ? <Loader2/>
-                                    : 'Nothing more to load'}
-                                </button>
+                                        ? <Loader2 />
+                                        : hasNextPage
+                                            ? 'Load More'
+                                            : 'Nothing more to load'}
+                                </div>
                             </div>
                         </div>
                     </>

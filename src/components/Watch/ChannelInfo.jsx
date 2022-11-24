@@ -98,7 +98,7 @@ function ChannelInfo({ video, channel }) {
     
     return (
         <>
-            <div className='flex items-center space-x-3'>
+            <div className='flex items-center md:justify-start justify-between space-x-3'>
                 <div className='flex space-x-2'>
                     <Link href={`/@${channel.Username}`} className="flex-none">
                         <img

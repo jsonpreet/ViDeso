@@ -27,7 +27,7 @@ const VideoActions = ({ video }) => {
                 <Button
                     variant="light"
                     onClick={() => setShowShare(true)}
-                    className='md:h-10'
+                    className='h-10'
                 >
                     <span className="flex items-center space-x-2 md:space-x-3">
                         <RiShareForwardLine size={22} />
@@ -35,15 +35,14 @@ const VideoActions = ({ video }) => {
                     </span>
                 </Button>
             </Tooltip> :
-                
                 <Button
                     variant="light"
                     onClick={() => setShowShare(true)}
-                    className='md:h-10'
+                    className='h-10'
                 >
                     <span className="flex items-center space-x-2 md:space-x-3">
                         <RiShareForwardLine size={22} />
-                        <span className='md:block hidden'>Share</span>
+                        <span>Share</span>
                     </span>
                 </Button>
             }
@@ -51,7 +50,7 @@ const VideoActions = ({ video }) => {
                 trigger={
                     <Button
                         variant="light"
-                        className='md:!p-0 md:w-10 max-w-[40px] h-auto w-auto md:h-10' 
+                        className='md:!p-0 md:w-10 max-w-[40px] w-auto h-10' 
                     >
                         <span className="flex items-center space-x-2 md:space-x-3">
                             <BsThreeDots size={22} />
