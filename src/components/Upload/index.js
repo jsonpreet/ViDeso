@@ -1,1 +1,1 @@
-export { default as UploadVideo } from './Video';
+export { default as Upload } from './Upload';

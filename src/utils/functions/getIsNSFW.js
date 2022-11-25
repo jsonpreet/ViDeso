@@ -1,3 +1,4 @@
+import logger from "../logger"
 
 
 const SENSITIVE_CONTENT_LIMIT = 95

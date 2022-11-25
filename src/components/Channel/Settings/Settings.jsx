@@ -7,7 +7,7 @@ import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData';
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
 import Deso from 'deso-protocol';
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import { BiCopy, BiUpload } from 'react-icons/bi';
 import party from "party-js"
@@ -17,27 +17,51 @@ function Settings() {
     const { user, setUser } = usePersistStore();
     const rootRef = useRef(null)
     const [copy] = useCopyToClipboard()
-    const [newCover, setCover] = useState(null)
-    const [newAvatar, setAvatar] = useState(null)
+    const [cover, setCover] = useState(null)
+    const [newCover, setNewCover] = useState(null)
+    const [avatar, setAvatar] = useState(null)
+    const [newAvatar, setNewAvatar] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [channel, setChannel] = useState(null)
     const [uploadingCover, setUploadingCover] = useState(false)
     const [uploadingAvatar, setUploadingAvatar] = useState(false)
-    const channel = user.profile;
-    const extraData = getProfileExtraData(user.profile);
-    const [displayName, setDisplayName] = useState(extraData?.DisplayName || '')
-    const [description, setDescription] = useState(extraData?.Description || '')
-    const [location, setLocation] = useState(extraData?.Location || '')
-    const [languages, setLanguages] = useState(extraData?.Languages || '')
-    const [twitterLink, setTwitterLink] = useState(extraData?.TwitterURL || '')
-    const [instagramLink, setInstagramLink] = useState(extraData?.InstagramURL || '')
-    const [youtubeLink, setYoutubeLink] = useState(extraData?.YoutubeURL || '')
-    const [linkedinLink, setLinkedInLink] = useState(extraData?.LinkedInURL || '')
-    const [githubLink, setGithubLink] = useState(extraData?.GithubURL || '')
-    const [discordLink, setDiscordLink] = useState(extraData?.DiscordURL || '')
-    const [websiteTitle, setWebsiteTitle] = useState(extraData?.WebsiteTitle || '')
-    const [websiteLink, setWebsiteLink] = useState(extraData?.WebsiteURL || '')
-    const [customTitle, setCustomTitle] = useState(extraData?.CustomTitle || '')
-    const [customLink, setCustomLink] = useState(extraData?.CustomURL || '')
+    const [displayName, setDisplayName] = useState('')
+    const [description, setDescription] = useState('')
+    const [location, setLocation] = useState('')
+    const [languages, setLanguages] = useState('')
+    const [twitterLink, setTwitterLink] = useState('')
+    const [instagramLink, setInstagramLink] = useState('')
+    const [youtubeLink, setYoutubeLink] = useState('')
+    const [linkedinLink, setLinkedInLink] = useState('')
+    const [githubLink, setGithubLink] = useState('')
+    const [discordLink, setDiscordLink] = useState('')
+    const [websiteTitle, setWebsiteTitle] = useState('')
+    const [websiteLink, setWebsiteLink] = useState('')
+    const [customTitle, setCustomTitle] = useState('')
+    const [customLink, setCustomLink] = useState('')
+
+    useEffect(() => {
+        setChannel(user.profile)
+        const cover = getCoverPicture(user.profile);
+        const avatar = getProfilePicture(user.profile);
+        setCover(cover);
+        setAvatar(avatar)
+        const extraData = getProfileExtraData(user.profile);
+        setDisplayName(extraData.DisplayName || '')
+        setDescription(extraData.Description || '')
+        setLocation(extraData.Location || '')
+        setLanguages(extraData.Languages || '')
+        setTwitterLink(extraData.TwitterURL || '')
+        setInstagramLink(extraData.InstagramURL || '')
+        setYoutubeLink(extraData.YoutubeURL || '')
+        setLinkedInLink(extraData.LinkedInURL || '')
+        setGithubLink(extraData.GithubURLk || '')
+        setDiscordLink(extraData.DiscordURL || '')
+        setWebsiteTitle(extraData.WebsiteTitle || '')
+        setWebsiteLink(extraData.WebsiteURL || '')
+        setCustomTitle(extraData.CustomTitle || '')
+        setCustomLink(extraData.CustomURL || '')
+    },[user])
 
     const onCopyChannelUrl = async () => {
         await copy(`${APP.URL}/@${channel.Username}`)
@@ -53,7 +77,7 @@ function Settings() {
             };
             const response = await deso.media.uploadImage(request);
             if (response.ImageURL !== "") {
-                setCover(response.ImageURL);
+                setNewCover(response.ImageURL);
                 const payload = {
                     ProfileImage: extraData.ProfileImage,
                     CoverImage: response.ImageURL,
@@ -120,7 +144,7 @@ function Settings() {
             };
             const response = await deso.media.uploadImage(request);
             if (response.ImageURL !== "") {
-                setAvatar(response.ImageURL);
+                setNewAvatar(response.ImageURL);
                 const payload = {
                     ProfileImage: response.ImageURL,
                     CoverImage: extraData.CoverImage,
@@ -233,8 +257,7 @@ function Settings() {
         }
     }
 
-    const cover = getCoverPicture(channel);
-    const avatar = getProfilePicture(channel);
+    
     return (
         <>
             <div ref={rootRef} className=''>

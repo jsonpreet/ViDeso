@@ -1,7 +1,17 @@
 import Head from 'next/head'
 import Deso from 'deso-protocol'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as tus from "tus-js-client"
+import Tooltip from '../UIElements/Tooltip'
+import { IoCopyOutline } from 'react-icons/io5'
+import useAppStore from '@app/store/app'
+import useCopyToClipboard from '@app/utils/hooks/useCopyToClipboard'
+import toast from 'react-hot-toast'
+import logger from '@app/utils/logger'
+import VideoThumbnails from './VideoThumbnails'
+import formatBytes from '@app/utils/functions'
+import clsx from 'clsx'
+import ExVideoPlayer from '../Player/ExVideoPlayer'
 
 function UploadVideo() {
     const [deso, setDeso] = useState(null)
@@ -11,16 +21,52 @@ function UploadVideo() {
     const [uploadProgress, setUploadProgress] = useState(0)
     const videoStreamInterval = null
 
+    const uploadedVideo = useAppStore((state) => state.uploadedVideo)
+    const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
+    const [copy] = useCopyToClipboard()
+    const videoRef = useRef(null)
+
+    const analyseVideo = async (currentVideo) => {
+        if (currentVideo && !uploadedVideo.isNSFW) {
+            try {
+                const model = await nsfwjs.load()
+                const predictions = await model?.classify(currentVideo, 3)
+                setUploadedVideo({
+                    isNSFW: getIsNSFW(predictions)
+                })
+            } catch (error) {
+                logger.error('[Error Analyse Video]', error)
+            }
+        }
+    }
+
+    const onDataLoaded = async (event) => {
+        if (videoRef.current?.duration && videoRef.current?.duration !== Infinity) {
+            setUploadedVideo({
+                durationInSeconds: videoRef.current.duration.toFixed(2)
+            })
+        }
+        if (event.target) {
+            const currentVideo = document.getElementsByTagName('video')[0]
+            await analyseVideo(currentVideo)
+        }
+    }
+
+    useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.onloadeddata = onDataLoaded
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [videoRef])
+
+    const onThumbnailUpload = (ipfsUrl, thumbnailType) => {
+        setUploadedVideo({ thumbnail: ipfsUrl, thumbnailType })
+    }
+
     useEffect(() => {
         const deso = new Deso();
         setDeso(deso)
     }, [])
-
-    // const uploadVideo = async () => {
-    //   const request = undefined;
-    //   const url = await deso.media.uploadVideo(request)
-    //   console.log(url)
-    // }
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0])
@@ -107,7 +153,7 @@ function UploadVideo() {
     return (
         <>
         
-            <form acceptCharset="UTF-8"
+            {/* <form acceptCharset="UTF-8"
                     method="POST"
                     encType="multipart/form-data"
                     id="ajaxForm"
@@ -119,7 +165,65 @@ function UploadVideo() {
                 <p className='text-white'>Video ID: {mediaID}</p>
             </div>}
             {uploadProgress > 0 && <p>{uploadProgress}%</p>}
-            </form>
+            </form> */}
+            <div className="flex flex-col w-full">
+                <div className="overflow-hidden relative rounded-xl w-full">
+                    <ExVideoPlayer
+                        playerRef={videoRef}
+                        poster={uploadedVideo.thumbnail}
+                        source={uploadedVideo.preview}
+                        type={uploadedVideo.videoType || 'video/mp4'}
+                    />
+                    {/* <video
+                        ref={videoRef}
+                        className="w-full aspect-[16/9]"
+                        disablePictureInPicture
+                        disableRemotePlayback
+                        controlsList="nodownload noplaybackrate"
+                        poster={uploadedVideo.thumbnail}
+                        controls
+                        src={uploadedVideo.preview}
+                    >
+                    <source
+                        src={uploadedVideo.preview}
+                        type={uploadedVideo.videoType || 'video/mp4'}
+                    />
+                    </video> */}
+                    <div className="py-0.5 absolute top-2 px-2 z-10 left-2 text-xs uppercase bg-brand-200 text-black rounded-full">
+                        {uploadedVideo.file?.size && (
+                            <span className="whitespace-nowrap font-semibold">
+                            {formatBytes(uploadedVideo.file?.size)}
+                            </span>
+                        )}
+                    </div>
+                </div>
+                
+                {uploadedVideo.percent !== 0 && <div className="w-full mt-4 overflow-hidden bg-gray-200 rounded-full">
+                    <div
+                        className={clsx(
+                            'h-[6px]',
+                            uploadedVideo.percent !== 0
+                                ? 'bg-indigo-500'
+                                : 'bg-gray-300 dark:bg-gray-800'
+                        )}
+                        style={{
+                            width: `${uploadedVideo.percent}%`
+                        }}
+                    />
+                </div>}
+                <div className="mt-4">
+                    <VideoThumbnails
+                        label="Thumbnail"
+                        file={uploadedVideo.file}
+                        afterUpload={(ipfsUrl, thumbnailType) => {
+                            if (!ipfsUrl?.length) {
+                            return toast.error('Failed to upload thumbnail')
+                            }
+                            onThumbnailUpload(ipfsUrl, thumbnailType)
+                        }}
+                    />
+                </div>
+            </div>
         </>
     )
 }

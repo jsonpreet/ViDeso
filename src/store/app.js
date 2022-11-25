@@ -3,8 +3,20 @@ import create from 'zustand'
 
 export const UPLOADED_VIDEO_FORM_DEFAULTS = {
   stream: null,
+  preview: '',
+  videoType: '',
+  file: null,
+  title: '',
+  description: '',
+  thumbnail: '',
+  thumbnailType: '',
+  videoSource: '',
+  percent: 0,
   playbackId: '',
+  isSensitiveContent: false,
+  isUploadToIpfs: false,
   loading: false,
+  uploadingThumbnail: false,
   buttonText: 'Post Video',
   durationInSeconds: null,
   videoCategory: CREATOR_VIDEO_CATEGORIES[0],
@@ -19,7 +31,12 @@ export const useAppStore = create((set) => ({
   hasNewNotification: false,
   upNextVideo: null,
   selectedChannel: null,
+  uploadedVideo: UPLOADED_VIDEO_FORM_DEFAULTS,
   videoWatchTime: 0,
+  setUploadedVideo: (videoData) =>
+    set((state) => ({
+      uploadedVideo: { ...state.uploadedVideo, ...videoData }
+    })),
   setVideoWatchTime: (videoWatchTime) => set(() => ({ videoWatchTime })),
   setSelectedChannel: (channel) => set(() => ({ selectedChannel: channel })),
   setUpNextVideo: (upNextVideo) => set(() => ({ upNextVideo })),

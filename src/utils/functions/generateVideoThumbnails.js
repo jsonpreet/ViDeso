@@ -38,6 +38,7 @@ export const generateVideoThumbnails = (
         const thumbnailArray = []
         const averageSplitTime = Math.floor(video.duration / count)
         for (let i = 0; i < count; i++) {
+          console.log(averageSplitTime * i)
           const currentTime = averageSplitTime * i
           const thumbnail = await canvasImageFromVideo(file, currentTime)
           thumbnailArray.push(thumbnail)
