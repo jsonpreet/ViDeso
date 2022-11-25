@@ -12,6 +12,7 @@ import VideoThumbnails from './VideoThumbnails'
 import formatBytes from '@app/utils/functions'
 import clsx from 'clsx'
 import { CardShimmer } from '../Shimmers/VideoCardShimmer'
+import dynamic from 'next/dynamic'
 
 const ExVideoPlayer = dynamic(() => import('../Player/ExVideoPlayer'), {
   loading: () => <CardShimmer />,
