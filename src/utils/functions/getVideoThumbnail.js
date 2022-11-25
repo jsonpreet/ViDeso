@@ -1,6 +1,6 @@
 import { getVideoExtraData } from "./getVideoExtraData";
 
-export const getVideoThumbnail = (video, duration) => {
+export const getVideoThumbnail = (video, duration = 0) => {
     const extraData = getVideoExtraData(video);
     const url = video.VideoURLs[0]
     const replacedUrl = url.replace('iframe.', '')

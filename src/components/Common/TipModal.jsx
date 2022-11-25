@@ -45,7 +45,7 @@ const TipModal = ({ diamondBestowed, setDiamondBestowed, rootRef, show, setShowT
     const sendDiamonds = async () => {
         setLoading(true);
         try {
-            const deso = new Deso(DESO_CONFIG)
+            const deso = new Deso()
             const request = {
                 ReceiverPublicKeyBase58Check: video.ProfileEntryResponse.PublicKeyBase58Check,
                 SenderPublicKeyBase58Check: user.profile.PublicKeyBase58Check,
@@ -55,22 +55,23 @@ const TipModal = ({ diamondBestowed, setDiamondBestowed, rootRef, show, setShowT
                 InTutorial: false,
             };
             const response = await deso.social.sendDiamonds(request);
-            if (response && response.TxnHashHex !== null) {
-                setDiamondBestowed(diamondBestowed + value)
-                party.confetti(rootRef.current, {
-                    count: party.variation.range(50, 100),
-                    size: party.variation.range(0.2, 1.0),
-                });
+            if (response && response.TxnHashHex) {
+                setDiamondBestowed(value)
+                // party.confetti(rootRef.current, {
+                //     count: party.variation.range(50, 100),
+                //     size: party.variation.range(0.2, 1.0),
+                // });
+                setLoading(false);
+                setShowTip(false);
             } else {
+                console.log(response)
                 logger.error('error', response);
                 toast.error(`Oops! This Amount Diamonds Already Sent`);
             }
         } catch (error) {
-            logger.error('error', error);
+                console.log(error)
+            logger.error('error', error.message);
             
-        } finally {
-            setLoading(false);
-            setShowTip(false);
         }
     }
 

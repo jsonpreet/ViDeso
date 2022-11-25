@@ -66,12 +66,16 @@ const WatchVideo = () => {
             //setVideoData({ id: videoID, data: videoData.data })
             setVideoData({ id: videoID, data: videoData.data, hls: `https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoID}/manifest/video.m3u8` })
             try {
-                //const duration = getThumbDuration(videoData.data.Duration);
-                const url = getVideoThumbnail(video);
-                await axios.get(url, { responseType: 'blob' }).then((res) => {
-                    setThumbnailUrl(URL.createObjectURL(res.data))
-                    setLoading(false)
-                })
+                const duration = getThumbDuration(videoData.data.Duration);
+                const thumb = getVideoThumbnail(video, duration);
+                if (thumb.processed) {
+                    setThumbnailUrl(thumb.url)
+                } else {
+                    await axios.get(thumb.url, { responseType: 'blob' }).then((res) => {
+                        setThumbnailUrl(URL.createObjectURL(res.data))
+                    })
+                }
+                setLoading(false)
             } catch (error) {
                 setLoading(false)
                 logger.error(video.PostHashHex, 'thumbnail', error);
@@ -87,7 +91,6 @@ const WatchVideo = () => {
     function getViews() {
         supabase.from('views').select('*', { count: 'exact' }).eq('posthash', video.PostHashHex).then((res) => {
             setViews(res.count)
-            console.log(res.count)
             if (res.error) {
                 logger.error(video.PostHashHex, 'views', res.error);
             }
