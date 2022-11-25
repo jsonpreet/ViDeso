@@ -55,12 +55,14 @@ const VideoCard = ({ video, userProfile }) => {
     const getThumbnail = async () => {
         try {
           const duration = getThumbDuration(videoData.Duration);
-          const url = getVideoThumbnail(video, duration);
-            //setThumbnailUrl(url)
-          await axios.get(url, { responseType: 'blob' }).then((res) => {
-            
-            setThumbnailUrl(URL.createObjectURL(res.data))
-          })
+          const thumb = getVideoThumbnail(video, duration);
+          if (thumb.processed) {
+            setThumbnailUrl(thumb.url)
+          } else {
+              await axios.get(thumb.url, { responseType: 'blob' }).then((res) => {
+                setThumbnailUrl(URL.createObjectURL(res.data))
+              })
+          }
         } catch (error) {
           logger.error(video.PostHashHex, error)
       }

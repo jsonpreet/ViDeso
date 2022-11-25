@@ -30,8 +30,8 @@ const Layout = ({ children }) => {
                 position="bottom-right"
                 toastOptions={toastOptions}
             />
-            <div className='bg-primary flex'>
-                <div className='hidden fixed top-0 left-0 md:flex md:flex-shrink-0'>
+            <div className=' flex'>
+                <div className='hidden bg-primary fixed top-0 left-0 md:flex md:flex-shrink-0'>
                     <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
                 </div>
                 <div className='flex flex-col mx-auto flex-1'>

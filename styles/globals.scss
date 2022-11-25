@@ -45,7 +45,7 @@ html, body{
 }
 
 body{
-  background-color: #fff;
+  background-color: rgb(255 255 255);
   font-family: "Roboto", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   -webkit-font-smoothing: antialiased;
   font-size: 16px;
@@ -376,10 +376,8 @@ vm-player video.sc-vm-file {
   resize: vertical;
   border-radius:0.375rem;
   border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(228 228 231 / var(--tw-border-opacity));
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  border-color: rgb(228 228 231);
+  background-color: rgb(255 255 255)!important;
   padding: 0.625rem 0.75rem;
   font-size: .875rem;
   line-height: 1.25rem;

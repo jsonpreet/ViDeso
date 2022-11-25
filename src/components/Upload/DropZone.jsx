@@ -50,54 +50,60 @@ const DropZone = () => {
 
     return (
         <div>
-            <MetaTags title="Select Video" />
-            <div className="relative flex flex-col items-center justify-center flex-1 my-20">
-                <label
-                    className={clsx(
-                        'w-full p-10 md:p-20 md:w-2/3 focus:outline-none border-gray-500 grid place-items-center text-center border border-dashed rounded-3xl',
-                        { '!border-green-500': dragOver }
-                    )}
-                    htmlFor="dropVideo"
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    >
-                    <input
-                        type="file"
-                        className="hidden"
-                        onChange={onChooseFile}
-                        id="dropVideo"
-                        accept={ALLOWED_VIDEO_TYPES.join(',')}
-                    />
-                    <span className="flex justify-center mb-6 opacity-80">
-                        <IoCloudUploadOutline className="w-14 h-14" />
-                    </span>
-                    <span className="space-y-10 md:space-y-14">
-                        <div className="text-2xl font-semibold md:text-4xl">
-                            <span>
-                                Drag and drop <br /> video to upload
-                            </span>
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="chooseVideo"
-                                className="px-8 py-4 text-lg text-white bg-indigo-500 cursor-pointer rounded-full"
-                            >
-                                or choose video
-                                <input
-                                    id="chooseVideo"
-                                    onChange={onChooseFile}
-                                    type="file"
-                                    className="hidden"
-                                    accept={ALLOWED_VIDEO_TYPES.join(',')}
-                                />
-                            </label>
-                        </div>
-                        {fileDropError && (
-                            <div className="font-medium text-red-500">{fileDropError}</div>
+            <MetaTags title="Upload videos" />
+            <div className="relative flex flex-col max-w-7xl md:px-0 px-4 mx-auto my-10">
+                <h3 className='mb-5 pb-5 text-2xl font-bold'>Upload videos</h3>
+                <div className="relative flex flex-col items-center justify-center w-full">
+                    <label
+                        className={clsx(
+                            'w-full p-10 md:p-20 focus:outline-none transition-all delay-75 duration-75 grid place-items-center text-center bg-secondary rounded-xl',
+                            { '!bg-gray-200': dragOver }
                         )}
-                    </span>
-                </label>
+                        htmlFor="dropVideo"
+                        onDragOver={onDragOver}
+                        onDragLeave={onDragLeave}
+                        onDrop={onDrop}
+                        >
+                        <input
+                            type="file"
+                            className="hidden"
+                            onChange={onChooseFile}
+                            id="dropVideo"
+                            accept={ALLOWED_VIDEO_TYPES.join(',')}
+                        />
+                        <span className="flex justify-center mb-6 opacity-80">
+                            <IoCloudUploadOutline className="w-14 h-14" />
+                        </span>
+                        <span className="space-y-10 md:space-y-14">
+                            <div className='flex flex-col space-y-2'>
+                                <span className="text-xl">
+                                Drag and drop video files to upload
+                                </span>
+                                <span className="text-sm text-light">
+                                Your video will be private until you publish them.
+                                </span>
+                            </div>
+                            <div>
+                                <label
+                                    htmlFor="chooseVideo"
+                                    className="px-8 py-4 text-lg primary-button cursor-pointer rounded-full"
+                                >
+                                    Select Files
+                                    <input
+                                        id="chooseVideo"
+                                        onChange={onChooseFile}
+                                        type="file"
+                                        className="hidden"
+                                        accept={ALLOWED_VIDEO_TYPES.join(',')}
+                                    />
+                                </label>
+                            </div>
+                            {fileDropError && (
+                                <div className="font-medium text-red-500">{fileDropError}</div>
+                            )}
+                        </span>
+                    </label>
+                </div>
             </div>
         </div>
     )

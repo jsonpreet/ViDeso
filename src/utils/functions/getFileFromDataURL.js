@@ -13,6 +13,6 @@ export const getFileFromDataURL = (dataUrl, fileName) => {
     }
     // write the ArrayBuffer to a blob, and you're done
     const blob = new Blob([ab], { type: mimeString })
-    const file = new File([blob], fileName)
+    const file = new File([blob], fileName, { type: mimeString })
     return file
 }

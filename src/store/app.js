@@ -5,19 +5,23 @@ export const UPLOADED_VIDEO_FORM_DEFAULTS = {
   stream: null,
   preview: '',
   videoType: '',
+  videoURL: '',
+  isProcessing: false,
   file: null,
   title: '',
   description: '',
+  language: '',
+  tags: [],
+  videoData: [],
   thumbnail: '',
   thumbnailType: '',
   videoSource: '',
   percent: 0,
-  playbackId: '',
   isSensitiveContent: false,
-  isUploadToIpfs: false,
+  readyToPost: false,
   loading: false,
   uploadingThumbnail: false,
-  buttonText: 'Post Video',
+  buttonText: 'Submit Video',
   durationInSeconds: null,
   videoCategory: CREATOR_VIDEO_CATEGORIES[0],
   isNSFW: false,
@@ -36,6 +40,10 @@ export const useAppStore = create((set) => ({
   setUploadedVideo: (videoData) =>
     set((state) => ({
       uploadedVideo: { ...state.uploadedVideo, ...videoData }
+    })),
+  setResetUploadedVideo: () =>
+    set((state) => ({
+      uploadedVideo: UPLOADED_VIDEO_FORM_DEFAULTS
     })),
   setVideoWatchTime: (videoWatchTime) => set(() => ({ videoWatchTime })),
   setSelectedChannel: (channel) => set(() => ({ selectedChannel: channel })),

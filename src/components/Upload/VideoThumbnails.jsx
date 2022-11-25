@@ -8,49 +8,36 @@ import { getIsNSFW } from '@app/utils/functions/getIsNSFW'
 import { getFileFromDataURL } from '@app/utils/functions/getFileFromDataURL'
 import useAppStore from '@app/store/app'
 import { useEffect, useState } from 'react'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import { nanoid } from 'nanoid'
+import Deso from 'deso-protocol';
+import { UploadImage } from '@app/data/image'
+import usePersistStore from '@app/store/persist'
+import * as tf from '@tensorflow/tfjs'
+import * as nsfwjs from 'nsfwjs'
 
 const DEFAULT_THUMBNAIL_INDEX = 0
 export const THUMBNAIL_GENERATE_COUNT = 3
 
 const VideoThumbnails = ({ label, afterUpload, file }) => {
+    const {user} = usePersistStore()
     const [thumbnails, setThumbnails] = useState([])
     const [selectedThumbnailIndex, setSelectedThumbnailIndex] = useState(-1)
     const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
     const uploadedVideo = useAppStore((state) => state.uploadedVideo)
-    const supabase = useSupabaseClient()
 
-    const uploadThumbnailToLocal = async (file) => {
+    const uploadThumbnail = async (file) => {
         setUploadedVideo({ uploadingThumbnail: true })
-        // let uploadDir = 'thumbnails'
-        // const fileName = file.name
-        // const extension = fileName.substring(fileName.lastIndexOf('.') + 1);
-        // const url = URL.createObjectURL(file)
-        // const newFileName = nanoid() + '.' + extension;
-        // const { data, error } = await supabase.storage.from('videso').upload(uploadDir+'/', newFileName + '.' + extension, {
-        //     cacheControl: '3600',
-        //     upsert: false
-        // })
-        // if (data) {
-        //     console.log(data);
-        //     const image = fileName;
-        //     const url = data.path;
-        //     afterUpload(url, file.type || 'image/jpeg')
-        //     return url
-        // } else if (error) {
-        //     console.log(error);
-        //     logger.error('[Uploading Thumbnails]', error)
-        // }
+        try {
+            const deso = new Deso();
+            const request = undefined;  
+            const jwt = await deso.identity.getJwt(request);
+            const response = await UploadImage(jwt, file, user.profile.PublicKeyBase58Check)
+            afterUpload(response.data.ImageURL, file.type || 'image/jpeg')
+            return response.data.ImageURL
+        } catch (error) {
+            console.log(error)
+        } finally {
             setUploadedVideo({ uploadingThumbnail: false })
-    }
-
-    const uploadThumbnailToIpfs = async (file) => {
-        setUploadedVideo({ uploadingThumbnail: true })
-        
-        setUploadedVideo({ uploadingThumbnail: false })
-        afterUpload(result.url, file.type || 'image/jpeg')
-        return result
+        }
     }
 
     const generateThumbnails = async (file) => {
@@ -61,21 +48,18 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
             )
             const thumbnails = []
             thumbnailArray.forEach((t) => {
-                thumbnails.push({ url: t, ipfsUrl: '', isNSFWThumbnail: false })
+                thumbnails.push({ url: t, ipfsUrl: '', isNSFWThumbnail: false,type: 'image/jpeg' })
             })
             setThumbnails(thumbnails)
             setSelectedThumbnailIndex(DEFAULT_THUMBNAIL_INDEX)
-            const imageFile = getFileFromDataURL(
-                thumbnails[DEFAULT_THUMBNAIL_INDEX].url,
-                'thumbnail.jpeg'
-            )
-            const ipfsResult = await uploadThumbnailToLocal(imageFile)
-            setThumbnails(
-                thumbnails.map((t, i) => {
-                    if (i === DEFAULT_THUMBNAIL_INDEX) t.ipfsUrl = ipfsResult
-                    return t
-                })
-            )
+            // const imageFile = getFileFromDataURL( thumbnails[DEFAULT_THUMBNAIL_INDEX].url, 'thumbnail.jpeg')
+            // const ipfsResult = await uploadThumbnail(imageFile)
+            // setThumbnails(
+            //     thumbnails.map((t, i) => {
+            //         if (i === DEFAULT_THUMBNAIL_INDEX) t.ipfsUrl = ipfsResult
+            //         return t
+            //     })
+            // )
         } catch (error) {
             logger.error('[Error Generate Thumbnails]', error)
         }
@@ -111,7 +95,7 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
     const handleUpload = async (e) => {
         if (e.target.files?.length) {
             setSelectedThumbnailIndex(-1)
-            const result = await uploadThumbnailToLocal(e.target.files[0])
+            const result = await uploadThumbnail(e.target.files[0])
             const preview = window.URL?.createObjectURL(e.target.files[0])
             const isNSFWThumbnail = await checkNsfw(preview)
             setUploadedVideo({ isNSFWThumbnail })
@@ -125,17 +109,17 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
 
     const onSelectThumbnail = async (index) => {
         setSelectedThumbnailIndex(index)
-        if (thumbnails[index].url === '') {
+        if (thumbnails[index].ipfsUrl === '') {
             const file = getFileFromDataURL(thumbnails[index].url, 'thumbnail.jpeg')
-            const ipfsResult = await uploadThumbnailToIpfs(file)
+            const ipfsResult = await uploadThumbnail(file)
             setThumbnails(
                 thumbnails.map((t, i) => {
-                    if (i === index) t.url = ipfsResult
+                    if (i === index) t.ipfsUrl = ipfsResult
                     return t
                 })
             )
         } else {
-            afterUpload(thumbnails[index].url, 'image/jpeg')
+            afterUpload(thumbnails[index].ipfsUrl, 'image/jpeg')
             setUploadedVideo({ isNSFWThumbnail: thumbnails[index]?.isNSFWThumbnail })
         }
     }
@@ -144,7 +128,7 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
         <div className="w-full">
             {label && (
                 <div className="flex items-center mb-1 space-x-1.5">
-                    <div className="text-[11px] font-semibold uppercase opacity-70">
+                    <div className="font-medium text-sm">
                         {label}
                     </div>
                 </div>
@@ -205,7 +189,7 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
         !uploadedVideo.uploadingThumbnail &&
         thumbnails.length ? (
             <p className="mt-2 text-xs font-medium text-red-500">
-            Please choose a thumbnail
+                Please choose a thumbnail
             </p>
         ) : null}
         </div>

@@ -63,7 +63,7 @@ const InputMentions = ({ label, validationError, value, onContentChange, mention
                 ) => (
                 <div
                     className={clsx('max-h-52 flex w-full items-center truncate px-3 py-2 space-x-1 hover-primary', {
-                    'dark:bg-[#fff]/[0.1] bg-gray-200': focused
+                    'dark:bg-[#fff]/[0.1] bg-gray-100': focused
                     })}
                 >
                     <img
