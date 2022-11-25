@@ -42,10 +42,14 @@ const SuggestedVideoCard = ({ video }) => {
             setVideoData(videoData.data)
             try {
                 const duration = getThumbDuration(videoData.data.Duration);
-                const url = getVideoThumbnail(video, duration);
-                await axios.get(url, { responseType: 'blob' }).then((res) => {
-                    setThumbnailUrl(URL.createObjectURL(res.data))
-                })
+                const thumb = getVideoThumbnail(video, duration);
+                if (thumb.processed) {
+                    setThumbnailUrl(thumb.url)
+                } else {
+                    await axios.get(thumb.url, { responseType: 'blob' }).then((res) => {
+                        setThumbnailUrl(URL.createObjectURL(res.data))
+                    })
+                }
             } catch (error) {
                 setError(true)
             }
