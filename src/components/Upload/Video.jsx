@@ -11,7 +11,12 @@ import logger from '@app/utils/logger'
 import VideoThumbnails from './VideoThumbnails'
 import formatBytes from '@app/utils/functions'
 import clsx from 'clsx'
-import ExVideoPlayer from '../Player/ExVideoPlayer'
+import { CardShimmer } from '../Shimmers/VideoCardShimmer'
+
+const ExVideoPlayer = dynamic(() => import('../Player/ExVideoPlayer'), {
+  loading: () => <CardShimmer />,
+  ssr: false
+})
 
 function UploadVideo() {
     const [deso, setDeso] = useState(null)
