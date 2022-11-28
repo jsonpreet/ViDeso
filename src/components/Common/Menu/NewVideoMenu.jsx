@@ -29,7 +29,7 @@ function NewVideoMenu() {
                                 Upload Video
                             </span>
                         </Menu.Item>
-                        <Menu.Item
+                        {/* <Menu.Item
                             as={NextLink}
                             href={`/@${user.profile.Username}/community`}
                             className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
@@ -38,7 +38,7 @@ function NewVideoMenu() {
                             <span className="truncate whitespace-nowrap">
                                 Create Post
                             </span>
-                        </Menu.Item>
+                        </Menu.Item> */}
                     </div>
                 </div>
             </DropMenu>

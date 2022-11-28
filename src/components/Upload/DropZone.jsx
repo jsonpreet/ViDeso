@@ -35,6 +35,11 @@ const DropZone = () => {
             toast.error(errorMessage)
             return setFileDropError(errorMessage)
         }
+        if (file.size > 4 * (1024 * 1024 * 1024)) {
+            const errorMessage = 'File is too large. Please choose a file less than 4GB'
+            toast.error(errorMessage);
+            return setFileDropError(errorMessage)
+        }
         uploadVideo(file)
     }
 
@@ -97,6 +102,9 @@ const DropZone = () => {
                                         accept={ALLOWED_VIDEO_TYPES.join(',')}
                                     />
                                 </label>
+                            </div>
+                            <div className='flex flex-col space-y-2'>
+                                <span className="text-xs text-light">Max. File Size Supports 4GB</span>
                             </div>
                             {fileDropError && (
                                 <div className="font-medium text-red-500">{fileDropError}</div>

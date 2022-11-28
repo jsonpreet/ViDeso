@@ -19,11 +19,13 @@ import logger from '@app/utils/logger'
 import { isBrowser } from 'react-device-detect'
 import { getProfileName } from '@app/utils/functions/getProfileName'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import useAppStore from '@app/store/app'
 
 
 const VideoCard = ({ video, userProfile }) => {
   const [showShare, setShowShare] = useState(false)
   const [showReport, setShowReport] = useState(false)
+  const uploadedVideo = useAppStore((state) => state.uploadedVideo)
   const [videoData, setVideoData] = useState('')
   const [thumbnailUrl, setThumbnailUrl] = useState('/default-black.jpg')
   const [extraData, setExtraData] = useState('')
@@ -91,11 +93,6 @@ const VideoCard = ({ video, userProfile }) => {
       ) : (
           <>
           <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
-          {/* <ReportModal
-            video={video}
-            show={showReport}
-            setShowReport={setShowReport}
-          /> */}
           <Link href={`/watch/${video.PostHashHex}`}>
             <div className="relative rounded-none md:rounded-xl aspect-w-16 overflow-hidden aspect-h-9">
                 <LazyLoadImage
@@ -109,6 +106,13 @@ const VideoCard = ({ video, userProfile }) => {
                   placeholderSrc='https://placekitten.com/360/220'
                   src={thumbnailUrl}
               />
+                {uploadedVideo.videoHash === video.PostHashHex && uploadedVideo.isProcessing ? 
+                  <>
+                    <div>
+                      <div>Processing Video</div>
+                    </div>
+                  </>
+                : null}  
               <ThumbnailOverlays video={video} data={videoData} />
             </div>
           </Link>

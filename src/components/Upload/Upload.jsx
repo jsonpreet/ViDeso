@@ -7,6 +7,7 @@ import UploadForm from './Form'
 import * as tus from "tus-js-client"
 import Deso from 'deso-protocol'
 import toast from 'react-hot-toast'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 function Upload() {
     const {isLoggedIn, user} = usePersistStore()
@@ -14,9 +15,9 @@ function Upload() {
     const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
     const setResetUploadedVideo = useAppStore((state) => state.setResetUploadedVideo)
     const router = useRouter();
-    console.log(uploadedVideo)
+    const supabase = useSupabaseClient()
     const [deso, setDeso] = useState(null)
-    const [file, setFile] = useState(null)
+    const [newPostHash, setNewPostHash] = useState(null)
     const [mediaID, setMediaId] = useState(null)
     const [newPost, setNewPost] = useState(null)
     const [uploadProgress, setUploadProgress] = useState(0)
@@ -45,9 +46,16 @@ function Upload() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedVideo])
 
+    useEffect(() => {
+        if (newPostHash !== null) {
+            saveToDB()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[newPostHash])
+
     const submitPost = async () => {
         try {
-            const body = `${uploadedVideo.description} \n ${uploadedVideo.tags.map(tag => `#${tag}`)} \n Posted on @Videso in @${uploadedVideo.videoCategory.tag}`
+            const body = `${uploadedVideo.description} \n ${uploadedVideo.tags.map(tag => `#${tag}`)} \n\n Posted on @Videso`
             const extraData = {
                 Title: uploadedVideo.title,
                 Tags: uploadedVideo.tags,
@@ -71,6 +79,8 @@ function Upload() {
             }
             const result = await deso.posts.submitPost(payload);
             if (result && result.constructedTransactionResponse.PostHashHex) {
+                setNewPostHash(result.constructedTransactionResponse.PostHashHex)
+                setUploadedVideo({ videoHash: result.constructedTransactionResponse.PostHashHex })
                 setTimeout(() => {
                     router.push(`/@${user.profile.Username}`)
                 }, 500)
@@ -83,12 +93,30 @@ function Upload() {
         }
     }
     
+    const saveToDB = async () => {
+        try {
+            const { data: post, error } = await supabase.from('uploads').select('*').eq('posthash', newPostHash).eq('user', user.profile.PublicKeyBase58Check);
+            if (post.length > 0) {
+               
+            } else {
+                const request = { user: user.profile.PublicKeyBase58Check, posthash: newPostHash, category: uploadedVideo.videoCategory.tag }
+                supabase.from('uploads').insert([request]).then((res) => {
+                    if (res.error) {
+                        logger.error(video.PostHashHex, 'watched', res.error);
+                    }
+                })
+            }
+            
+        } catch (error) {
+            logger.error(video.PostHashHex, 'watched', error);
+        }
+    }
 
     const onUpload = () => {
         const file = uploadedVideo.file
         return new Promise((resolve, reject) => {
         if (file.size > 4 * (1024 * 1024 * 1024)) {
-            this.globalVars._alertError("File is too large. Please choose a file less than 4GB");
+            toast.error('File is too large. Please choose a file less than 4GB');
             return;
         }
         let upload;
@@ -130,6 +158,10 @@ function Upload() {
         });
     }
 
+    const onCancel = () => {
+        setResetUploadedVideo()
+    }
+
 
     const pollForReadyToStream = (onReadyToStream, mediaId) => {
         let attempts = 0;
@@ -163,7 +195,7 @@ function Upload() {
         }, timeoutMillis);
     }
 
-    return uploadedVideo?.file ? <UploadForm onUpload={onUpload} /> : <DropZone />
+    return uploadedVideo?.file ? <UploadForm onCancel={onCancel} onUpload={onUpload} /> : <DropZone />
 }
 
 export default Upload

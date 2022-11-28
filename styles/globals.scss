@@ -385,6 +385,13 @@ vm-player video.sc-vm-file {
   outline-offset: 2px;
 }
 
+.dark {
+  .input-mentions-single textarea, .input-mentions-textarea textarea {
+    border-color: rgb(39 39 42);
+    background-color: #0f0f0f!important;
+  }
+}
+
 .input-mentions-single, .input-mentions-textarea {
   width: 100%;
   font-size: .875rem;

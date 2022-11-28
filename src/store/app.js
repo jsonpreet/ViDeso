@@ -6,6 +6,7 @@ export const UPLOADED_VIDEO_FORM_DEFAULTS = {
   preview: '',
   videoType: '',
   videoURL: '',
+  videoHash: '',
   isProcessing: false,
   file: null,
   title: '',

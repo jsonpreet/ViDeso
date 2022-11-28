@@ -20,7 +20,7 @@ const ContentAlert = ({ message }) => (
 )
 
 
-function UploadForm({onUpload}) {
+function UploadForm({onUpload, onCancel}) {
     const {setUploadedVideo, uploadedVideo} = useAppStore()
     const [tags, setTags] = useState([])
     const [currentTag, setCurrentTag] = useState('')

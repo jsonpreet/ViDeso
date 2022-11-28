@@ -168,6 +168,7 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
             onVmCurrentTimeChange={onTimeUpdate}
             autopause
             autoplay
+            
             icons="material"
         >
             <Hls version="latest" poster={poster}>

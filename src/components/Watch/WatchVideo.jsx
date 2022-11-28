@@ -51,6 +51,7 @@ const WatchVideo = () => {
         if (!video) {
             setVideoData(null)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router, video])
 
     //console.log({isSuccess: isSuccess, isLoading: isLoading, isFetching: isFetching, isError: isError, 'video': id})
@@ -86,6 +87,7 @@ const WatchVideo = () => {
             getVideo()
             getViews()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router, video, isFetched, addToRecentlyWatched])
 
     function getViews() {
@@ -120,6 +122,7 @@ const WatchVideo = () => {
             }
             addToHistory()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [video, isLoggedIn, reader])
 
     if (isError) {
