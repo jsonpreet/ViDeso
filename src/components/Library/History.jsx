@@ -7,6 +7,9 @@ import { NoDataFound } from '@app/components/UIElements/NoDataFound';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import logger from '@app/utils/logger';
 import { getFeed } from '@app/data/history';
+import Carousel from "react-multi-carousel";
+import VideoCardSmall from '../Common/VideoCard/VideoCardSmall';
+import { isBrowser } from 'react-device-detect';
 
 
 const History = () => {
@@ -19,11 +22,31 @@ const History = () => {
     const [isFetched, setFetched] = useState(false)
     const [noData, setNoDataFound] = useState(false)
     const reader = user.profile.PublicKeyBase58Check;
+
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 2
+        }
+    };
     
     useEffect(() => {
         async function getHistory() {
             try {
-                const { data, error } = await supabase.from('history').select('*').limit(8).eq('user', reader).order('id', { ascending: false } );
+                const { data, error } = await supabase.from('history').select('*').limit(32).eq('user', reader).order('id', { ascending: false } );
                 if (data.length > 0) {
                     const feed = await getFeed(data, reader);
                     setVideos(feed)
@@ -41,6 +64,7 @@ const History = () => {
             }
         }
         getHistory()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reader])
 
     if (isError) {
@@ -71,11 +95,30 @@ const History = () => {
         return (
             <>
                 <div className="grid gap-x-4 lg:grid-cols-4 md:gap-y-4 gap-y-2 2xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-col-1">
-                    {videos.length > 0 && videos.map((video) => {
-                            return (
-                                <VideoCard userProfile={video.ProfileEntryResponse} key={`${video.PostHashHex}`} video={video} />
-                            )
-                        })
+                    {videos.length > 0 &&
+                        isBrowser ?
+                        <>
+                            {videos.map((video) => {
+                                return (
+                                    <VideoCardSmall userProfile={video.ProfileEntryResponse} key={`${video.PostHashHex}`} video={video} />
+                                )
+                            })}
+                        </>
+                        : 
+                        <Carousel
+                            responsive={responsive}
+                            swipeable={true}
+                            draggable={true}
+                            showDots={false}
+                            infinite={false}
+                        >
+                            {videos.map((video) => {
+                                    return (
+                                        <VideoCardSmall userProfile={video.ProfileEntryResponse} key={`${video.PostHashHex}`} video={video} />
+                                    )
+                                })
+                            }
+                        </Carousel>
                     }
                 </div>
             </>

@@ -15,6 +15,8 @@ import logger from '@app/utils/logger'
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import { MdOutlineAttachMoney } from 'react-icons/md'
 import TipModal from '../Common/TipModal'
+import { CiBadgeDollar } from "react-icons/ci";
+import { BiDollar } from 'react-icons/bi'
 
 const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = true}) => {
     const {isLoggedIn, user } = usePersistStore()
@@ -151,7 +153,7 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
                 }
                 
                 
-                {isBrowser ? <Tooltip title="Diamonds">
+                {isBrowser ? <Tooltip title="Tips">
                     <Button ref={diamondRef} variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={() => { showTipModal() }}>
                         <span className={clsx('flex items-center group-hover:text-brand2-500 dark:group-hover:text-brand2-400 space-x-2 outline-none', {
                             'text-brand2-500 dark:text-brand2-400 font-semibold': diamondBestowed > 0
@@ -159,8 +161,8 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
                             { 'space-x-1 md:space-x-3': showButton },
                             { 'mt-1.5': !showButton }
                         )}>
-                            <IoDiamondOutline size={iconSize} />
-                            <span>{video.DiamondCount}</span>
+                            <BiDollar size={iconSize} />
+                            <span>Tip</span>
                         </span>
                     </Button>
                 </Tooltip> :
@@ -172,8 +174,8 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
                             { 'space-x-1': showButton },
                             { 'mt-1.5': !showButton }
                         )}>
-                            <IoDiamondOutline size={18} />
-                            <span>{video.DiamondCount}</span>
+                            <BiDollar size={18} />
+                            <span>Tip</span>
                         </span>
                     </Button>
                 }

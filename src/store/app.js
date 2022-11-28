@@ -23,7 +23,6 @@ export const UPLOADED_VIDEO_FORM_DEFAULTS = {
   loading: false,
   uploadingThumbnail: false,
   buttonText: 'Submit Video',
-  durationInSeconds: null,
   videoCategory: CREATOR_VIDEO_CATEGORIES[0],
   isNSFW: false,
   isNSFWThumbnail: false

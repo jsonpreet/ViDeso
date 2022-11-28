@@ -1,10 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @import 'react-lazy-load-image-component/src/effects/blur.css';
 @import 'simplebar-react/dist/simplebar.min.css';
 @import '@vime/core/themes/default.css';
-@import "react-multi-carousel/lib/styles.css";
 
 html {
   @apply overflow-y-scroll;
@@ -402,7 +402,7 @@ vm-player video.sc-vm-file {
 }
 
 .input-mentions-textarea{
-  min-height:7rem
+  // min-height:7rem
 }
 
 .input-mentions-single__suggestions, .input-mentions-textarea__suggestions{
@@ -420,3 +420,26 @@ vm-player video.sc-vm-file {
 .dark .input-mentions-single__suggestions,.dark .input-mentions-textarea__suggestions{
   background-color:#1b1b1b!important
 }
+
+.react-multi-carousel-track li.suggested-videos {
+	width: auto !important;
+	margin-right: 10px;
+}
+.suggested-videos-container {
+  padding: 10px 0;
+}
+.suggested-videos-container .react-multiple-carousel__arrow {
+	background: #fff;
+}
+.suggested-videos-container .react-multiple-carousel__arrow--left {
+	left: 0;
+}
+.suggested-videos-container .react-multiple-carousel__arrow--right {
+	right: 0;
+}
+// .suggested-videos-container .react-multiple-carousel__arrow::after {
+// 	background: linear-gradient(to left,#fff 10%,rgba(249,249,249,0) 90%);
+//   content: '';
+//   position: absolute;
+//   left: 0;
+// }

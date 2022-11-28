@@ -35,8 +35,6 @@ const WatchVideo = () => {
     const [thumbnailUrl, setThumbnailUrl] = useState('')
     const [loading, setLoading] = useState(true)
     const [posthash, setPosthash] = useState('')
-    
-    ///const { data: video, isLoading, isFetching, isFetched, error, isError } = FetchSinglePost({ id });
 
     const { isLoading, isError, error, isFetched, data: video } = useQuery([['single-post', posthash], { id: posthash, reader: reader }], getSinglePost, { enabled: !!posthash, })
 
@@ -146,7 +144,7 @@ const WatchVideo = () => {
                         <VideoComments video={video} />
                     </div>
                     <div className="w-full md:min-w-[300px] md:max-w-[400px]">
-                        <SuggestedVideos currentVideoId={video?.PostHashHex} />
+                        <SuggestedVideos video={video} currentVideoId={video?.PostHashHex} />
                     </div>
                 </div>
             ) : null}

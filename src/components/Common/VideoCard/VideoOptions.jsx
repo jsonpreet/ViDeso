@@ -78,7 +78,7 @@ const VideoOptions = ({
             }
           )}
         >
-          <BsThreeDotsVertical size={isSuggested ? 17 : 22} />
+          <BsThreeDotsVertical size={17} />
         </div>
       }
     >

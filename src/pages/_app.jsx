@@ -10,7 +10,7 @@ import Layout from '@app/components/Common/Layout';
 import '@vidstack/player/hydrate.js';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
-
+import "react-multi-carousel/lib/styles.css";
 import '@styles/globals.scss'
 
 function MyApp({ Component, pageProps }) {

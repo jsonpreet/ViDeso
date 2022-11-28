@@ -57,20 +57,6 @@ function UploadVideo() {
     }
     return (
         <>
-        
-            {/* <form acceptCharset="UTF-8"
-                    method="POST"
-                    encType="multipart/form-data"
-                    id="ajaxForm"
-                    onSubmit={handleSubmit} className='flex flex-col space-y-6'>
-            <input type="file" name="video" onChange={handleFileChange} />
-            <button type="submit" className='bg-white text-black border-0 px-4 py-2 font-semibold'>Upload Video</button>
-            {videoUrl && <div className='flex flex-col space-y-2'>
-                <p className='text-white'>Video URL: {videoUrl}</p>
-                <p className='text-white'>Video ID: {mediaID}</p>
-            </div>}
-            {uploadProgress > 0 && <p>{uploadProgress}%</p>}
-            </form> */}
             <div className="flex flex-col w-full">
                 <div className="overflow-hidden relative rounded-xl w-full">
                     <ExVideoPlayer
@@ -91,7 +77,7 @@ function UploadVideo() {
                 {uploadedVideo.percent !== 0 ?
                     <>
                         
-                            <div className='-mb-4'>
+                            <div className=''>
                                 <ProgressBar progress={uploadedVideo.percent} height={24} />
                             </div>
                     </>
@@ -99,7 +85,7 @@ function UploadVideo() {
                     
                 }
                 
-                <div className="mt-4">
+                <div className={`${uploadedVideo.percent === 0 ? `mt-4` : ``}`}>
                     <VideoThumbnails
                         label="Thumbnail"
                         file={uploadedVideo.file}

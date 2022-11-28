@@ -51,7 +51,7 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
                 thumbnails.push({ url: t, ipfsUrl: '', isNSFWThumbnail: false,type: 'image/jpeg' })
             })
             setThumbnails(thumbnails)
-            setSelectedThumbnailIndex(DEFAULT_THUMBNAIL_INDEX)
+            //setSelectedThumbnailIndex(DEFAULT_THUMBNAIL_INDEX)
             // const imageFile = getFileFromDataURL( thumbnails[DEFAULT_THUMBNAIL_INDEX].url, 'thumbnail.jpeg')
             // const ipfsResult = await uploadThumbnail(imageFile)
             // setThumbnails(

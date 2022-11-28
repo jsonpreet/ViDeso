@@ -21,13 +21,13 @@ const AboutChannel = ({views, video }) => {
   return (
     <div className="flex items-start justify-between w-full bg-secondary p-4 rounded-none md:rounded-xl">
       <div className="flex flex-col flex-1 overflow-hidden break-words">
-        <div className='text-[13px] flex space-x-1 items-center font-medium mb-3'>
+        <div className='text-[14px] flex space-x-1 items-center font-medium mb-3'>
           <span>{views > 1 ? `${views} views` : `${views} view`}</span>
           <span className='middot'></span>
           <span>{timeNow(video.TimestampNanos)}</span>
         </div>
         {video.Body !== null && (
-          <div className="text-sm md:text-base">
+          <div className="text-sm md:text-sm">
           <Linkify options={LinkifyOptions}>
             {clamped ? video.Body.trim().substring(0, 200) : video.Body}
             </Linkify>

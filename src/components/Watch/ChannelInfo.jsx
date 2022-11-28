@@ -113,13 +113,20 @@ function ChannelInfo({ views, video, channel }) {
                             href={`/@${channel.Username}`}
                             className="flex items-center w-fit space-x-1.5 font-medium"
                         >
-                            {isBrowser ? <Tooltip placement='top' contentClass='text-[12px]' title={getProfileName(channel)}>
-                                <span>{getProfileName(channel)}</span>
-                            </Tooltip> : <span>{channel.Username}</span>}    
-                            {channel.IsVerified ? <Tooltip placement='top' contentClass='text-[12px]' title='Verified'><span><IsVerified size="lg" /></span></Tooltip> : null}
-                            </Link>
+                            {isBrowser ?
+                                <Tooltip placement='top' contentClass='text-[12px]' title={getProfileName(channel)}>
+                                    <span>{getProfileName(channel)}</span>
+                                </Tooltip> :
+                                <span>{channel.Username}</span>
+                            }    
+                            {channel.IsVerified ?
+                                <Tooltip placement='top' contentClass='text-[12px]' title='Verified'>
+                                    <span><IsVerified size="lg" /></span>
+                                </Tooltip> : null
+                            }
+                        </Link>
                         {!loading ?
-                            <span className="text-[13px] leading-4 text-secondary">
+                            <span className="text-[14px] leading-4 text-secondary">
                                 {formatNumber(followers)} subscribers
                             </span>
                             : <div className="h-2 bg-gray-300 rounded dark:bg-gray-700" />

@@ -33,30 +33,30 @@ const SuggestedVideoCard = ({ video }) => {
     useEffect(() => {
         const deso = new Deso(DESO_CONFIG)
         const getVideoData = async () => {
-        try {
-            const videoID = getPlaybackIdFromUrl(video);
-            const request = {
-                "videoId": videoID
-            };
-            const videoData = await deso.media.getVideoStatus(request)
-            setVideoData(videoData.data)
             try {
-                const duration = getThumbDuration(videoData.data.Duration);
-                const thumb = getVideoThumbnail(video, duration);
-                if (thumb.processed) {
-                    setThumbnailUrl(thumb.url)
-                } else {
-                    await axios.get(thumb.url, { responseType: 'blob' }).then((res) => {
-                        setThumbnailUrl(URL.createObjectURL(res.data))
-                    })
+                const videoID = getPlaybackIdFromUrl(video);
+                const request = {
+                    "videoId": videoID
+                };
+                const videoData = await deso.media.getVideoStatus(request)
+                setVideoData(videoData.data)
+                try {
+                    const duration = getThumbDuration(videoData.data.Duration);
+                    const thumb = getVideoThumbnail(video, duration);
+                    if (thumb.processed) {
+                        setThumbnailUrl(thumb.url)
+                    } else {
+                        await axios.get(thumb.url, { responseType: 'blob' }).then((res) => {
+                            setThumbnailUrl(URL.createObjectURL(res.data))
+                        })
+                    }
+                } catch (error) {
+                    setError(true)
                 }
             } catch (error) {
                 setError(true)
+                logger.error(video.PostHashHex, 'Video Status:', error.message);
             }
-        } catch (error) {
-            setError(true)
-            logger.error(video.PostHashHex, 'Video Status:', res.error);
-        }
         }
         if (video.VideoURLs[0] !== null) {
             getVideoData()
@@ -64,6 +64,7 @@ const SuggestedVideoCard = ({ video }) => {
         setUserProfile(video.ProfileEntryResponse)
         setExtraData(video.ExtraData)
         getViews()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [video])   
 
     
@@ -141,10 +142,10 @@ const SuggestedVideoCard = ({ video }) => {
                                         <span className="whitespace-nowrap">
                                             {views > 1 ? `${views} views` : `${views} view`}
                                         </span>
-                                        <span className="middot" />
+                                        {/* <span className="middot" />
                                         <span className="whitespace-nowrap">
                                             {video.LikeCount} likes
-                                        </span>
+                                        </span> */}
                                         <span className="middot" />
                                         <span>{timeNow(video.TimestampNanos)}</span>
                                     </div>

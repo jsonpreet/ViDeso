@@ -58,34 +58,6 @@ export const GetLatestFeed = async (limit, reader, lastPost, output = 32) => {
     }
 }
 
-export const GetSuggestedFeed = async (limit, reader, output = 32, seenPosts) => {
-    const endpoint = 'get-hot-feed';
-    const seenPostLists = seenPosts.map(
-        (post) => post.PostHashHex
-    );
-    const nLimit = (limit && limit !== -1) ? limit : 2500
-    const response = await axios.post(`${BASE_URI}/${endpoint}`, {
-        ReaderPublicKeyBase58Check: reader,
-        SeenPosts: seenPostLists,
-        SortByNew: false,
-        ResponseLimit: nLimit,
-    });
-    if (response === null) {
-        return null
-    } else {
-        const posts = response.data.HotFeedPage;
-
-        const filtered = posts.filter(post => {
-            if (post.VideoURLs !== null && post.VideoURLs.length > 0 && post.VideoURLs[0] !== '' && post.ProfileEntryResponse !== null) {
-                return post
-            }
-        });
-        
-        let offset = seenPostLists.length > 0 ? seenPostLists.length : 0;
-        return filtered.splice(0, output)
-    }
-}
-
 export const FetchLatestFeed = ({limit}) => {
     return useQuery(['latest-feed'], ({ pageParam = 1 }) => GetLatestFeed(limit, pageParam), {
         keepPreviousData: true,
@@ -125,26 +97,6 @@ export const FetchInfiniteLatestFeed = (limit, reader) => {
                 } else {
                     let last = lastPage[lastPage.length - 1];
                     return last.PostHashHex;
-                }
-            }
-        }
-    );
-}
-
-export const FetchSuggestedFeed = (limit, output) => {
-    const user = usePersistStore((state) => state.user)
-    const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
-    const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
-    const recentlyWatched = usePersistStore((state) => state.recentlyWatched)
-    return useInfiniteQuery(['suggested-feed'], ({ pageParam = recentlyWatched }) => GetSuggestedFeed(limit, reader, output, pageParam),
-        {
-            getNextPageParam: (lastPage, pages) => {
-                if(lastPage === null) {
-                    return null;
-                } else {
-                    //let last = lastPage[lastPage.length - 1];
-                    //console.log({ pages: pages, watched: recentlyWatched })
-                    return recentlyWatched;
                 }
             }
         }

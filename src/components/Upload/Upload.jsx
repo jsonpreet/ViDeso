@@ -112,7 +112,17 @@ function Upload() {
         }
     }
 
+    const checkFieldsData = () => {
+        if (uploadedVideo.title !== '' || uploadedVideo.description !== '' || uploadedVideo.language !== '' || uploadedVideo.tags.length > 0) {
+            return true;
+        }
+        return false
+    }
+
     const onUpload = () => {
+        if (!checkFieldsData()) {
+            return toast.error('All fields required!')
+        }
         const file = uploadedVideo.file
         return new Promise((resolve, reject) => {
         if (file.size > 4 * (1024 * 1024 * 1024)) {

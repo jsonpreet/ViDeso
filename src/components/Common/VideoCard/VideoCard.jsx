@@ -51,6 +51,7 @@ const VideoCard = ({ video, userProfile }) => {
     }
     setExtraData(video.ExtraData)
     getViews()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [video])
 
   useEffect(() => {
@@ -139,10 +140,10 @@ const VideoCard = ({ video, userProfile }) => {
                       <span className="whitespace-nowrap">
                         {views > 1 ? `${views} views` : `${views} view`}
                       </span>
-                      <span className="middot" />
+                      {/* <span className="middot" />
                       <span className="whitespace-nowrap">
                         {video.LikeCount > 1 ? `${video.LikeCount} likes` : `${video.LikeCount} like`}
-                      </span>
+                      </span> */}
                       <span className="middot" />
                         <span className="whitespace-nowrap">
                           {timeNow(video.TimestampNanos)}

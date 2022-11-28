@@ -1,4 +1,5 @@
-import { FetchInfiniteHotFeed, FetchSuggestedFeed, GetSuggestedFeed, getSuggestedFeed } from '@app/data/videos'
+
+import { GetSuggestedFeed } from '@app/data/suggested'
 import useAppStore from '@app/store/app'
 import usePersistStore from '@app/store/persist'
 import { getShuffleArray } from '@app/utils/functions/getShuffleArray'
@@ -8,13 +9,16 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
+import Carousel from 'react-multi-carousel'
 import { SuggestedVideosShimmer } from '../Shimmers/WatchVideoShimmer'
+import { Button } from '../UIElements/Button'
 
 import SuggestedVideoCard from './SuggestedVideoCard'
 
-const SuggestedVideos = ({ currentVideoId }) => {
+const SuggestedVideos = ({ video, currentVideoId }) => {
     const {query: { id }} = useRouter()
     const { ref, inView } = useInView()
+    const [selectedTab, setSelectedTab] = useState('all');
     const setUpNextVideo = useAppStore((state) => state.setUpNextVideo)
     const recentlyWatched = usePersistStore((state) => state.recentlyWatched)
     const user = usePersistStore((state) => state.user)
@@ -54,13 +58,65 @@ const SuggestedVideos = ({ currentVideoId }) => {
         }
     }, [isSuccess, videos, currentVideoId, setUpNextVideo])
 
+    const channel = video.ProfileEntryResponse;
+
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 3,
+            slidesToSlide: 1
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3,
+            slidesToSlide: 1
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2,
+            slidesToSlide: 1
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 2,
+            slidesToSlide: 1
+        }
+    };
+
+    const Tab = ({ isSelected, tab, children }) => {
+        return (
+            <>
+                <Button
+                    onClick={() => setSelectedTab(tab)}
+                    variant={`${isSelected ? `dark` : `light`}`}
+                >
+                    {children}
+                </Button>
+            </>
+        )
+    }
+
     return (
         <>
             {isSuccess ? (
-                <div className="pt-3 md:pt-0 pb-3">
+                <div className="pt-3 md:pt-0 md:-mt-3 pb-3">
                     <div className="space-y-2 flex flex-col">
                         <div className='px-4 md:px-0'>
-                            <h2 className="text-lg font-semibold">Up Next</h2>
+                            <Carousel
+                                responsive={responsive}
+                                swipeable={true}
+                                draggable={true}
+                                showDots={false}
+                                infinite={false}
+                                containerClass='suggested-videos-container'
+                                itemClass='suggested-videos'
+                            >
+                                <Tab isSelected={selectedTab === 'all'} tab='all'>All</Tab>
+                                <Tab isSelected={selectedTab === 'user'} tab='user'>From {channel.Username}</Tab>
+                                <Tab isSelected={selectedTab === 'recent'} tab='recent'>Recently Uploaded</Tab>
+                                <Tab isSelected={selectedTab === 'popular'} tab='popular'>Popular</Tab>
+                            </Carousel>
                         </div>
                         <div className='space-y-1'>
                             {videos.pages.map(page => 
