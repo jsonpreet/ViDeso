@@ -106,13 +106,6 @@ const VideoCard = ({ video, userProfile }) => {
                   placeholderSrc='https://placekitten.com/360/220'
                   src={thumbnailUrl}
               />
-                {uploadedVideo.videoHash === video.PostHashHex && uploadedVideo.isProcessing ? 
-                  <>
-                    <div>
-                      <div>Processing Video</div>
-                    </div>
-                  </>
-                : null}  
               <ThumbnailOverlays video={video} data={videoData} />
             </div>
           </Link>
