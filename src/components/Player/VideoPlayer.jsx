@@ -18,8 +18,6 @@ import { getCurrentDuration } from '@app/utils/functions/getCurrentDuration'
 import usePersistStore from '@app/store/persist'
 import { APP } from '@app/utils/constants'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import { data } from 'autoprefixer'
-import { current } from 'tailwindcss/colors'
 
 const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
   const router = useRouter()
@@ -77,6 +75,7 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
   useEffect(() => {
     if (!isStarted) return
     setNewView();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isStarted])
 
   useEffect(() => {
@@ -162,18 +161,17 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
     >
       <div className={`md:relative z-[5] aspect-[16/9]`}>
         <Player
-            tabIndex={1}
-            ref={playerRef}
-            aspectRatio={ratio}
-            onVmCurrentTimeChange={onTimeUpdate}
-            autopause
-            autoplay
-            
-            icons="material"
+          tabIndex={1}
+          ref={playerRef}
+          aspectRatio={ratio}
+          onVmCurrentTimeChange={onTimeUpdate}
+          autopause
+          autoplay
+          icons="material"
         >
-            <Hls version="latest" poster={poster}>
-                <source data-src={hls} type="application/x-mpegURL"/>
-            </Hls>
+          <Hls version="latest" poster={poster}>
+            <source data-src={hls} type="application/x-mpegURL"/>
+          </Hls>
           <DefaultUi noControls noPoster>
               <Poster fit='contain' />
               <DefaultControls hideOnMouseLeave activeDuration={2000} />
