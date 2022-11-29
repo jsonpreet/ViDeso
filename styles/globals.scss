@@ -437,6 +437,9 @@ vm-player video.sc-vm-file {
 .suggested-videos-container .react-multiple-carousel__arrow--right {
 	right: 0;
 }
+.suggested-videos-container .react-multiple-carousel__arrow::before {
+	color: rgb(39 39 42);
+}
 // .suggested-videos-container .react-multiple-carousel__arrow::after {
 // 	background: linear-gradient(to left,#fff 10%,rgba(249,249,249,0) 90%);
 //   content: '';

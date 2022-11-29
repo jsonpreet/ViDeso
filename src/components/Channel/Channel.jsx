@@ -84,6 +84,7 @@ const Channel = () => {
             setRouteTab('videos')
             setSelectedTab(0)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [query])
 
     useEffect(() => {
@@ -125,12 +126,14 @@ const Channel = () => {
                 checkFollowing()
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isFetched, channel, isLoggedIn, reader])
 
     useEffect(() => {
         if (isFetched && channel) {
             FetchProfileStats(channel.Username);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isFetched, channel])
 
     

@@ -1,34 +1,34 @@
-import VideoCard from '@app/components/Common/VideoCard/VideoCard'
+import { VideoCard } from '@app/components/Common/VideoCard';
 import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
-import { FetchInfiniteLatestFeed } from '@app/data/videos';
-import { useInView } from 'react-intersection-observer'
-import { useEffect } from 'react';
-import { NoDataFound } from '../UIElements/NoDataFound';
+import { Loader2 } from '@app/components/UIElements/Loader';
+import { NoDataFound } from '@app/components/UIElements/NoDataFound';
+import { FetchInfiniteHotFeed } from '@app/data/hot';
 import usePersistStore from '@app/store/persist';
 import { APP } from '@app/utils/constants';
-import { Loader2 } from '../UIElements/Loader';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 
-
-const Timeline = () => {
+function PopularVideos() {
   const { ref, inView } = useInView()
   const user = usePersistStore((state) => state.user)
   const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
   const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
-  const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data: videos } = FetchInfiniteLatestFeed(-1, reader);  
+  const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data: videos } = FetchInfiniteHotFeed(reader);  
 
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, hasNextPage])
 
   if (isError) {
     return <NoDataFound 
-            isCenter
-            withImage
-            title="Something went wrong"
-            description="We are unable to fetch the latest videos. Please try again later."
-          />
+      isCenter
+      withImage
+      title="Something went wrong"
+      description="We are unable to fetch the latest videos. Please try again later."
+    />
   }
 
   return (
@@ -66,7 +66,6 @@ const Timeline = () => {
     </>
     
   )
- 
 }
 
-export default Timeline
+export default PopularVideos

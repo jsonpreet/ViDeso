@@ -9,17 +9,17 @@ import Link from 'next/link'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import ThumbnailOverlays from '../Common/ThumbnailOverlays'
-import VideoOptions from '../Common/VideoCard/VideoOptions'
+import ThumbnailOverlays from '../../Common/ThumbnailOverlays'
+import VideoOptions from '../../Common/VideoCard/VideoOptions'
 import { DESO_CONFIG } from '@app/utils/constants'
-import Tooltip from '../UIElements/Tooltip'
+import Tooltip from '../../UIElements/Tooltip'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
 import { isBrowser } from 'react-device-detect'
 import { getProfileName } from '@app/utils/functions/getProfileName'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import logger from '@app/utils/logger'
 
-const SuggestedVideoCard = ({ video }) => {
+const SuggestedVideoCard = ({ video, channel }) => {
     const [showShare, setShowShare] = useState(false)
     const [showReport, setShowReport] = useState(false)
     const [videoData, setVideoData] = useState('')
@@ -61,7 +61,7 @@ const SuggestedVideoCard = ({ video }) => {
         if (video.VideoURLs[0] !== null) {
             getVideoData()
         }
-        setUserProfile(video.ProfileEntryResponse)
+        setUserProfile(video.ProfileEntryResponse || channel)
         setExtraData(video.ExtraData)
         getViews()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -121,7 +121,7 @@ const SuggestedVideoCard = ({ video }) => {
                                     className="text-sm font-medium line-clamp-1"
                                 >
                                     <span className="flex line-clamp-2">
-                                        {getVideoTitle(video)}
+                                        {getVideoTitle(video, channel)}
                                     </span>
                                 </Link>
                             </div>

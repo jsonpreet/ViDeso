@@ -41,6 +41,7 @@ const Timeline = ({isLibrary = false}) => {
             }
         }
         getHistory()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reader])
 
     if (isError) {

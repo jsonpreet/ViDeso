@@ -113,7 +113,7 @@ const Comment = ({ comment }) => {
                         </div>
                     )}
                     <div className="mt-1">
-                        <Reactions iconSize="17" showButton={false} video={comment} />
+                        <Reactions iconSize={14} showTipButton={false} showButton={false} video={comment} />
                     </div>
                 </div>
             </div>

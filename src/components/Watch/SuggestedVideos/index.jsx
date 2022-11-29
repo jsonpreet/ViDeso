@@ -1,32 +1,31 @@
-import usePersistStore from '@app/store/persist';
-import MetaTags from '@components/Common/MetaTags'
-import { useState } from 'react';
-import Carousel from 'react-multi-carousel';
-import { Button } from '../UIElements/Button';
-import HistoryVideos from './Tabs/HistoryVideos';
-import PopularVideos from './Tabs/PopularVideos';
-import RecentVideos from './Tabs/RecentVideos';
-import WatchedVideos from './Tabs/WatchedVideos';
+import { useState } from 'react'
+import Carousel from 'react-multi-carousel'
+import { Button } from '../../UIElements/Button'
+import AllVideos from './Tabs/AllVideos'
+import PopularVideos from './Tabs/PopularVideos'
+import RecentVideos from './Tabs/RecentVideos'
+import UserVideos from './Tabs/UserVideos'
 
-const Home = () => {
-    const isLoggedIn = usePersistStore((state)=> state.isLoggedIn)
+const SuggestedVideos = ({ video, currentVideoId }) => {
     const [selectedTab, setSelectedTab] = useState('all');
+
+    const channel = video.ProfileEntryResponse;
 
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
             breakpoint: { max: 4000, min: 3000 },
-            items: 5,
+            items: 3,
             slidesToSlide: 1
         },
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 4,
+            items: 3,
             slidesToSlide: 1
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
-            items: 3,
+            items: 2,
             slidesToSlide: 1
         },
         mobile: {
@@ -35,7 +34,7 @@ const Home = () => {
             slidesToSlide: 1
         }
     };
-    
+
     const Tab = ({ isSelected, tab, children }) => {
         return (
             <>
@@ -48,10 +47,10 @@ const Home = () => {
             </>
         )
     }
+
     return (
         <>
-            <MetaTags />
-            <div className="md:px-16">
+            <div className="pt-3 md:pt-0 md:-mt-3 pb-3">
                 <div className="space-y-2 w-full md:w-auto flex flex-col">
                     <div className='px-2 md:px-0 overflow-hidden md:max-w-full max-w-[360px]'>
                         <Carousel
@@ -64,22 +63,22 @@ const Home = () => {
                             itemClass='suggested-videos'
                         >
                             <Tab isSelected={selectedTab === 'all'} tab='all'>Popular</Tab>
+                            <Tab isSelected={selectedTab === 'user'} tab='user'>From {channel.Username}</Tab>
                             <Tab isSelected={selectedTab === 'recent'} tab='recent'>Recently Uploaded</Tab>
-                            {isLoggedIn && <Tab isSelected={selectedTab === 'watched'} tab='watched'>Watch Later</Tab>}
-                            {isLoggedIn && <Tab isSelected={selectedTab === 'history'} tab='history'>History</Tab>}
+                            {/* <Tab isSelected={selectedTab === 'popular'} tab='popular'>Most Popular</Tab> */}
                         </Carousel>
                     </div>
                     <div className='space-y-1'>
                         {selectedTab === 'all' ?
-                            <PopularVideos />
+                            <AllVideos video={video} currentVideoId={currentVideoId} />
                             : 
-                            selectedTab === 'watched' ?
-                                <WatchedVideos />
+                            selectedTab === 'user' ?
+                                <UserVideos video={video} currentVideoId={currentVideoId} />
                             : selectedTab === 'recent' ?
-                                <RecentVideos />
-                            :  selectedTab === 'history' ?
-                                <HistoryVideos />
-                            : <PopularVideos />
+                                <RecentVideos video={video} currentVideoId={currentVideoId} />
+                            // :  selectedTab === 'popular' ?
+                            //     <PopularVideos video={video} currentVideoId={currentVideoId} />
+                            : <AllVideos video={video} currentVideoId={currentVideoId} />
                         }
                     </div>
                 </div>
@@ -88,4 +87,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default SuggestedVideos

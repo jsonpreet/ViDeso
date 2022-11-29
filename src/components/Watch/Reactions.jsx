@@ -18,7 +18,7 @@ import TipModal from '../Common/TipModal'
 import { CiBadgeDollar } from "react-icons/ci";
 import { BiDollar } from 'react-icons/bi'
 
-const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = true}) => {
+const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = false, showButton = true}) => {
     const {isLoggedIn, user } = usePersistStore()
     const selectedChannel = useAppStore((state) => state.selectedChannel)
     const [liking, setLiking] = useState(false)
@@ -152,8 +152,8 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
                     </Button>
                 }
                 
-                
-                {isBrowser ? <Tooltip title="Tips">
+                {showTipButton ?
+                isBrowser ? <Tooltip title="Tips">
                     <Button ref={diamondRef} variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={() => { showTipModal() }}>
                         <span className={clsx('flex items-center group-hover:text-brand2-500 dark:group-hover:text-brand2-400 space-x-2 outline-none', {
                             'text-brand2-500 dark:text-brand2-400 font-semibold': diamondBestowed > 0
@@ -178,7 +178,7 @@ const Reactions = ({ video, iconSize = '21', isVertical = false, showButton = tr
                             <span>Tip</span>
                         </span>
                     </Button>
-                }
+                :null }
             </div>
         </>
     )

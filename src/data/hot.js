@@ -2,44 +2,42 @@
 import { BASE_URI } from "@app/utils/constants";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { fetchAllPosts } from "./fetchList";
 
-export const GetHotFeed = async (reader) => {
-    const url = 'https://api.searchclout.net/trends/posts/hot/0?full=0&cache=1';
+export const GetHotFeed = async (reader, pageParam = 0, output = 32) => {
+    const url = `https://api.searchclout.net/trends/posts/week/${pageParam}?full=1&cache=1&type=video`;
     const response = await axios.get(url);
     if (response === null) {
         return null
     } else {
-        fetchPosts(response.data.posts, reader);
-    }
-}
+        const posts = response.data.posts;
 
-const fetchPosts = async (posts, reader) => {
-    try {
-        const response = await axios.post('https://green.post2earndao.com/api/v0/get-posts-hashlist', {
-            PostsHashList: posts,
-            ReaderPublicKeyBase58Check: reader
+        const filtered = posts.filter(post => {
+            if (post.videos !== null && post.videos.length > 0 && post.videos[0] !== '') {
+                return post
+            }
         });
-        if (response === null) {
-            return null
-        } else {
-            console.log(response.data);
-        }
-    } catch (error) {
-        console.log(error.message);
-        console.log(error);
+
+        const postsList = filtered.map((post) => {
+            return post.postHash
+        })
+
+        const fullPosts = await fetchAllPosts(reader, postsList);
+        
+        return fullPosts.splice(0, output)
     }
 }
 
-export const FetchInfiniteFollowingFeed = (reader, limit) => {
-    return useInfiniteQuery(['subscriptions-feed', reader], ({ pageParam = 0 }) => GetHotFeed(limit, reader, pageParam),
+export const FetchInfiniteHotFeed = (reader) => {
+    return useInfiniteQuery(['infinite-popular-feed', reader], ({ pageParam = 0 }) => GetHotFeed(reader, pageParam),
         {
             enabled: !!reader,
             getNextPageParam: (lastPage, pages) => {
                 if(lastPage === null) {
                     return null;
                 } else {
-                    let last = lastPage.length > 0 ? lastPage[lastPage.length - 1]: lastPage;
-                    return last.PostHashHex;
+                    console.log(pages);
+                    return 0
                 }
             }
         }

@@ -86,13 +86,9 @@ const VideoCard = ({ video, userProfile }) => {
   }
 
   return (
-    <div className="group">
-      {video.IsHidden ? (
-        <div className="grid h-full place-items-center">
-          <span className="text-xs">Video Hidden by User</span>
-        </div>
-      ) : (
-          <>
+    <>
+    {!video.IsHidden ? (
+      <div className="group">
           <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
           <Link href={`/watch/${video.PostHashHex}`}>
             <div className="relative rounded-none md:rounded-xl aspect-w-16 overflow-hidden aspect-h-9">
@@ -159,9 +155,11 @@ const VideoCard = ({ video, userProfile }) => {
               </div>
             </div>
           </div>
-        </>
+        </div>
+      ) : (
+        null
       )}
-    </div>
+    </>
   )
 }
 
