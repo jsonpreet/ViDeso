@@ -74,8 +74,8 @@ function ChannelInfo({ following, followers, channel }) {
                     <div className="w-20 h-20 bg-white border-white border-4 dark:border-gray-900 rounded-full md:relative md:-mt-10 -mt-7 absolute -top-2 md:w-32 md:h-32 md:ml-0 ml-4 dark:bg-gray-700">
                         <img src={avatar} alt="cover" className="w-full h-full object-cover rounded-full" />
                     </div>
-                    <div className="flex-none md:flex-1 md:p-0 p-4 flex flex-col mt-5 md:mt-2 space-y-2">
-                        <div className='flex space-x-10 items-center justify-start md:justify-end w-full -mb-0 -mt-0 md:-mb-1'>
+                    <div className="flex-none md:flex-1 w-full md:w-auto md:p-0 p-4 flex flex-col mt-5 md:mt-2 space-y-2">
+                        <div className='flex space-x-10 items-center justify-between md:justify-end w-full -mb-0 -mt-0 md:-mb-1'>
                             <div className='flex flex-col mt-4 md:mt-0 mb-2 flex-none md:flex-1 items-start'>
                                 <div className='flex items-center'>
                                     <Tooltip placement='top' contentClass='text-[12px]' title={channel.Username}>
