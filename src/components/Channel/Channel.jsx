@@ -60,10 +60,10 @@ const Channel = () => {
 
     const channelTabs = {
         0: "Videos",
-        1: "Stori",
+        // 1: "Stori",
         // 2: "Community",
         // 3: "Channels",
-        2: "About",
+        1: "About",
     }
 
     const getDefaultTab = (tab) => {

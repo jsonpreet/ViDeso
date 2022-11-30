@@ -34,7 +34,7 @@ const MobileMenu = () => {
           />
           <span className="text-xs">Home</span>
         </Link>
-        <Link
+        {/* <Link
           href={STORI}
           className="flex flex-col space-y-1 items-center justify-center w-full"
         >
@@ -45,8 +45,8 @@ const MobileMenu = () => {
             })}
           />
           <span className="text-xs">Stori</span>
-        </Link>
-        {/* <Link
+        </Link> */}
+        <Link
           href={FEED}
           className="flex flex-col space-y-1 items-center justify-center w-full"
         >
@@ -56,7 +56,7 @@ const MobileMenu = () => {
             })}
           />
           <span className="text-xs">Subscriptions</span>
-        </Link> */}
+        </Link>
         <Link
           href={EXPLORE}
           className="flex flex-col space-y-1 items-center justify-center w-full"

@@ -64,7 +64,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   <p className={`flex ml-6`}>Subscriptions</p>
                 </div>
               </Link>
-              <Link
+              {/* <Link
                 href={STORI}
                 className={clsx(
                   'rounded-lg px-3 py-2 group hover-primary',
@@ -77,7 +77,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   <MdSlowMotionVideo size={21} />
                   <p className={`flex ml-6`}>Stori</p>
                 </div>
-              </Link>
+              </Link> */}
               <Link
                 href={LIBRARY}
                 className={clsx(
