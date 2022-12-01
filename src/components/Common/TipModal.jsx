@@ -69,7 +69,7 @@ const TipModal = ({ rootRef, show, setShowTip, video }) => {
                 </div>
                 <div className="h-[1px] relative theme-border-bg" />
                 <div className='text-light text-center text-[13px] mt-4'>
-                    <p><span className='font-semibold mr-1'>NOTE:</span>On Submit you will redirect to <a href='https://diamondapp.com/u/@senDeso' className='gradientLink text-secondary-hover' rel="noreferrer" target='_blank'>SenDeso.money</a> Website!</p>
+                    <p><span className='font-semibold mr-1'>NOTE:</span>On Submit you will redirect to <a href='https://SenDeso.money' className='gradientLink text-secondary-hover' rel="noreferrer" target='_blank'>SenDeso.money</a> Website!</p>
                     <p>(By: <a href='https://diamondapp.com/u/@senDeso' className='gradientLink text-secondary-hover' rel="noreferrer" target='_blank'>SenDeso.money</a>)</p>
                 </div>
             </Modal>
