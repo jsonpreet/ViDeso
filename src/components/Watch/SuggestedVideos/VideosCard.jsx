@@ -139,13 +139,13 @@ const SuggestedVideoCard = ({ video, channel }) => {
                                 </div>
                                 <div>
                                     <div className="flex truncate items-center text-xs text-light">
-                                        <span className="whitespace-nowrap">
+                                        {/* <span className="whitespace-nowrap">
                                             {views > 1 ? `${views} views` : `${views} view`}
                                         </span>
-                                        {/* <span className="middot" />
+                                        <span className="middot" /> */}
                                         <span className="whitespace-nowrap">
                                             {video.LikeCount} likes
-                                        </span> */}
+                                        </span>
                                         <span className="middot" />
                                         <span>{timeNow(video.TimestampNanos)}</span>
                                     </div>

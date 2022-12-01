@@ -144,13 +144,13 @@ const VideoCard = ({ video, userProfile }) => {
                       }
                     </Link>
                     <div className="flex overflow-hidden text-[13px] text-light">
-                      <span className="whitespace-nowrap">
+                      {/* <span className="whitespace-nowrap">
                         {views > 1 ? `${views} views` : `${views} view`}
                       </span>
-                      {/* <span className="middot" />
+                      <span className="middot" /> */}
                       <span className="whitespace-nowrap">
                         {video.LikeCount > 1 ? `${video.LikeCount} likes` : `${video.LikeCount} like`}
-                      </span> */}
+                      </span>
                       <span className="middot" />
                         <span className="whitespace-nowrap">
                           {timeNow(video.TimestampNanos)}
