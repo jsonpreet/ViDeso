@@ -89,16 +89,16 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
     //   setisStarted(true);
     //   console.log('video started');
     // }
-    currentVideo.onplaying = () => {
-      currentVideo.style.display = 'block'
-      setShowNext(false)
-    }
-    currentVideo.onended = () => {
-      if (upNextVideo) {
-        currentVideo.style.display = 'none'
-        setShowNext(true)
-      }
-    }
+    // currentVideo.onplaying = () => {
+    //   currentVideo.style.display = 'block'
+    //   setShowNext(false)
+    // }
+    // currentVideo.onended = () => {
+    //   if (upNextVideo) {
+    //     currentVideo.style.display = 'none'
+    //     setShowNext(true)
+    //   }
+    // }
     currentVideo.onloadedmetadata = () => {
       currentVideo.currentTime = Number(videoWatchTime || 0)
     }
@@ -179,13 +179,13 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
           </DefaultUi>
         </Player>
       </div>
-      {showNext && (
+      {/* {showNext && (
         <NextVideo
           video={upNextVideo}
           playNext={playNext}
           cancelPlayNext={cancelPlayNext}
         />
-      )}
+      )} */}
       {showContextMenu && pathname === '/watch/[id]' && !showNext && (
         <PlayerContextMenu
           position={position}
