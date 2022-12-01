@@ -30,13 +30,12 @@ const MetaTags = (props) => {
       <meta property="og:image:height" content="630"/>
       <meta property="og:image:type" content="image/png"/>
       <meta property="og:image:alt" content={meta.description} />
-      <meta name="twitter:card" content="summary" />
-      <meta property="twitter:image:width" content="400" />
-      <meta property="twitter:image:height" content="400" />
-      <meta name="twitter:site" content="VidesoApp" />
+      <meta property="twitter:url" content={`${APP.URL}${router.asPath}`} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@VidesoApp" />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
-      <meta property="twitter:image:src" content={meta.image} />
+      <meta property="twitter:image" content={meta.image} />
       <meta property="twitter:creator" content='@VidesoApp' />
     </Head>
   )
