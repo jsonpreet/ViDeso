@@ -6,16 +6,13 @@ import clsx from 'clsx'
 import Deso from 'deso-protocol'
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
-import { IoDiamondOutline } from 'react-icons/io5'
 import party from "party-js"
 import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
 import { DESO_CONFIG } from '@app/utils/constants'
 import Tooltip from '../UIElements/Tooltip'
 import logger from '@app/utils/logger'
-import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
-import { MdOutlineAttachMoney } from 'react-icons/md'
+import { isBrowser } from 'react-device-detect';
 import TipModal from '../Common/TipModal'
-import { CiBadgeDollar } from "react-icons/ci";
 import { BiDollar } from 'react-icons/bi'
 
 const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = false, showButton = true}) => {
@@ -72,9 +69,9 @@ const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = 
     }
 
     const showTipModal = () => {
-        if (!isLoggedIn) {
-            return toast.error('You must be logged in!')
-        } 
+        // if (!isLoggedIn) {
+        //     return toast.error('You must be logged in!')
+        // } 
         setShowTip(!showTip)
     }
 
