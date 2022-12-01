@@ -23,8 +23,10 @@ export const GetHotFeed = async (reader, pageParam = 0, output = 32) => {
         })
 
         const fullPosts = await fetchAllPosts(reader, postsList);
+
+        const result = { posts: fullPosts.splice(0, output), page: response.data.page, pages: response.data.pages }
         
-        return fullPosts.splice(0, output)
+        return result
     }
 }
 
@@ -33,11 +35,10 @@ export const FetchInfiniteHotFeed = (reader) => {
         {
             enabled: !!reader,
             getNextPageParam: (lastPage, pages) => {
-                if(lastPage === null) {
+                if(lastPage === null || lastPage.page === lastPage.pages) {
                     return null;
                 } else {
-                    console.log(pages);
-                    return 0
+                    return lastPage.page + 1
                 }
             }
         }
