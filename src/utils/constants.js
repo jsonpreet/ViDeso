@@ -8,7 +8,7 @@ export const ALLOWED_VIDEO_TYPES = [
 
 export const APP = {
   Name: 'Videso',
-  URL: 'https://videso.vercel.app',
+  URL: 'https://videso.xyz',
   Description: 'Videso is a decentralized video-sharing social media platform built with DeSo.',
   Twitter: 'VidesoApp',
   PublicKeyBase58Check: 'BC1YLiHYuaqQc1r5UFvJ3G8eMYawk693wVGiTHmBQtr9DK8NQXt14oJ'
