@@ -33,6 +33,7 @@ const WatchVideo = () => {
     const [videoData, setVideoData] = useState(null)
     const [views, setViews] = useState(0)
     const [thumbnailUrl, setThumbnailUrl] = useState('')
+    const [defaultThumbnailUrl, setDefaultThumbnailUrl] = useState('')
     const [loading, setLoading] = useState(true)
     const [posthash, setPosthash] = useState('')
 
@@ -67,6 +68,7 @@ const WatchVideo = () => {
             try {
                 const duration = getThumbDuration(videoData.data.Duration);
                 const thumb = getVideoThumbnail(video, duration);
+                setDefaultThumbnailUrl(thumb.url)
                 if (thumb.processed) {
                     setThumbnailUrl(thumb.url)
                 } else {
@@ -131,11 +133,10 @@ const WatchVideo = () => {
         return <Custom404 />
     }
 
-
     if (loading || !videoData) return <WatchVideoShimmer />
     return (
         <>
-            <MetaTags title={video ? getVideoTitle(video) : 'Watch'} />
+            <MetaTags title={video ? getVideoTitle(video) : 'Watch'} url={`${APP.URL}/watch/${video.PostHashHex}`} />
             {isFetched && !loading && !isError && videoData && video ? (
                 <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">

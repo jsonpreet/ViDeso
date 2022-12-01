@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient(config))
   return (
     <>
-      <MetaTags/>
+      
       <ThemeProvider enableSystem={false} attribute="class">
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
