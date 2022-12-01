@@ -151,7 +151,7 @@ const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = 
                 
                 {showTipButton ?
                 isBrowser ? <Tooltip title="Tips">
-                    <Button ref={diamondRef} variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={() => setShowTip(!showTip)}>
+                    <Button ref={diamondRef} variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={showTipModal}>
                         <span className={clsx('flex items-center group-hover:text-brand2-500 dark:group-hover:text-brand2-400 space-x-2 outline-none', {
                             'text-brand2-500 dark:text-brand2-400 font-semibold': diamondBestowed > 0
                         },
@@ -164,7 +164,7 @@ const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = 
                     </Button>
                 </Tooltip> :
                     
-                    <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={() => setShowTip(!showTip)}>
+                    <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={showTipModal}>
                         <span className={clsx('flex items-center group-hover:text-brand2-500 dark:group-hover:text-brand2-400 space-x-2 outline-none', {
                             'text-brand2-500 dark:text-brand2-400 font-semibold': diamondBestowed > 0
                         },
