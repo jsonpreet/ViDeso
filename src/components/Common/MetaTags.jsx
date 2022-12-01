@@ -9,7 +9,7 @@ const MetaTags = (props) => {
   const meta = {
     title: title ? `${title} - ${APP.Name}` : APP.Name,
     description: description ?? APP.Description,
-    image: image ?? `/meta.png`,
+    image: image ?? `${APP.URL}/meta.png`,
     type: 'website'
   }
 
@@ -19,7 +19,7 @@ const MetaTags = (props) => {
       <meta name="robots" content="follow, index" />
       <meta content={meta.description} name="description" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-      <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+      <link rel="icon" type="image/x-icon" href={`${APP.URL}/favicon.ico`} />
       <link rel="canonical" href={`${APP.URL}${router.asPath}`} />
       <meta property="og:url" content={`${APP.URL}${router.asPath}`}/>
       <meta property="og:type" content={meta.type} />
