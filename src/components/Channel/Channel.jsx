@@ -1,11 +1,9 @@
 import clsx from 'clsx';
 import { Suspense, useEffect, useState } from 'react';
 import dynamic from "next/dynamic";
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Custom404 from '@app/pages/500';
-import { Tab } from '@headlessui/react';
 import { FetchProfile } from '@app/data/channel';
-import MetaTags from '@app/components/Common/MetaTags'
 import ChannelShimmer from '@app/components/Shimmers/ChannelShimmer';
 import { Loader2 } from '@app/components/UIElements/Loader';
 import { NoDataFound } from '@app/components/UIElements/NoDataFound';
@@ -14,14 +12,15 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import usePersistStore from '@app/store/persist';
 import Deso from 'deso-protocol';
-import { DESO_CONFIG } from '@app/utils/constants';
+import { APP, DESO_CONFIG } from '@app/utils/constants';
 import logger from '@app/utils/logger';
-import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
-import DropMenu from '../UIElements/DropMenu';
-import Link from 'next/link';
+import { BsThreeDots } from 'react-icons/bs';
 import { Button } from '../UIElements/Button';
-import { FiFlag } from 'react-icons/fi';
 import MoreTabsModal from '../Common/MoreTabsModal';
+import Head from 'next/head';
+import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
+import { getProfileName } from '@app/utils/functions/getProfileName';
+import MetaTags from '../Common/MetaTags';
 
 const ChannelVideos = dynamic(() => import("./Tabs/Videos"), {
   suspense: true,
@@ -221,10 +220,26 @@ const Channel = () => {
         )
     }
     
-    if (isFetched) {
-        return (
-            <>
-                <MetaTags title={`${channel?.Username}`} />
+    return (
+        <>
+            {/* <Head>
+                <title>{channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name}</title>
+                <meta content={APP.Description} name="description" />
+                <link rel="canonical" href={`${APP.URL}${router.asPath}`} />
+                <meta property="og:url" content={`${APP.URL}${router.asPath}`}/>
+                <meta property="og:type" content={APP.Meta.type} />
+                <meta property="og:site_name" content={APP.Name} />
+                <meta property="og:description" content={APP.Description} />
+                <meta property="og:title" content={channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name} />
+                <meta property="og:image:alt" content={channel ? getProfileName(channel) : APP.Name} />
+                <meta property="og:image" content={channel ? getProfilePicture(channel) : `${APP.URL}${APP.Meta.image}`} />
+                <meta property="twitter:url" content={`${APP.URL}${router.asPath}`} />
+                <meta name="twitter:title" content={channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name} />
+                <meta name="twitter:description" content={APP.Description} />
+                <meta property="twitter:image" content={channel ? getProfilePicture(channel) : `${APP.URL}${APP.Meta.image}`} />
+            </Head> */}
+            <MetaTags title={channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name} image={channel ? getProfilePicture(channel) : `${APP.URL}${APP.Meta.image}`}/>
+            {isFetched ?
                 <div className="">
                     <ChannelInfo followers={followers} following={follow} channel={channel}/>
                     {channel && <MoreTabsModal username={channel.Username} show={showModal} setShowModal={setShowModal} />}
@@ -252,7 +267,7 @@ const Channel = () => {
                                         />
                                     )
                                 })}
-                                <TabButton/>
+                                {/* <TabButton/> */}
                             </div>
                         </div>
                         <div className="md:py-3 p-0 md:px-16 focus:outline-none">
@@ -261,7 +276,7 @@ const Channel = () => {
                                     <ChannelVideos channel={channel} />
                                 </Suspense>
                             }
-                           
+                            
                             {routeTab === 'stori' &&
                                 <Suspense fallback={<Loader />}>
                                     <Stori channel={channel} />
@@ -285,9 +300,9 @@ const Channel = () => {
                         </div>
                     </div>
                 </div>
-            </>
-        )
-    }
+        : <ChannelShimmer /> }
+        </>
+    )
 }
 
 export default Channel

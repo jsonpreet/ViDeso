@@ -15,6 +15,7 @@ import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import { APP } from '@app/utils/constants'
 import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData'
+import MetaTags from '@app/components/Common/MetaTags'
 
 dayjs.extend(advancedFormat)
 
@@ -22,16 +23,16 @@ function About({ stats, channel }) {
     const { isLoggedIn, user } = usePersistStore();
     const reporterID = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
     const channelExtra = getProfileExtraData(channel);
-    const DiscordURL = channelExtra.DiscordURL !== null ? channelExtra.DiscordURL : null;
-    const GithubURL = channelExtra.GithubURL !== null ? channelExtra.GithubURL : null;
-    const InstagramURL = channelExtra.InstagramURL !== null ? channelExtra.InstagramURL : null;
-    const LinkedinURL = channelExtra.LinkedinURL !== null ? channelExtra.LinkedinURL : null;
-    const TwitterURL = channelExtra.TwitterURL !== null ? channelExtra.TwitterURL : null;
-    const YoutubeURL = channelExtra.YoutubeURL !== null ? channelExtra.YoutubeURL : null;
-    const WebsiteURL = channelExtra.WebsiteURL !== null ? channelExtra.WebsiteURL : null;
-    const WebsiteTitle = channelExtra.WebsiteTitle !== null ? channelExtra.WebsiteTitle : 'Website';
-    const CustomTitle = channelExtra.CustomTitle !== null ? channelExtra.CustomTitle : 'External Site';
-    const CustomURL = channelExtra.CustomURL !== null ? channelExtra.CustomURL : null;
+    const DiscordURL = channelExtra !== null ? channelExtra.DiscordURL : null;
+    const GithubURL = channelExtra !== null ? channelExtra.GithubURL : null;
+    const InstagramURL = channelExtra !== null ? channelExtra.InstagramURL : null;
+    const LinkedinURL = channelExtra !== null ? channelExtra.LinkedinURL : null;
+    const TwitterURL = channelExtra !== null ? channelExtra.TwitterURL : null;
+    const YoutubeURL = channelExtra !== null ? channelExtra.YoutubeURL : null;
+    const WebsiteURL = channelExtra !== null ? channelExtra.WebsiteURL : null;
+    const WebsiteTitle = channelExtra !== null ? channelExtra.WebsiteTitle : 'Website';
+    const CustomTitle = channelExtra !== null ? channelExtra.CustomTitle : 'External Site';
+    const CustomURL = channelExtra !== null ? channelExtra.CustomURL : null;
     
     return (
         <>
@@ -44,7 +45,7 @@ function About({ stats, channel }) {
                                 'overflow-hidden leading-6 text-sm break-words'
                                 )}>
                                 <Linkify options={LinkifyOptions}>
-                                    {channelExtra.Description !== null ? channelExtra.Description : channel.Description}
+                                    {channelExtra !== null ? channelExtra.Description : channel.Description}
                                 </Linkify>
                             </div>
                         </div>
@@ -59,12 +60,12 @@ function About({ stats, channel }) {
                                             <div>
                                                 <span className='text-sm text-primary'>Joined: {dayjs.unix(stats.UserAge.Timestamp).format('MMM DD, YYYY')}</span>
                                             </div>
-                                            {channelExtra.Location !== '' &&
+                                            {channelExtra !== null && channelExtra.Location !== '' &&
                                                 <div>
                                                     <span className='text-sm text-primary'>Location: {channelExtra.Location}</span>
                                                 </div>
                                             }
-                                            {channelExtra.Languages !== '' &&
+                                            {channelExtra !== null && channelExtra.Languages !== '' &&
                                                 <div>
                                                     <span className='text-sm text-primary'>Language: {channelExtra.Languages}</span>
                                                 </div>
