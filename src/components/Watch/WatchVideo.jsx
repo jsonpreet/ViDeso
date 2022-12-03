@@ -21,6 +21,7 @@ import logger from '@app/utils/logger'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { APP } from '@app/utils/constants'
 import { getThumbDuration } from '@app/utils/functions'
+import { NextSeo } from 'next-seo'
 
 const WatchVideo = () => {
     const router = useRouter()
@@ -138,7 +139,22 @@ const WatchVideo = () => {
     
     return (
         <>
-            <MetaTags description={video ? getVideoTitle(video) : 'Watch'} image={video ? defaultThumbnailUrl : ''} title={video ? getVideoTitle(video) : 'Watch'} url={`${APP.URL}/watch/${video.PostHashHex}`} />
+            <NextSeo
+                title={video ? getVideoTitle(video) : 'Watch'}
+                description={video ? getVideoTitle(video) : 'Watch'}
+                canonical={`${APP.URL}/watch/${video.PostHashHex}`}
+                openGraph={{
+                    title: video ? getVideoTitle(video) : 'Watch',
+                    description: video ? getVideoTitle(video) : 'Watch',
+                    url: `${APP.URL}/watch/${video.PostHashHex}`,
+                    images: [
+                        {
+                            url: video ? defaultThumbnailUrl : '',
+                            alt: video ? getVideoTitle(video) : 'Watch',
+                        },
+                    ],
+                }}
+            />
             {isFetched && !loading && !isError && videoData && video ? (
                 <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
