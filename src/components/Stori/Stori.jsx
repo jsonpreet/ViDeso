@@ -4,9 +4,7 @@ import { FetchInfiniteStoriFeed } from '@app/data/stori';
 import usePersistStore from '@app/store/persist';
 import { APP } from '@app/utils/constants';
 import Head from 'next/head';
-import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import MetaTags from '../Common/MetaTags';
 import StoriVideo from './StoriVideo';
 
 function Stori() {
@@ -37,7 +35,6 @@ function Stori() {
                 <Head>
                     <meta name="theme-color" content="#000000" />
                 </Head>
-                <MetaTags title="Stori" />
                 <div className="md:h-[calc(100vh-70px)] h-screen overflow-y-scroll no-scrollbar snap-y snap-mandatory scroll-smooth">
                     {
                         isSuccess ? (
