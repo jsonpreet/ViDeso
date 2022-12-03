@@ -9,6 +9,7 @@ import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
 import { Loader2 } from '../UI/Loader';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import { APP } from '@app/utils/constants';
 
 function Explore() {
     const { user, isLoggedIn } = usePersistStore();
