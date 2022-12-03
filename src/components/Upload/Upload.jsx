@@ -1,4 +1,4 @@
-import useAppStore, { UPLOADED_VIDEO_FORM_DEFAULTS } from '@app/store/app'
+import useAppStore from '@app/store/app'
 import usePersistStore from '@app/store/persist'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -19,8 +19,6 @@ function Upload() {
     const [deso, setDeso] = useState(null)
     const [newPostHash, setNewPostHash] = useState(null)
     const [mediaID, setMediaId] = useState(null)
-    const [newPost, setNewPost] = useState(null)
-    const [uploadProgress, setUploadProgress] = useState(0)
     const videoStreamInterval = null
 
 

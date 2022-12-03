@@ -1,4 +1,4 @@
-import DropMenu from '@components/UIElements/DropMenu'
+import DropMenu from '@app/components/UI/DropMenu'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 import { AiOutlineDelete } from 'react-icons/ai'

@@ -2,8 +2,8 @@ import usePersistStore from '@app/store/persist';
 import MetaTags from '@components/Common/MetaTags'
 import dynamic from "next/dynamic";
 import { Suspense } from 'react';
-import { NoDataFound } from '@components/UIElements/NoDataFound';
-import FullPageLoader from '../Common/FullPageLoader';
+import { NoDataFound } from '@app/components/UI/NoDataFound';
+import FullPageLoader from '../UI/FullPageLoader';
 // import Timeline from './Timeline';
 const Timeline = dynamic(() => import("./Timeline"), {
     suspense: true,

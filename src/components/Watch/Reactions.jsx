@@ -1,7 +1,7 @@
 import useAppStore from '@app/store/app'
 import usePersistStore from '@app/store/persist'
 import { formatNumber } from '@app/utils/functions'
-import { Button } from '@components/UIElements/Button'
+import { Button } from '@app/components/UI/Button'
 import clsx from 'clsx'
 import Deso from 'deso-protocol'
 import { useEffect, useRef, useState } from 'react'
@@ -9,7 +9,7 @@ import toast from 'react-hot-toast'
 import party from "party-js"
 import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
 import { DESO_CONFIG } from '@app/utils/constants'
-import Tooltip from '../UIElements/Tooltip'
+import Tooltip from '../UI/Tooltip'
 import logger from '@app/utils/logger'
 import { isBrowser } from 'react-device-detect';
 import TipModal from '../Common/TipModal'

@@ -1,6 +1,6 @@
 import { DESO_CONFIG } from '@app/utils/constants';
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
-import { Loader, Loader2 } from '@components/UIElements/Loader'
+import { Loader, Loader2 } from '@app/components/UI/Loader'
 import { Tab } from '@headlessui/react'
 import clsx from 'clsx';
 import Deso from 'deso-protocol';
@@ -12,8 +12,8 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { BiUser } from 'react-icons/bi';
 import { useDebounce } from 'use-debounce';
 import IsVerified from '../Common/IsVerified';
-import { Button } from '../UIElements/Button';
-import Modal from '../UIElements/Modal';
+import { Button } from '../UI/Button';
+import Modal from '../UI/Modal';
 
 
 const Search = () => {

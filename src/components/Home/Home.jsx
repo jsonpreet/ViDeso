@@ -2,7 +2,7 @@ import usePersistStore from '@app/store/persist';
 import MetaTags from '@components/Common/MetaTags'
 import { useState } from 'react';
 import Carousel from 'react-multi-carousel';
-import { Button } from '../UIElements/Button';
+import { Button } from '../UI/Button';
 import HistoryVideos from './Tabs/HistoryVideos';
 import PopularVideos from './Tabs/PopularVideos';
 import RecentVideos from './Tabs/RecentVideos';

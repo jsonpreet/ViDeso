@@ -1,7 +1,6 @@
-import React from 'react'
-import { Loader2 } from '../UIElements/Loader'
+import { Loader2 } from './Loader'
 
-import MetaTags from './MetaTags'
+import MetaTags from '../Common/MetaTags'
 
 const FullPageLoader = () => {
   return (

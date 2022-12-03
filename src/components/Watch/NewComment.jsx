@@ -1,5 +1,5 @@
-import { Button } from '@components/UIElements/Button'
-import InputMentions from '@components/UIElements/InputMentions'
+import { Button } from '@app/components/UI/Button'
+import InputMentions from '@app/components/UI/InputMentions'
 import React, { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'

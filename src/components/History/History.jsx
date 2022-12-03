@@ -1,5 +1,5 @@
 import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@app/components/UIElements/NoDataFound';
+import { NoDataFound } from '@app/components/UI/NoDataFound';
 import MetaTags from '@app/components/Common/MetaTags';
 import Timeline from './Timeline';
 

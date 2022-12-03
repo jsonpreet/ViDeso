@@ -1,11 +1,11 @@
-import VideoCard from '@app/components/Common/VideoCard/VideoCard'
+import VideoCard from '@app/components/Common/Cards/Video'
 import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
 import { FetchInfiniteFollowingFeed } from '@app/data/feed';
 import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@app/components/UIElements/NoDataFound';
-import { Loader2 } from '../UIElements/Loader';
+import { NoDataFound } from '@app/components/UI/NoDataFound';
+import { Loader2 } from '../UI/Loader';
 
 
 const Timeline = () => {

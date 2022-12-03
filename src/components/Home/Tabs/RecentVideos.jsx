@@ -1,7 +1,7 @@
-import { VideoCard } from '@app/components/Common/VideoCard';
+import { VideoCard } from '@app/components/Common/Cards';
 import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
-import { Loader2 } from '@app/components/UIElements/Loader';
-import { NoDataFound } from '@app/components/UIElements/NoDataFound';
+import { Loader2 } from '@app/components/UI/Loader';
+import { NoDataFound } from '@app/components/UI/NoDataFound';
 import { FetchInfiniteLatestFeed } from '@app/data/videos';
 import usePersistStore from '@app/store/persist';
 import { APP } from '@app/utils/constants';

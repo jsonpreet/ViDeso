@@ -4,7 +4,7 @@ import { generateVideoThumbnails } from '@app/utils/functions/generateVideoThumb
 import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 import { getPlaybackIdFromUrl } from '@app/utils/functions/getVideoUrl'
-import { Button } from '@components/UIElements/Button'
+import { Button } from '@app/components/UI/Button'
 import Deso from 'deso-protocol'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'

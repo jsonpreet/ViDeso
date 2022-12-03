@@ -1,6 +1,6 @@
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
 import ChannelLinks from './Links';
-import Tooltip from '../UIElements/Tooltip';
+import Tooltip from '../UI/Tooltip';
 import IsVerified from '../Common/IsVerified';
 import { useEffect, useRef, useState } from 'react';
 import Deso from 'deso-protocol';
@@ -9,7 +9,7 @@ import usePersistStore from '@app/store/persist';
 import toast from 'react-hot-toast';
 import { formatNumber } from '@app/utils/functions';
 import { getCoverPicture } from '@app/utils/functions/getCoverPicture';
-import { Button } from '../UIElements/Button';
+import { Button } from '../UI/Button';
 import Link from 'next/link';
 import logger from '@app/utils/logger';
 import party from "party-js"

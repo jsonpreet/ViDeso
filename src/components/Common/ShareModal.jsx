@@ -1,5 +1,5 @@
 import { APP } from '@app/utils/constants'
-import Modal from '@components/UIElements/Modal'
+import Modal from '@app/components/UI/Modal'
 import useCopyToClipboard from '@utils/hooks/useCopyToClipboard'
 import toast from 'react-hot-toast'
 import SimpleBar from 'simplebar-react';

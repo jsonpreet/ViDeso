@@ -1,5 +1,5 @@
-import { Loader2 } from '@app/components/UIElements/Loader';
-import { NoDataFound } from '@app/components/UIElements/NoDataFound';
+import { Loader2 } from '@app/components/UI/Loader';
+import { NoDataFound } from '@app/components/UI/NoDataFound';
 import { FetchInfiniteStoriFeed } from '@app/data/stori';
 import usePersistStore from '@app/store/persist';
 import { APP } from '@app/utils/constants';

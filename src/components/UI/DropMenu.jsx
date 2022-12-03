@@ -1,7 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { FC, Fragment, ReactElement, ReactNode } from 'react'
+import { Fragment } from 'react'
 
 export const NextLink = ({ href, children, ...rest }) => (
   <Link href={href} {...rest}>

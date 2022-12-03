@@ -1,10 +1,8 @@
 import { CREATOR_VIDEO_CATEGORIES } from '@app/data/categories'
 import useAppStore from '@app/store/app'
 import { Listbox, Transition } from '@headlessui/react'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { BsCheck } from 'react-icons/bs'
-import { IoBagCheckOutline } from 'react-icons/io5'
-import { MdCheckBoxOutlineBlank } from 'react-icons/md'
 
 const Category = () => {
   const uploadedVideo = useAppStore((state) => state.uploadedVideo)

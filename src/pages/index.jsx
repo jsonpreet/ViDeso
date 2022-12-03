@@ -1,4 +1,4 @@
-import FullPageLoader from '@app/components/Common/FullPageLoader'
+import FullPageLoader from '@app/components/UI/FullPageLoader'
 import dynamic from 'next/dynamic'
 import { Home } from '@app/components/Home'
 import { Suspense } from 'react'

@@ -1,9 +1,9 @@
-import VideoCard from '@app/components/Common/VideoCard/VideoCard'
+import VideoCard from '@app/components/Common/Cards/Video'
 import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
 import { useInView } from 'react-intersection-observer'
 import { useEffect, useState } from 'react';
 import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@app/components/UIElements/NoDataFound';
+import { NoDataFound } from '@app/components/UI/NoDataFound';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import logger from '@app/utils/logger';
 import { getFeed } from '@app/data/history';

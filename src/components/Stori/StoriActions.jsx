@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import ShareModal from '../Common/ShareModal'
-import VideoOptions from '../Common/VideoCard/VideoOptions'
+import VideoOptions from '../Common/Cards/Options'
 
 const StoriActions = ({ video }) => {
     const [showShare, setShowShare] = useState(false)

@@ -1,12 +1,8 @@
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
 import 'tippy.js/themes/material.css'
-
-//import Tippy from '@tippyjs/react'
 import Tippy from '@tippyjs/react/headless'
 import clsx from 'clsx'
-import { useTheme } from 'next-themes'
-import React from 'react'
 
 const Tooltip = ({
   render,

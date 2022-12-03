@@ -4,7 +4,7 @@ import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
 import Link from 'next/link'
 import { isBrowser } from 'react-device-detect'
 import IsVerified from '../Common/IsVerified'
-import Tooltip from '../UIElements/Tooltip'
+import Tooltip from '../UI/Tooltip'
 
 const BottomOverlay = ({ video }) => {
     const userProfile = video.ProfileEntryResponse

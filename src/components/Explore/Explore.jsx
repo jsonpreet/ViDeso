@@ -1,13 +1,13 @@
-import VideoCard from '@components/Common/VideoCard/VideoCard'
+import VideoCard from '@app/components/Common/Cards/Video'
 import { FetchInfiniteLatestFeed } from '@app/data/videos';
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
 import Custom500 from '@app/pages/404';
 import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@components/UIElements/NoDataFound';
+import { NoDataFound } from '@app/components/UI/NoDataFound';
 import MetaTags from '@components/Common/MetaTags';
 import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
-import { Loader2 } from '../UIElements/Loader';
+import { Loader2 } from '../UI/Loader';
 
 function Explore() {
     const { user, isLoggedIn } = usePersistStore();

@@ -6,8 +6,8 @@ import Custom404 from '@app/pages/500';
 import { FetchProfile } from '@app/data/channel';
 import MetaTags from '@app/components/Common/MetaTags'
 import ChannelShimmer from '@app/components/Shimmers/ChannelShimmer';
-import { Loader2 } from '@app/components/UIElements/Loader';
-import { NoDataFound } from '@app/components/UIElements/NoDataFound';
+import { Loader2 } from '@app/components/UI/Loader';
+import { NoDataFound } from '@app/components/UI/NoDataFound';
 import ChannelInfo from './Info';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -16,7 +16,7 @@ import Deso from 'deso-protocol';
 import { DESO_CONFIG } from '@app/utils/constants';
 import logger from '@app/utils/logger';
 import { BsThreeDots } from 'react-icons/bs';
-import { Button } from '../UIElements/Button';
+import { Button } from '../UI/Button';
 import MoreTabsModal from '../Common/MoreTabsModal';
 
 const ChannelVideos = dynamic(() => import("./Tabs/Videos"), {

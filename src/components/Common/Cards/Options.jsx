@@ -1,6 +1,6 @@
 import usePersistStore from '@app/store/persist'
 import { APP } from '@app/utils/constants'
-import DropMenu from '@app/components/UIElements/DropMenu'
+import DropMenu from '@app/components/UI/DropMenu'
 import clsx from 'clsx'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FiFlag } from 'react-icons/fi'

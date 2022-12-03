@@ -10,7 +10,7 @@ import { FaDiscord, FaExternalLinkAlt, FaGithub, FaGlobe, FaInstagram, FaLinkedi
 import { IoDiamondOutline } from 'react-icons/io5'
 import { FiFlag } from 'react-icons/fi'
 import usePersistStore from '@app/store/persist'
-import Tooltip from '@app/components/UIElements/Tooltip'
+import Tooltip from '@app/components/UI/Tooltip'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import { APP } from '@app/utils/constants'

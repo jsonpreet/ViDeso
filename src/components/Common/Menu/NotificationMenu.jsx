@@ -1,4 +1,4 @@
-import DropMenu from '@app/components/UIElements/DropMenu'
+import DropMenu from '@app/components/UI/DropMenu'
 import useAppStore from '@app/store/app'
 import usePersistStore from '@app/store/persist'
 import React, { useState } from 'react'

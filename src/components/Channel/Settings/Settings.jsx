@@ -1,5 +1,5 @@
 import IsVerified from '@app/components/Common/IsVerified';
-import { Button } from '@app/components/UIElements/Button';
+import { Button } from '@app/components/UI/Button';
 import usePersistStore from '@app/store/persist';
 import { APP, DESO_CONFIG } from '@app/utils/constants';
 import { getCoverPicture } from '@app/utils/functions/getCoverPicture';

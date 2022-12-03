@@ -2,10 +2,10 @@ import usePersistStore from '@app/store/persist';
 import toast from 'react-hot-toast'
 import Deso from 'deso-protocol'
 import { useEffect, useState } from 'react'
-import { Button } from '../../UIElements/Button';
+import { Button } from '../../UI/Button';
 import { Menu } from '@headlessui/react';
 import Link from 'next/link';
-import DropMenu, { NextLink } from '../../UIElements/DropMenu';
+import DropMenu, { NextLink } from '../../UI/DropMenu';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { HiOutlineCog } from 'react-icons/hi';
 import { MdExitToApp } from 'react-icons/md';

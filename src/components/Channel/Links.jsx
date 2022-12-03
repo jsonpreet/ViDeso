@@ -4,7 +4,7 @@ import { FaDiscord, FaExternalLinkSquareAlt, FaGithub, FaGlobe, FaInstagram, FaL
 import { HiOutlineGlobe } from 'react-icons/hi'
 import { IoDiamondOutline } from 'react-icons/io5';
 import { RiTwitterLine } from 'react-icons/ri'
-import Tooltip from '../UIElements/Tooltip';
+import Tooltip from '../UI/Tooltip';
 
 function ChannelLinks({channel}) {
     const channelExtra = getProfileExtraData(channel);

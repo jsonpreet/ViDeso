@@ -3,7 +3,7 @@ import { DESO_CONFIG } from '@app/utils/constants'
 import Deso from 'deso-protocol'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { Button } from '../UIElements/Button'
+import { Button } from '../UI/Button'
 
 function SidebarLoginMessage() {
   const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()

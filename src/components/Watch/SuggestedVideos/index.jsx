@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Carousel from 'react-multi-carousel'
-import { Button } from '../../UIElements/Button'
+import { Button } from '../../UI/Button'
 import AllVideos from './Tabs/AllVideos'
 import PopularVideos from './Tabs/PopularVideos'
 import RecentVideos from './Tabs/RecentVideos'

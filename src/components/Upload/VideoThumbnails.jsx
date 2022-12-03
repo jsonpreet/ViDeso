@@ -1,6 +1,6 @@
 import logger from '@app/utils/logger'
 import ThumbnailsShimmer from '@app/components/Shimmers/ThumbnailsShimmer'
-import { Loader } from '@components/UIElements/Loader'
+import { Loader } from '@app/components/UI/Loader'
 import clsx from 'clsx'
 import { BiImageAdd } from 'react-icons/bi'
 import { generateVideoThumbnails } from '@app/utils/functions/generateVideoThumbnails'
@@ -11,8 +11,6 @@ import { useEffect, useState } from 'react'
 import Deso from 'deso-protocol';
 import { UploadImage } from '@app/data/image'
 import usePersistStore from '@app/store/persist'
-import * as tf from '@tensorflow/tfjs'
-import * as nsfwjs from 'nsfwjs'
 
 const DEFAULT_THUMBNAIL_INDEX = 0
 export const THUMBNAIL_GENERATE_COUNT = 3
@@ -48,18 +46,9 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
             )
             const thumbnails = []
             thumbnailArray.forEach((t) => {
-                thumbnails.push({ url: t, ipfsUrl: '', isNSFWThumbnail: false,type: 'image/jpeg' })
+                thumbnails.push({ url: t, image: '',type: 'image/jpeg' })
             })
             setThumbnails(thumbnails)
-            //setSelectedThumbnailIndex(DEFAULT_THUMBNAIL_INDEX)
-            // const imageFile = getFileFromDataURL( thumbnails[DEFAULT_THUMBNAIL_INDEX].url, 'thumbnail.jpeg')
-            // const ipfsResult = await uploadThumbnail(imageFile)
-            // setThumbnails(
-            //     thumbnails.map((t, i) => {
-            //         if (i === DEFAULT_THUMBNAIL_INDEX) t.ipfsUrl = ipfsResult
-            //         return t
-            //     })
-            // )
         } catch (error) {
             logger.error('[Error Generate Thumbnails]', error)
         }
@@ -77,30 +66,13 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file])
 
-    const checkNsfw = async (source) => {
-        const img = document.createElement('img')
-        img.src = source
-        img.height = 200
-        img.width = 400
-        let predictions = []
-        try {
-            const model = await nsfwjs.load()
-            predictions = await model?.classify(img, 3)
-        } catch (error) {
-            logger.error('[Error Check NSFW]', error)
-        }
-        return getIsNSFW(predictions)
-    }
-
     const handleUpload = async (e) => {
         if (e.target.files?.length) {
             setSelectedThumbnailIndex(-1)
             const result = await uploadThumbnail(e.target.files[0])
             const preview = window.URL?.createObjectURL(e.target.files[0])
-            const isNSFWThumbnail = await checkNsfw(preview)
-            setUploadedVideo({ isNSFWThumbnail })
             setThumbnails([
-                { url: preview, url: result, isNSFWThumbnail },
+                { url: preview, url: result },
                 ...thumbnails
             ])
             setSelectedThumbnailIndex(0)
@@ -109,30 +81,29 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
 
     const onSelectThumbnail = async (index) => {
         setSelectedThumbnailIndex(index)
-        if (thumbnails[index].ipfsUrl === '') {
+        if (thumbnails[index].image === '') {
             const file = getFileFromDataURL(thumbnails[index].url, 'thumbnail.jpeg')
             const ipfsResult = await uploadThumbnail(file)
             setThumbnails(
                 thumbnails.map((t, i) => {
-                    if (i === index) t.ipfsUrl = ipfsResult
+                    if (i === index) t.image = ipfsResult
                     return t
                 })
             )
         } else {
-            afterUpload(thumbnails[index].ipfsUrl, 'image/jpeg')
-            setUploadedVideo({ isNSFWThumbnail: thumbnails[index]?.isNSFWThumbnail })
+            afterUpload(thumbnails[index].image, 'image/jpeg')
         }
     }
 
     return (
         <div className="w-full">
-            {label && (
-                <div className="flex items-center mb-1 space-x-1.5">
-                    <div className="font-medium text-sm">
-                        {label}
-                    </div>
+        {label && (
+            <div className="flex items-center mb-1 space-x-1.5">
+                <div className="font-medium text-sm">
+                    {label}
                 </div>
-            )}
+            </div>
+        )}
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 place-items-start py-0.5 gap-3">
             <label
                 htmlFor="chooseThumbnail"
@@ -162,8 +133,7 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
                         className={clsx(
                             'rounded-md flex w-full relative cursor-grab flex-none focus:outline-none',
                             {
-                            'drop-shadow-2xl ring ring-brand2-500': selectedThumbnailIndex === idx,
-                            'ring !ring-red-500': thumbnail.isNSFWThumbnail
+                            'drop-shadow-2xl ring ring-brand2-500': selectedThumbnailIndex === idx
                             }
                         )}
                     >

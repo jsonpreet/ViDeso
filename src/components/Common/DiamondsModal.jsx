@@ -3,13 +3,13 @@ import { APP, DESO_CONFIG } from '@app/utils/constants'
 import { abbreviateNumber, formatUSD, nanosToUSDNumber } from '@app/utils/functions'
 import { getProfileName } from '@app/utils/functions/getProfileName'
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
-import Modal from '@components/UIElements/Modal'
+import Modal from '@app/components/UI/Modal'
 import Deso from 'deso-protocol';
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { IoDiamondOutline } from 'react-icons/io5'
 import { Slider } from 'rsuite'
-import { Button } from '../UIElements/Button'
+import { Button } from '../UI/Button'
 import logger from '@app/utils/logger'
 
 const TipModal = ({ diamondBestowed, setDiamondBestowed, rootRef, show, setShowTip, video }) => {

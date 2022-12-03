@@ -1,23 +1,10 @@
 import useAppStore from '@app/store/app'
-import React, { useState } from 'react'
-import { AiFillCloseCircle } from 'react-icons/ai'
+import { useState } from 'react'
 import { BiX } from 'react-icons/bi'
-import Alert from '../UIElements/Alert'
-import { Button } from '../UIElements/Button'
-import InputMentions from '../UIElements/InputMentions'
+import { Button } from '../UI/Button'
+import InputMentions from '../UI/InputMentions'
 import Category from './Category'
 import UploadVideo from './Video'
-
-const ContentAlert = ({ message }) => (
-  <div className="mt-6">
-    <Alert variant="danger">
-      <span className="inline-flex items-center text-sm">
-        <AiFillCloseCircle className="mr-3 text-xl text-red-500" />
-        {message}
-      </span>
-    </Alert>
-  </div>
-)
 
 
 function UploadForm({onUpload, onCancel}) {
@@ -128,42 +115,20 @@ function UploadForm({onUpload, onCancel}) {
                         <UploadVideo />
                     </div>
                 </div>
-                {uploadedVideo.isNSFWThumbnail ? (
-                    <ContentAlert
-                    message={
-                        <span>
-                        Sorry! <b className="px-0.5">Selected thumbnail</b> image has
-                        tripped some content warnings. It contains NSFW content, choose
-                        different image to post.
-                        </span>
-                    }
-                    />
-                ) : uploadedVideo.isNSFW ? (
-                    <ContentAlert
-                    message={
-                        <span>
-                        Sorry! Something about this video has tripped some content
-                        warnings. It contains NSFW content in some frames, and so the
-                        video is not allowed to post on Lenstube!
-                        </span>
-                    }
-                    />
-                ) : (
-                    <div className="flex items-center space-x-4 justify-start mt-5">
-                        <Button
-                            loading={uploadedVideo.loading || uploadedVideo.uploadingThumbnail}
-                            disabled={uploadedVideo.loading || uploadedVideo.uploadingThumbnail}
-                            onClick={() => onUpload()}
-                        >
-                            {uploadedVideo.uploadingThumbnail
-                            ? 'Uploading thumbnail'
-                            : uploadedVideo.buttonText}
-                        </Button>
-                        <Button variant="light" onClick={() => onCancel()} type="button">
-                            Cancel
-                        </Button>
-                    </div>
-                )}
+                <div className="flex items-center space-x-4 justify-start mt-5">
+                    <Button
+                        loading={uploadedVideo.loading || uploadedVideo.uploadingThumbnail}
+                        disabled={uploadedVideo.loading || uploadedVideo.uploadingThumbnail}
+                        onClick={() => onUpload()}
+                    >
+                        {uploadedVideo.uploadingThumbnail
+                        ? 'Uploading thumbnail'
+                        : uploadedVideo.buttonText}
+                    </Button>
+                    <Button variant="light" onClick={() => onCancel()} type="button">
+                        Cancel
+                    </Button>
+                </div>
             </div>
         </>
     )

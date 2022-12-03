@@ -1,15 +1,15 @@
-import VideoCard from '@app/components/Common/VideoCard/VideoCard'
+import VideoCard from '@app/components/Common/Cards/Video'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
 import Custom500 from '@app/pages/404';
 import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@app/components/UIElements/NoDataFound';
+import { NoDataFound } from '@app/components/UI/NoDataFound';
 import MetaTags from '@app/components/Common/MetaTags';
 import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
 import { APP } from '@app/utils/constants';
 import { getShuffleArray } from '@app/utils/functions/getShuffleArray';
 import { FetchInfiniteHotFeed, GetHotFeed } from '@app/data/hot';
-import { Loader2 } from '@app/components/UIElements/Loader';
+import { Loader2 } from '@app/components/UI/Loader';
 
 function Category() {
     const { ref, inView } = useInView()
