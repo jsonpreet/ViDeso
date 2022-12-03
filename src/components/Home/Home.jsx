@@ -1,5 +1,4 @@
 import usePersistStore from '@app/store/persist';
-import MetaTags from '@components/Common/MetaTags'
 import { useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import { Button } from '../UI/Button';
@@ -50,7 +49,6 @@ const Home = () => {
     }
     return (
         <>
-            <MetaTags />
             <div className="md:px-16">
                 <div className="space-y-2 w-full md:w-auto flex flex-col">
                     <div className='px-2 md:px-0 overflow-hidden md:max-w-full max-w-[360px]'>

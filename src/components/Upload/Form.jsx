@@ -1,4 +1,5 @@
 import useAppStore from '@app/store/app'
+import { NextSeo } from 'next-seo'
 import { useState } from 'react'
 import { BiX } from 'react-icons/bi'
 import { Button } from '../UI/Button'
@@ -29,6 +30,14 @@ function UploadForm({onUpload, onCancel}) {
     
     return (
         <>
+            <NextSeo
+                title='Upload Videos'
+                canonical={`${APP.URL}/upload`}
+                openGraph={{
+                    title: 'Upload Videos',
+                    url: `${APP.URL}/upload`,
+                }}
+            />
             <div className='md:px-16 px-4 max-w-7xl mx-auto mt-5'>
                 <h3 className='mb-5 text-2xl font-bold'>Upload videos</h3>
                 <div className="grid h-full gap-5 md:grid-cols-2">

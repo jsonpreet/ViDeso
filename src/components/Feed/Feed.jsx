@@ -1,9 +1,9 @@
 import usePersistStore from '@app/store/persist';
-import MetaTags from '@components/Common/MetaTags'
 import dynamic from "next/dynamic";
 import { Suspense } from 'react';
 import { NoDataFound } from '@app/components/UI/NoDataFound';
 import FullPageLoader from '../UI/FullPageLoader';
+import { NextSeo } from 'next-seo';
 // import Timeline from './Timeline';
 const Timeline = dynamic(() => import("./Timeline"), {
     suspense: true,
@@ -24,7 +24,14 @@ const Feed = () => {
     }
     return (
         <>
-            <MetaTags />
+            <NextSeo
+                title='Subscriptions'
+                canonical={`${APP.URL}/feed`}
+                openGraph={{
+                    title: 'Subscriptions',
+                    url: `${APP.URL}/feed`,
+                }}
+            />
             <div className="md:px-16">
                 <Suspense fallback={<FullPageLoader/>}>
                     <Timeline />

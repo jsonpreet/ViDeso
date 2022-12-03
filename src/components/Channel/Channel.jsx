@@ -21,6 +21,7 @@ import Head from 'next/head';
 import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
 import { getProfileName } from '@app/utils/functions/getProfileName';
 import MetaTags from '../Common/MetaTags';
+import { NextSeo } from 'next-seo';
 
 const ChannelVideos = dynamic(() => import("./Tabs/Videos"), {
   suspense: true,
@@ -222,23 +223,14 @@ const Channel = () => {
     
     return (
         <>
-            {/* <Head>
-                <title>{channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name}</title>
-                <meta content={APP.Description} name="description" />
-                <link rel="canonical" href={`${APP.URL}${router.asPath}`} />
-                <meta property="og:url" content={`${APP.URL}${router.asPath}`}/>
-                <meta property="og:type" content={APP.Meta.type} />
-                <meta property="og:site_name" content={APP.Name} />
-                <meta property="og:description" content={APP.Description} />
-                <meta property="og:title" content={channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name} />
-                <meta property="og:image:alt" content={channel ? getProfileName(channel) : APP.Name} />
-                <meta property="og:image" content={channel ? getProfilePicture(channel) : `${APP.URL}${APP.Meta.image}`} />
-                <meta property="twitter:url" content={`${APP.URL}${router.asPath}`} />
-                <meta name="twitter:title" content={channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name} />
-                <meta name="twitter:description" content={APP.Description} />
-                <meta property="twitter:image" content={channel ? getProfilePicture(channel) : `${APP.URL}${APP.Meta.image}`} />
-            </Head> */}
-            <MetaTags title={channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name} image={channel ? getProfilePicture(channel) : `${APP.URL}${APP.Meta.image}`}/>
+            <NextSeo
+                title={channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name}
+                canonical={`${APP.URL}${router.asPath}`}
+                openGraph={{
+                    title: channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name,
+                    url: `${APP.URL}${router.asPath}`,
+                }}
+            />
             {isFetched ?
                 <div className="">
                     <ChannelInfo followers={followers} following={follow} channel={channel}/>

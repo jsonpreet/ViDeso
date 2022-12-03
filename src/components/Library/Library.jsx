@@ -1,16 +1,22 @@
 import usePersistStore from '@app/store/persist';
 import { NoDataFound } from '@app/components/UI/NoDataFound';
-import MetaTags from '@components/Common/MetaTags';
-import Timeline from '../History/Timeline';
 import WatchLater from './WatchLater';
 import History from './History';
+import { NextSeo } from 'next-seo';
 
 function Library() {
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
 
     return (
         <>
-            <MetaTags title='Library' />
+            <NextSeo
+                title='Library'
+                canonical={`${APP.URL}/library`}
+                openGraph={{
+                    title: 'Library',
+                    url: `${APP.URL}/library`,
+                }}
+            />
             {isLoggedIn ?
                 <>
                     <div className='flex flex-col space-y-4 px-0 md:px-16'>

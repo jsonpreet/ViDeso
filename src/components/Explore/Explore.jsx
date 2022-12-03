@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 import Custom500 from '@app/pages/404';
 import usePersistStore from '@app/store/persist';
 import { NoDataFound } from '@app/components/UI/NoDataFound';
-import MetaTags from '@components/Common/MetaTags';
 import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
 import { Loader2 } from '../UI/Loader';
+import { NextSeo } from 'next-seo';
 
 function Explore() {
     const { user, isLoggedIn } = usePersistStore();
@@ -16,8 +16,9 @@ function Explore() {
 
     useEffect(() => {
         if (inView && hasNextPage) {
-        fetchNextPage()
+            fetchNextPage()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inView, hasNextPage])
     
     if (videos?.length === 0) {
@@ -36,7 +37,14 @@ function Explore() {
 
     return (
         <>
-            <MetaTags title="Feed" />
+            <NextSeo
+                title='Explore'
+                canonical={`${APP.URL}${router.asPath}`}
+                openGraph={{
+                    title: 'Explore',
+                    url: `${APP.URL}${router.asPath}`,
+                }}
+            />
             {
                 isSuccess ? (
                     <>

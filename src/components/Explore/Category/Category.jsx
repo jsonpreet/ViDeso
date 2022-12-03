@@ -10,6 +10,7 @@ import { APP } from '@app/utils/constants';
 import { getShuffleArray } from '@app/utils/functions/getShuffleArray';
 import { FetchInfiniteHotFeed, GetHotFeed } from '@app/data/hot';
 import { Loader2 } from '@app/components/UI/Loader';
+import { NextSeo } from 'next-seo';
 
 function Category() {
     const { ref, inView } = useInView()
@@ -35,6 +36,14 @@ function Category() {
     }
     return (
         <>
+            <NextSeo
+                title='Explore'
+                canonical={`${APP.URL}${router.asPath}`}
+                openGraph={{
+                    title: 'Explore',
+                    url: `${APP.URL}${router.asPath}`,
+                }}
+            />
         {
             isSuccess ? (
             <>

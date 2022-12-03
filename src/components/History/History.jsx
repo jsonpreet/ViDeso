@@ -1,14 +1,21 @@
 import usePersistStore from '@app/store/persist';
 import { NoDataFound } from '@app/components/UI/NoDataFound';
-import MetaTags from '@app/components/Common/MetaTags';
 import Timeline from './Timeline';
+import { NextSeo } from 'next-seo';
 
 function History() {
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
 
     return (
         <>
-            <MetaTags title='History' />
+            <NextSeo
+                title='History'
+                canonical={`${APP.URL}/history`}
+                openGraph={{
+                    title: 'History',
+                    url: `${APP.URL}/history`,
+                }}
+            />
             {isLoggedIn ?
                 <>
                     <div className='px-0 md:px-16'><Timeline /></div>

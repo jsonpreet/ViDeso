@@ -1,4 +1,3 @@
-import MetaTags from '@app/components/Common/MetaTags'
 import clsx from 'clsx'
 import fileReaderStream from 'filereader-stream'
 import toast from 'react-hot-toast'
@@ -7,6 +6,7 @@ import logger from '@app/utils/logger'
 import { IoCloudUploadOutline } from 'react-icons/io5'
 import {ALLOWED_VIDEO_TYPES} from '@app/utils/constants'
 import useAppStore from '@app/store/app'
+import { NextSeo } from 'next-seo'
 
 const DropZone = () => {
     const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
@@ -55,7 +55,14 @@ const DropZone = () => {
 
     return (
         <div>
-            <MetaTags title="Upload videos" />
+            <NextSeo
+                title='Upload Videos'
+                canonical={`${APP.URL}/upload`}
+                openGraph={{
+                    title: 'Upload Videos',
+                    url: `${APP.URL}/upload`,
+                }}
+            />
             <div className="relative flex flex-col max-w-7xl md:px-0 px-4 mx-auto my-10">
                 <h3 className='mb-5 pb-5 text-2xl font-bold'>Upload videos</h3>
                 <div className="relative flex flex-col items-center justify-center w-full">

@@ -16,6 +16,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat'
 import { APP } from '@app/utils/constants'
 import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData'
 import MetaTags from '@app/components/Common/MetaTags'
+import { NextSeo } from 'next-seo'
 
 dayjs.extend(advancedFormat)
 
@@ -36,6 +37,14 @@ function About({ stats, channel }) {
     
     return (
         <>
+            <NextSeo
+                title={channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name}
+                canonical={`${APP.URL}${router.asPath}`}
+                openGraph={{
+                    title: channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name,
+                    url: `${APP.URL}${router.asPath}`,
+                }}
+            />
             <div className='max-w-7xl mx-auto md:px-0 px-4'>
                 <div className='grid gap-4 md:grid-cols-4'>
                     <div className='col-span-3'>

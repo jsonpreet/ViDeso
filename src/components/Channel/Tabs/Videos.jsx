@@ -7,6 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { NoDataFound } from '@app/components/UI/NoDataFound';
 import { Loader2 } from '@app/components/UI/Loader';
+import { NextSeo } from 'next-seo';
 
 function ChannelVideos({channel}) {
     const { ref, inView } = useInView()
@@ -50,6 +51,14 @@ function ChannelVideos({channel}) {
     if (isFetched) {
         return (
             <>
+                <NextSeo
+                    title={channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name}
+                    canonical={`${APP.URL}${router.asPath}`}
+                    openGraph={{
+                        title: channel ? `${getProfileName(channel)} - ${APP.Name}` : APP.Name,
+                        url: `${APP.URL}${router.asPath}`,
+                    }}
+                />
                 <div className='max-w-7xl mx-auto'>
                     <div className="grid gap-x-4 lg:grid-cols-4 md:gap-y-4 gap-y-2 2xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-col-1">
                         {videos.pages.map(page =>
