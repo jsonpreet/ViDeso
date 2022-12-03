@@ -20,6 +20,7 @@ import { useQuery } from '@tanstack/react-query'
 import logger from '@app/utils/logger'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { APP } from '@app/utils/constants'
+import { getThumbDuration } from '@app/utils/functions'
 
 const WatchVideo = () => {
     const router = useRouter()
@@ -79,7 +80,7 @@ const WatchVideo = () => {
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
-                logger.error(video.PostHashHex, 'thumbnail', error);
+                console.error(video.PostHashHex, 'thumbnail', error);
             }
         }
         if (video && isFetched) {
@@ -134,9 +135,10 @@ const WatchVideo = () => {
     }
 
     if (loading || !videoData) return <WatchVideoShimmer />
+    
     return (
         <>
-            <MetaTags title={video ? getVideoTitle(video) : 'Watch'} url={`${APP.URL}/watch/${video.PostHashHex}`} />
+            <MetaTags description={video ? getVideoTitle(video) : 'Watch'} image={video ? defaultThumbnailUrl : ''} title={video ? getVideoTitle(video) : 'Watch'} url={`${APP.URL}/watch/${video.PostHashHex}`} />
             {isFetched && !loading && !isError && videoData && video ? (
                 <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">

@@ -1,13 +1,12 @@
 import { CardShimmer } from '@components/Shimmers/VideoCardShimmer'
 import { getVideoUrl } from '@utils/functions/getVideoUrl'
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Linkify from 'linkify-react'
 import "linkify-plugin-hashtag"
 import "linkify-plugin-mention"
 import { LinkifyOptions } from '@app/utils/functions/getLinkifyOptions'
 import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
-import VideoMeta from './VideoMeta'
 import VideoActions from './VideoActions'
 import ChannelInfo from './ChannelInfo'
 
