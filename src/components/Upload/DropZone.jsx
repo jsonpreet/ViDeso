@@ -4,11 +4,13 @@ import toast from 'react-hot-toast'
 import useDragAndDrop from '@app/utils/hooks/useDragAndDrop'
 import logger from '@app/utils/logger'
 import { IoCloudUploadOutline } from 'react-icons/io5'
-import {ALLOWED_VIDEO_TYPES} from '@app/utils/constants'
+import {ALLOWED_VIDEO_TYPES, APP} from '@app/utils/constants'
 import useAppStore from '@app/store/app'
 import { NextSeo } from 'next-seo'
+import { useRouter } from 'next/router'
 
 const DropZone = () => {
+    const router = useRouter()
     const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
     const { dragOver, setDragOver, onDragOver, onDragLeave, fileDropError, setFileDropError } = useDragAndDrop()
 

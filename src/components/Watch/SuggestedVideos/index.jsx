@@ -62,8 +62,8 @@ const SuggestedVideos = ({ video, currentVideoId }) => {
                             containerClass='suggested-videos-container'
                             itemClass='suggested-videos'
                         >
-                            <Tab isSelected={selectedTab === 'all'} tab='all'>Popular</Tab>
-                            <Tab isSelected={selectedTab === 'user'} tab='user'>From {channel.Username}</Tab>
+                            <Tab isSelected={selectedTab === 'all'} tab='all'>All</Tab>
+                            <Tab isSelected={selectedTab === 'user'} tab='user'>{channel.Username}</Tab>
                             <Tab isSelected={selectedTab === 'recent'} tab='recent'>Recently Uploaded</Tab>
                             {/* <Tab isSelected={selectedTab === 'popular'} tab='popular'>Most Popular</Tab> */}
                         </Carousel>

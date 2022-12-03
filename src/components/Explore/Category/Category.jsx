@@ -1,19 +1,19 @@
 import VideoCard from '@app/components/Common/Cards/Video'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
-import Custom500 from '@app/pages/404';
 import usePersistStore from '@app/store/persist';
 import { NoDataFound } from '@app/components/UI/NoDataFound';
-import MetaTags from '@app/components/Common/MetaTags';
 import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
 import { APP } from '@app/utils/constants';
 import { getShuffleArray } from '@app/utils/functions/getShuffleArray';
-import { FetchInfiniteHotFeed, GetHotFeed } from '@app/data/hot';
+import { FetchInfiniteHotFeed } from '@app/data/hot';
 import { Loader2 } from '@app/components/UI/Loader';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 
 function Category() {
     const { ref, inView } = useInView()
+    const router = useRouter()
     const user = usePersistStore((state) => state.user)
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
     const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;

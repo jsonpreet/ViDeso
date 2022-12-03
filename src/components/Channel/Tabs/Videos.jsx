@@ -8,9 +8,13 @@ import { useEffect } from 'react';
 import { NoDataFound } from '@app/components/UI/NoDataFound';
 import { Loader2 } from '@app/components/UI/Loader';
 import { NextSeo } from 'next-seo';
+import { getProfileName } from '@app/utils/functions/getProfileName';
+import { useRouter } from 'next/router';
+import { APP } from '@app/utils/constants';
 
 function ChannelVideos({channel}) {
     const { ref, inView } = useInView()
+    const router = useRouter()
     const user = usePersistStore((state) => state.user)
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
     const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : '';

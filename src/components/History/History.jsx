@@ -2,6 +2,7 @@ import usePersistStore from '@app/store/persist';
 import { NoDataFound } from '@app/components/UI/NoDataFound';
 import Timeline from './Timeline';
 import { NextSeo } from 'next-seo';
+import { APP } from '@app/utils/constants';
 
 function History() {
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)

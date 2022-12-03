@@ -16,7 +16,7 @@ import { FaTwitter } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
 import { APP } from '@app/utils/constants'
 import { useState } from 'react'
-import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
+import { BsChevronDown, BsChevronUp, BsShieldExclamation } from 'react-icons/bs'
 import SimpleBar from 'simplebar-react';
 import dynamic from 'next/dynamic'
 
@@ -25,7 +25,7 @@ const SidebarLoginMessage = dynamic(() => import('./SidebarLoginMessage'), { ssr
 const Sidebar = ({isSidebarCollapsed}) => {
   const router = useRouter()
   const [showMore, setShowMore] = useState(false)
-  const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 6;
+  const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 9;
 
 
   const isActivePath = (path) => router.pathname === path
@@ -175,7 +175,7 @@ const Sidebar = ({isSidebarCollapsed}) => {
                       <p className='ml-6'>DiamondApp</p>
                     </div>
                   </a>
-                  <a
+                  {/* <a
                     href='#' rel="noreferrer"
                     className={'rounded-lg px-3 py-2 group hover-primary'}
                   >
@@ -183,33 +183,19 @@ const Sidebar = ({isSidebarCollapsed}) => {
                       <MdOutlineFeedback size={21} />
                       <p className='ml-6'>Send Feedback</p>
                     </div>
+                  </a> */}
+                  <a
+                    href='#' rel="noreferrer"
+                    className={'rounded-lg px-3 py-2 group hover-primary'}
+                  >
+                    <div className="flex items-center">
+                      <BsShieldExclamation size={21} />
+                      <p className='ml-6'>Privacy</p>
+                    </div>
                   </a>
                 </div>
                 <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
-                <div className="grid grid-cols-3 px-3">
-                  <Link
-                    href={`/about`}
-                    rel="noreferrer noopener"
-                    className="text-primary text-primary-hover text-sm font-medium"
-                  >
-                    <p>About</p>
-                  </Link>
-                  <Link
-                    href={`/privacy`}
-                    rel="noreferrer noopener"
-                    className="text-primary text-primary-hover text-sm font-medium"
-                  >
-                    <p>Privacy</p>
-                  </Link>
-                  <Link
-                    href={`/copyright`}
-                    rel="noreferrer noopener"
-                    className="text-primary text-primary-hover text-sm font-medium"
-                  >
-                    <p>Copyright</p>
-                  </Link>
-                </div>
-                <div className='flex w-full px-3 text-sm text-primary mt-4 space-x-1'>
+                <div className='flex w-full px-3 text-sm text-primary space-x-1'>
                   <span>Powered by</span>
                   <Link
                     className="text-primary text-primary-hover text-sm font-medium"

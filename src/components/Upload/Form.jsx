@@ -1,4 +1,5 @@
 import useAppStore from '@app/store/app'
+import { APP } from '@app/utils/constants'
 import { NextSeo } from 'next-seo'
 import { useState } from 'react'
 import { BiX } from 'react-icons/bi'

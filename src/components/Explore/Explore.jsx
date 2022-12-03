@@ -8,10 +8,12 @@ import { NoDataFound } from '@app/components/UI/NoDataFound';
 import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
 import { Loader2 } from '../UI/Loader';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 
 function Explore() {
     const { user, isLoggedIn } = usePersistStore();
     const { ref, inView } = useInView()
+    const router = useRouter()
     const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data:videos } = FetchInfiniteLatestFeed( -1 );
 
     useEffect(() => {

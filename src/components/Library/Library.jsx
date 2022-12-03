@@ -3,6 +3,7 @@ import { NoDataFound } from '@app/components/UI/NoDataFound';
 import WatchLater from './WatchLater';
 import History from './History';
 import { NextSeo } from 'next-seo';
+import { APP } from '@app/utils/constants';
 
 function Library() {
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)

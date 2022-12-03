@@ -4,9 +4,7 @@ import Linkify from 'linkify-react'
 import "linkify-plugin-hashtag"
 import "linkify-plugin-mention"
 import Link from 'next/link'
-import { useEffect, useState } from "react"
-import { BiChevronDown, BiChevronUp } from "react-icons/bi"
-import { FaDiscord, FaExternalLinkAlt, FaGithub, FaGlobe, FaInstagram, FaLinkedin, FaTelegram, FaTwitter, FaYoutube } from 'react-icons/fa'
+import { FaDiscord, FaExternalLinkAlt, FaGlobe, FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { IoDiamondOutline } from 'react-icons/io5'
 import { FiFlag } from 'react-icons/fi'
 import usePersistStore from '@app/store/persist'
@@ -15,12 +13,14 @@ import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import { APP } from '@app/utils/constants'
 import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData'
-import MetaTags from '@app/components/Common/MetaTags'
 import { NextSeo } from 'next-seo'
+import { useRouter } from 'next/router'
+import { getProfileName } from '@app/utils/functions/getProfileName'
 
 dayjs.extend(advancedFormat)
 
 function About({ stats, channel }) {
+    const router = useRouter()
     const { isLoggedIn, user } = usePersistStore();
     const reporterID = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
     const channelExtra = getProfileExtraData(channel);

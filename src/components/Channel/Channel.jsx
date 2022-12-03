@@ -17,10 +17,7 @@ import logger from '@app/utils/logger';
 import { BsThreeDots } from 'react-icons/bs';
 import { Button } from '../UI/Button';
 import MoreTabsModal from '../Common/MoreTabsModal';
-import Head from 'next/head';
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
 import { getProfileName } from '@app/utils/functions/getProfileName';
-import MetaTags from '../Common/MetaTags';
 import { NextSeo } from 'next-seo';
 
 const ChannelVideos = dynamic(() => import("./Tabs/Videos"), {
@@ -28,10 +25,6 @@ const ChannelVideos = dynamic(() => import("./Tabs/Videos"), {
 });
 
 const Stori = dynamic(() => import("./Tabs/Stori"), {
-  suspense: true,
-});
-
-const Community = dynamic(() => import("./Community/Community"), {
   suspense: true,
 });
 
@@ -272,11 +265,6 @@ const Channel = () => {
                             {routeTab === 'stori' &&
                                 <Suspense fallback={<Loader />}>
                                     <Stori channel={channel} />
-                                </Suspense>
-                            }
-                            {routeTab === 'community' &&
-                                <Suspense fallback={<Loader/>}>
-                                    <Community channel={channel} />
                                 </Suspense>
                             }
                             {routeTab === 'channels' &&
