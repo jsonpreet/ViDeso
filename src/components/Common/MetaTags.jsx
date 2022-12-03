@@ -37,7 +37,7 @@ const MetaTags = (props) => {
       <meta property="og:image:height" content="630"/>
       <meta property="og:image:type" content="image/png"/>
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@VidesoApp" />
+      <meta name="twitter:site" content="VidesoApp" />
       <meta property="twitter:creator" content='@VidesoApp' />
     </Head>
   )

@@ -1,20 +1,14 @@
 
-import useAppStore from '@app/store/app'
+
 import usePersistStore from '@app/store/persist'
 import { APP, DESO_CONFIG } from '@app/utils/constants'
 import CommentsShimmer from '@components/Shimmers/CommentsShimmer'
-import { Loader } from '@app/components/UI/Loader'
 import { NoDataFound } from '@app/components/UI/NoDataFound'
 import Deso from 'deso-protocol'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { AiOutlineComment } from 'react-icons/ai'
 import { BiComment } from 'react-icons/bi'
-import Alert from '../UI/Alert'
-
-// import NewComment from './NewComment'
 
 const Comment = dynamic(() => import('./Comment'))
 
@@ -70,24 +64,10 @@ const VideoComments = ({ video }) => {
                     <span>Comments</span>
                     
                 </h1>
-                {/* {!isLoggedIn && (
-                    <span className="text-xs">(Sign in required to comment)</span>
-                )} */}
             </div>
             {post.CommentCount === 0 && (
                 <NoDataFound text="Be the first to comment." />
             )}
-            {/* {video?.canComment.result ? (
-                <NewComment video={video} refetchComments={() => refetchComments()} />
-            ) : (
-                <Alert variant="warning">
-                <span className="text-sm">
-                    {isFollowerOnlyReferenceModule
-                    ? 'Only subscribers can comment on this publication'
-                    : `Only subscribers within ${video.profile.handle}'s preferred network can comment`}
-                </span>
-                </Alert>
-            )} */}
             {!loading && (
                 <>
                     <div className=" space-y-4">
@@ -96,11 +76,6 @@ const VideoComments = ({ video }) => {
                         />
                         ))}
                     </div>
-                    {/* {pageInfo?.next && comments.length !== pageInfo?.totalCount && (
-                        <span ref={observe} className="flex justify-center p-10">
-                        <Loader />
-                        </span>
-                    )} */}
                 </>
             )}
         </div>
