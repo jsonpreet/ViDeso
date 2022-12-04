@@ -54,29 +54,16 @@ const VideoActions = ({ video }) => {
                     itemClass="carousel-item-padding-40-px"
                 > */}
                     <Reactions video={video} />
-                    {isBrowser ? <Tooltip title="Share">
-                        <Button
-                            variant="light"
-                            onClick={() => setShowShare(true)}
-                            className='h-10'
-                        >
-                            <span className="flex items-center space-x-2 md:space-x-3">
-                                <RiShareForwardLine size={22} />
-                                <span>Share</span>
-                            </span>
-                        </Button>
-                    </Tooltip> :
-                        <Button
-                            variant="light"
-                            onClick={() => setShowShare(true)}
-                            className='h-10'
-                        >
-                            <span className="flex items-center space-x-2 md:space-x-3">
-                                <RiShareForwardLine size={22} />
-                                <span>Share</span>
-                            </span>
-                        </Button>
-                    }
+                    <Button
+                        variant="light"
+                        onClick={() => setShowShare(true)}
+                        className='h-10'
+                    >
+                        <span className="flex items-center space-x-2 md:space-x-3">
+                            <RiShareForwardLine size={22} />
+                            <span>Share</span>
+                        </span>
+                    </Button>
                     <DropMenu
                         trigger={
                             <Button
