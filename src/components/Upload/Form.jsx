@@ -1,5 +1,5 @@
-import useAppStore from '@app/store/app'
-import { APP } from '@app/utils/constants'
+import useAppStore from '@store/app'
+import { APP } from '@utils/constants'
 import { NextSeo } from 'next-seo'
 import { useState } from 'react'
 import { BiX } from 'react-icons/bi'
@@ -50,6 +50,7 @@ function UploadForm({onUpload, onCancel}) {
                                     placeholder="Title that describes your video"
                                     autoComplete="off"
                                     value={title}
+                                    onFocus={() => null}
                                     onContentChange={(value) => {
                                         setTitle(value)
                                         setUploadedVideo({title: value})
@@ -64,11 +65,12 @@ function UploadForm({onUpload, onCancel}) {
                                     placeholder="Tell viewers about your video (type @ to mention a channel) or add #Hashtags"
                                     autoComplete="off"
                                     value={description}
+                                    onFocus={() => null}
                                     onContentChange={(value) => {
                                         setDescription(value)
                                         setUploadedVideo({description: value})
                                     }}
-                                    mentionsSelector="h-24 input-mentions-textarea"
+                                    mentionsSelector="input-mentions-textarea"
                                 />
                             </div>
                             <div className="mb-4 ">

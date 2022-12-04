@@ -1,6 +1,6 @@
-import DropMenu from '@app/components/UI/DropMenu'
-import useAppStore from '@app/store/app'
-import usePersistStore from '@app/store/persist'
+import DropMenu from '@components/UI/DropMenu'
+import useAppStore from '@store/app'
+import usePersistStore from '@store/persist'
 import React, { useState } from 'react'
 import { CgBell } from 'react-icons/cg'
 

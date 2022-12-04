@@ -1,5 +1,5 @@
-import usePersistStore from '@app/store/persist'
-import { DESO_CONFIG } from '@app/utils/constants'
+import usePersistStore from '@store/persist'
+import { DESO_CONFIG } from '@utils/constants'
 import clsx from 'clsx'
 import Deso from 'deso-protocol'
 import React, { useEffect, useState } from 'react'

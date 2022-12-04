@@ -1,16 +1,16 @@
-import { FetchProfileFeed, GetProfileFeed } from '@app/data/channel';
-import usePersistStore from '@app/store/persist';
-import { VideoCard } from '@app/components/Common/Cards';
+import { FetchProfileFeed, GetProfileFeed } from '@data/channel';
+import usePersistStore from '@store/persist';
+import { VideoCard } from '@components/Common/Cards';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
+import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
-import { Loader2 } from '@app/components/UI/Loader';
+import { NoDataFound } from '@components/UI/NoDataFound';
+import { Loader2 } from '@components/UI/Loader';
 import { NextSeo } from 'next-seo';
-import { getProfileName } from '@app/utils/functions/getProfileName';
+import { getProfileName } from '@utils/functions/getProfileName';
 import { useRouter } from 'next/router';
-import { APP } from '@app/utils/constants';
+import { APP } from '@utils/constants';
 
 function ChannelVideos({channel}) {
     const { ref, inView } = useInView()

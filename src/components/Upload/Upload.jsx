@@ -1,5 +1,5 @@
-import useAppStore from '@app/store/app'
-import usePersistStore from '@app/store/persist'
+import useAppStore from '@store/app'
+import usePersistStore from '@store/persist'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import DropZone from './DropZone'

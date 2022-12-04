@@ -1,4 +1,4 @@
-import { THUMBNAIL_GENERATE_COUNT } from '@app/components/Upload/VideoThumbnails'
+import { THUMBNAIL_GENERATE_COUNT } from '@components/Upload/VideoThumbnails'
 import { useMemo } from 'react'
 
 const ThumbnailsShimmer = () => {

@@ -1,4 +1,4 @@
-import Modal from '@app/components/UI/Modal'
+import Modal from '@components/UI/Modal'
 import Link from 'next/link'
 
 const MoreTabsModal = ({rootRef, show, setShowModal, username }) => {

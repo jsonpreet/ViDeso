@@ -1,6 +1,6 @@
-import usePersistStore from '@app/store/persist'
-import { formatNumber } from '@app/utils/functions'
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
+import usePersistStore from '@store/persist'
+import { formatNumber } from '@utils/functions'
+import { getProfilePicture } from '@utils/functions/getProfilePicture'
 import Deso from 'deso-protocol'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -8,11 +8,11 @@ import toast from 'react-hot-toast'
 import IsVerified from '../Common/IsVerified'
 import { Button } from '../UI/Button'
 import party from "party-js"
-import { DESO_CONFIG } from '@app/utils/constants'
+import { DESO_CONFIG } from '@utils/constants'
 import Tooltip from '../UI/Tooltip'
-import logger from '@app/utils/logger'
+import logger from '@utils/logger'
 import { isBrowser } from 'react-device-detect'
-import { getProfileName } from '@app/utils/functions/getProfileName'
+import { getProfileName } from '@utils/functions/getProfileName'
 
 function ChannelInfo({ views, video, channel }) {
     const [followers, setFollowers] = useState(0)

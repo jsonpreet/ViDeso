@@ -1,5 +1,5 @@
-import usePersistStore from '@app/store/persist'
-import { EXPLORE, FEED, HOME, LIBRARY, STORI } from '@app/utils/paths'
+import usePersistStore from '@store/persist'
+import { EXPLORE, FEED, HOME, LIBRARY, STORI } from '@utils/paths'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'

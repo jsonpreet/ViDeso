@@ -1,13 +1,13 @@
-import VideoCard from '@app/components/Common/Cards/Video'
+import VideoCard from '@components/Common/Cards/Video'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
-import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
-import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
-import { APP } from '@app/utils/constants';
-import { getShuffleArray } from '@app/utils/functions/getShuffleArray';
-import { FetchInfiniteHotFeed } from '@app/data/hot';
-import { Loader2 } from '@app/components/UI/Loader';
+import usePersistStore from '@store/persist';
+import { NoDataFound } from '@components/UI/NoDataFound';
+import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
+import { APP } from '@utils/constants';
+import { getShuffleArray } from '@utils/functions/getShuffleArray';
+import { FetchInfiniteHotFeed } from '@data/hot';
+import { Loader2 } from '@components/UI/Loader';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 

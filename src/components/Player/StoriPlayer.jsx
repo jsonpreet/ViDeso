@@ -1,5 +1,5 @@
 
-import useAppStore from '@app/store/app'
+import useAppStore from '@store/app'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -21,9 +21,9 @@ import {
   Spinner,
   Ui,
 } from '@vime/react'
-import { getCurrentDuration } from '@app/utils/functions/getCurrentDuration'
-import usePersistStore from '@app/store/persist'
-import { APP } from '@app/utils/constants'
+import { getCurrentDuration } from '@utils/functions/getCurrentDuration'
+import usePersistStore from '@store/persist'
+import { APP } from '@utils/constants'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { data } from 'autoprefixer'
 import { current } from 'tailwindcss/colors'

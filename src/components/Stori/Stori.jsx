@@ -1,8 +1,8 @@
-import { Loader2 } from '@app/components/UI/Loader';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
-import { FetchInfiniteStoriFeed } from '@app/data/stori';
-import usePersistStore from '@app/store/persist';
-import { APP } from '@app/utils/constants';
+import { Loader2 } from '@components/UI/Loader';
+import { NoDataFound } from '@components/UI/NoDataFound';
+import { FetchInfiniteStoriFeed } from '@data/stori';
+import usePersistStore from '@store/persist';
+import { APP } from '@utils/constants';
 import Head from 'next/head';
 import { useInView } from 'react-intersection-observer';
 import StoriVideo from './StoriVideo';

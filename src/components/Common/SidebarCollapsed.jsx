@@ -14,7 +14,7 @@ import { SHORTS, HISTORY, FEED, HOME, LIBRARY, STORI } from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
 import { FaTwitter } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
-import { APP } from '@app/utils/constants'
+import { APP } from '@utils/constants'
 import { useState } from 'react'
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 import SimpleBar from 'simplebar-react';

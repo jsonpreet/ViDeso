@@ -1,14 +1,15 @@
 
 
-import usePersistStore from '@app/store/persist'
-import { APP, DESO_CONFIG } from '@app/utils/constants'
+import usePersistStore from '@store/persist'
+import { APP, DESO_CONFIG } from '@utils/constants'
 import CommentsShimmer from '@components/Shimmers/CommentsShimmer'
-import { NoDataFound } from '@app/components/UI/NoDataFound'
+import { NoDataFound } from '@components/UI/NoDataFound'
 import Deso from 'deso-protocol'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BiComment } from 'react-icons/bi'
+import NewComment from './NewComment'
 
 const Comment = dynamic(() => import('./Comment'))
 
@@ -19,37 +20,44 @@ const VideoComments = ({ video }) => {
     const [post, setPost] = useState([])
 
     useEffect(() => {
-        async function fetchData() {
-            const deso = new Deso(DESO_CONFIG);
-            try {
-                const request = {
-                    ReaderPublicKeyBase58Check: userPublicKey,
-                    PostHashHex: video.PostHashHex,
-                    FetchParents: true,
-                    CommentOffset: 0,
-                    CommentLimit: 20,
-                    AddGlobalFeedBool: false,
-                    ThreadLevelLimit: 2,
-                    ThreadLeafLimit: 1,
-                    LoadAuthorThread: true,
-                };
-                    
-                const response = await deso.posts.getSinglePost(request);
-                if (response && response.PostFound) {
-                    let post = response.PostFound;
-                    setPost(post);
-                    setLoading(false);
-                }
-                    
-            } catch (error) {
-                console.log(error);
-                logger.error('error', error);
-                toast.error("Something went wrong!");
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [video, userPublicKey])
+
+    const refetchComments = async () => {
+        await fetchData();
+    }
+
+    
+    async function fetchData() {
+        const deso = new Deso(DESO_CONFIG);
+        try {
+            const request = {
+                ReaderPublicKeyBase58Check: userPublicKey,
+                PostHashHex: video.PostHashHex,
+                FetchParents: true,
+                CommentOffset: 0,
+                CommentLimit: 20,
+                AddGlobalFeedBool: false,
+                ThreadLevelLimit: 2,
+                ThreadLeafLimit: 1,
+                LoadAuthorThread: true,
+            };
+                
+            const response = await deso.posts.getSinglePost(request);
+            if (response && response.PostFound) {
+                let post = response.PostFound;
+                setPost(post);
                 setLoading(false);
             }
+                
+        } catch (error) {
+            console.log(error);
+            logger.error('error', error);
+            toast.error("Something went wrong!");
+            setLoading(false);
         }
-        fetchData();
-    }, [video, userPublicKey])
+    }
 
     if (loading) return <CommentsShimmer />
 
@@ -65,10 +73,13 @@ const VideoComments = ({ video }) => {
                     
                 </h1>
             </div>
-            {post.CommentCount === 0 && (
+            {isLoggedIn ? (
+                <NewComment video={video} refetch={refetchComments} />
+            ) : null}
+            {post.CommentCount === 0 ? (
                 <NoDataFound text="Be the first to comment." />
-            )}
-            {!loading && (
+            ) : null}
+            {!loading ? (
                 <>
                     <div className=" space-y-4">
                         {post.Comments?.map((comment) => (
@@ -77,7 +88,7 @@ const VideoComments = ({ video }) => {
                         ))}
                     </div>
                 </>
-            )}
+            ) : null}
         </div>
     )
 }

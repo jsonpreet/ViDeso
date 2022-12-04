@@ -1,5 +1,5 @@
 
-import useAppStore from '@app/store/app'
+import useAppStore from '@store/app'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -14,9 +14,9 @@ import {
   Player,
   Poster,
 } from '@vime/react'
-import { getCurrentDuration } from '@app/utils/functions/getCurrentDuration'
-import usePersistStore from '@app/store/persist'
-import { APP } from '@app/utils/constants'
+import { getCurrentDuration } from '@utils/functions/getCurrentDuration'
+import usePersistStore from '@store/persist'
+import { APP } from '@utils/constants'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {

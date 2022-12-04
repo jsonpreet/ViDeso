@@ -1,20 +1,20 @@
-import IsVerified from '@app/components/Common/IsVerified';
-import { Button } from '@app/components/UI/Button';
-import usePersistStore from '@app/store/persist';
-import { APP, DESO_CONFIG } from '@app/utils/constants';
-import { getCoverPicture } from '@app/utils/functions/getCoverPicture';
-import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData';
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
+import { Button } from '@components/UI/Button';
+import usePersistStore from '@store/persist';
+import { APP, DESO_CONFIG } from '@utils/constants';
+import { getCoverPicture } from '@utils/functions/getCoverPicture';
+import { getProfileExtraData } from '@utils/functions/getProfileExtraData';
+import { getProfilePicture } from '@utils/functions/getProfilePicture';
 import Deso from 'deso-protocol';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import { BiCopy, BiUpload } from 'react-icons/bi';
 import party from "party-js"
-import useCopyToClipboard from '@app/utils/hooks/useCopyToClipboard';
+import useCopyToClipboard from '@utils/hooks/useCopyToClipboard';
 
 function Settings() {
-    const { user, setUser } = usePersistStore();
+    const { isLoggedIn, user, setUser } = usePersistStore();
+    const router = useRouter()
     const rootRef = useRef(null)
     const [copy] = useCopyToClipboard()
     const [cover, setCover] = useState(null)
@@ -27,6 +27,7 @@ function Settings() {
     const [uploadingAvatar, setUploadingAvatar] = useState(false)
     const [displayName, setDisplayName] = useState('')
     const [description, setDescription] = useState('')
+    const [username, setUsername] = useState('')
     const [location, setLocation] = useState('')
     const [languages, setLanguages] = useState('')
     const [twitterLink, setTwitterLink] = useState('')
@@ -41,27 +42,37 @@ function Settings() {
     const [customLink, setCustomLink] = useState('')
 
     useEffect(() => {
-        setChannel(user.profile)
-        const cover = getCoverPicture(user.profile);
-        const avatar = getProfilePicture(user.profile);
-        setCover(cover);
-        setAvatar(avatar)
-        const extraData = getProfileExtraData(user.profile);
-        setDisplayName(extraData?.DisplayName || '')
-        setDescription(extraData?.Description || '')
-        setLocation(extraData?.Location || '')
-        setLanguages(extraData?.Languages || '')
-        setTwitterLink(extraData?.TwitterURL || '')
-        setInstagramLink(extraData?.InstagramURL || '')
-        setYoutubeLink(extraData?.YoutubeURL || '')
-        setLinkedInLink(extraData?.LinkedInURL || '')
-        setGithubLink(extraData?.GithubURLk || '')
-        setDiscordLink(extraData?.DiscordURL || '')
-        setWebsiteTitle(extraData?.WebsiteTitle || '')
-        setWebsiteLink(extraData?.WebsiteURL || '')
-        setCustomTitle(extraData?.CustomTitle || '')
-        setCustomLink(extraData?.CustomURL || '')
-    },[user])
+        if (!isLoggedIn) {
+            router.push('/')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[router, isLoggedIn])
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            setChannel(user.profile)
+            const cover = getCoverPicture(user.profile);
+            const avatar = getProfilePicture(user.profile);
+            setUsername(user.profile.Username)
+            setCover(cover);
+            setAvatar(avatar)
+            const extraData = getProfileExtraData(user.profile);
+            setDisplayName(extraData?.DisplayName || '')
+            setDescription(extraData?.Description || '')
+            setLocation(extraData?.Location || '')
+            setLanguages(extraData?.Languages || '')
+            setTwitterLink(extraData?.TwitterURL || '')
+            setInstagramLink(extraData?.InstagramURL || '')
+            setYoutubeLink(extraData?.YoutubeURL || '')
+            setLinkedInLink(extraData?.LinkedInURL || '')
+            setGithubLink(extraData?.GithubURLk || '')
+            setDiscordLink(extraData?.DiscordURL || '')
+            setWebsiteTitle(extraData?.WebsiteTitle || '')
+            setWebsiteLink(extraData?.WebsiteURL || '')
+            setCustomTitle(extraData?.CustomTitle || '')
+            setCustomLink(extraData?.CustomURL || '')
+        }
+    },[isLoggedIn, user])
 
     const onCopyChannelUrl = async () => {
         await copy(`${APP.URL}/@${channel.Username}`)
@@ -205,9 +216,10 @@ function Settings() {
     const updateChannel = async () => {
         setLoading(true);
         const deso = new Deso(DESO_CONFIG);
+        const extraData = getProfileExtraData(user.profile);
         const payload = {
-            ProfileImage: extraData.ProfileImage,
-            CoverImage: extraData.CoverImage,
+            ProfileImage: extraData ? extraData.ProfileImage : null,
+            CoverImage: extraData ? extraData.CoverImage : null,
             DisplayName: displayName,
             Description: description,
             Location: location,
@@ -311,7 +323,7 @@ function Settings() {
                                         <input
                                             type='text'
                                             readOnly
-                                            defaultValue={channel?.Username}
+                                            defaultValue={username}
                                             placeholder='Set your handle'
                                             className="w-full text-sm py-2.5 px-3 active-primary border theme-border rounded-md focus:outline-none"
                                         />
@@ -359,14 +371,14 @@ function Settings() {
                                     </div>
                                 </div>
                                 <div className='flex w-full flex-col'>
-                                    <div className='mb-4 flex flex-col space-y-2'>
+                                    {/* <div className='mb-4 flex flex-col space-y-2'>
                                         <label className='font-medium text-sm'>Channel URL</label>
                                         <div className='flex relative items-center'>
                                             <input
                                                 type='text'
                                                 placeholder='Channel URL'
                                                 readOnly
-                                                defaultValue={`${APP.URL}/@${channel?.Username}`}
+                                                defaultValue={`${APP.URL}/@${username}`}
                                                 className="w-full text-sm py-2.5 px-3 active-primary border theme-border rounded-md focus:outline-none"
                                             />
                                             <span className='absolute right-3'>
@@ -379,7 +391,7 @@ function Settings() {
                                                 </button>
                                             </span>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className='mb-4 flex flex-col space-y-2'>
                                         <label className='font-medium text-sm'>Twitter</label>
                                         <div className='flex'>

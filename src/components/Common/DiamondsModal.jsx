@@ -1,16 +1,16 @@
-import usePersistStore from '@app/store/persist'
-import { APP, DESO_CONFIG } from '@app/utils/constants'
-import { abbreviateNumber, formatUSD, nanosToUSDNumber } from '@app/utils/functions'
-import { getProfileName } from '@app/utils/functions/getProfileName'
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
-import Modal from '@app/components/UI/Modal'
+import usePersistStore from '@store/persist'
+import { APP, DESO_CONFIG } from '@utils/constants'
+import { abbreviateNumber, formatUSD, nanosToUSDNumber } from '@utils/functions'
+import { getProfileName } from '@utils/functions/getProfileName'
+import { getProfilePicture } from '@utils/functions/getProfilePicture'
+import Modal from '@components/UI/Modal'
 import Deso from 'deso-protocol';
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { IoDiamondOutline } from 'react-icons/io5'
 import { Slider } from 'rsuite'
 import { Button } from '../UI/Button'
-import logger from '@app/utils/logger'
+import logger from '@utils/logger'
 
 const TipModal = ({ diamondBestowed, setDiamondBestowed, rootRef, show, setShowTip, video }) => {
     const { user, isLoggedIn } = usePersistStore()

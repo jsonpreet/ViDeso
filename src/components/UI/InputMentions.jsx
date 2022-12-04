@@ -1,14 +1,14 @@
 
-import { DESO_CONFIG } from '@app/utils/constants'
-import { getProfileName } from '@app/utils/functions/getProfileName'
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
+import { DESO_CONFIG } from '@utils/constants'
+import { getProfileName } from '@utils/functions/getProfileName'
+import { getProfilePicture } from '@utils/functions/getProfilePicture'
 import clsx from 'clsx'
 import Deso from 'deso-protocol'
 import { useId } from 'react'
 import { Mention, MentionsInput } from 'react-mentions'
 import IsVerified from '../Common/IsVerified'
 
-const InputMentions = ({ label, validationError, value, onContentChange, mentionsSelector, ...props }) => {
+const InputMentions = ({ label, validationError, value, onContentChange, onFocus, mentionsSelector, ...props }) => {
     const id = useId()
 
     const fetchSuggestions = async ( query, callback ) => {
@@ -20,7 +20,8 @@ const InputMentions = ({ label, validationError, value, onContentChange, mention
             }
             const profiles = await deso.user.getProfiles(request);
             if (profiles && profiles.ProfilesFound !== null) {
-                const channels = profiles.ProfilesFound.map((channel) => ({
+                const topProfiles = profiles.ProfilesFound.slice(0, 5)
+                const channels = topProfiles.map((channel) => ({
                     id: channel.Username,
                     display: getProfileName(channel),
                     isVerified: channel.IsVerified,
@@ -44,11 +45,12 @@ const InputMentions = ({ label, validationError, value, onContentChange, mention
         )}
         <div className="flex flex-col w-full">
             <MentionsInput
-            id={id}
-            className={mentionsSelector}
-            value={value}
-            placeholder={props.placeholder}
-            onChange={(e) => onContentChange(e.target.value)}
+                id={id}
+                className={mentionsSelector}
+                value={value}
+                placeholder={props.placeholder}
+                onChange={(e) => onContentChange(e.target.value)}
+                onFocus={(e) => onFocus(e)}
             >
             <Mention
                 trigger="@"

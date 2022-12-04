@@ -1,5 +1,5 @@
 
-import useAppStore from '@app/store/app'
+import useAppStore from '@store/app'
 import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import {

@@ -1,7 +1,7 @@
 
-import { APP } from '@app/utils/constants'
-import useCopyToClipboard from '@app/utils/hooks/useCopyToClipboard'
-import useOutsideClick from '@app/utils/hooks/useOutsideClick'
+import { APP } from '@utils/constants'
+import useCopyToClipboard from '@utils/hooks/useCopyToClipboard'
+import useOutsideClick from '@utils/hooks/useOutsideClick'
 import { useRouter } from 'next/router'
 import { forwardRef, useRef } from 'react'
 import toast from 'react-hot-toast'

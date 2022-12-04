@@ -1,7 +1,6 @@
-import { DESO_CONFIG } from '@app/utils/constants';
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
-import { Loader, Loader2 } from '@app/components/UI/Loader'
-import { Tab } from '@headlessui/react'
+import { DESO_CONFIG } from '@utils/constants';
+import { getProfilePicture } from '@utils/functions/getProfilePicture';
+import { Loader2 } from '@components/UI/Loader'
 import clsx from 'clsx';
 import Deso from 'deso-protocol';
 import Link from 'next/link';
@@ -9,10 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useDetectClickOutside } from 'react-detect-click-outside';
 import { isBrowser } from 'react-device-detect';
 import { AiOutlineSearch } from 'react-icons/ai'
-import { BiUser } from 'react-icons/bi';
-import { useDebounce } from 'use-debounce';
 import IsVerified from '../Common/IsVerified';
-import { Button } from '../UI/Button';
 import Modal from '../UI/Modal';
 
 

@@ -1,4 +1,4 @@
-import { LinkifyOptions } from '@app/utils/functions/getLinkifyOptions'
+import { LinkifyOptions } from '@utils/functions/getLinkifyOptions'
 import clsx from "clsx"
 import Linkify from 'linkify-react'
 import "linkify-plugin-hashtag"
@@ -7,15 +7,15 @@ import Link from 'next/link'
 import { FaDiscord, FaExternalLinkAlt, FaGlobe, FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { IoDiamondOutline } from 'react-icons/io5'
 import { FiFlag } from 'react-icons/fi'
-import usePersistStore from '@app/store/persist'
-import Tooltip from '@app/components/UI/Tooltip'
+import usePersistStore from '@store/persist'
+import Tooltip from '@components/UI/Tooltip'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
-import { APP } from '@app/utils/constants'
-import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData'
+import { APP } from '@utils/constants'
+import { getProfileExtraData } from '@utils/functions/getProfileExtraData'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import { getProfileName } from '@app/utils/functions/getProfileName'
+import { getProfileName } from '@utils/functions/getProfileName'
 
 dayjs.extend(advancedFormat)
 

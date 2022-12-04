@@ -1,9 +1,9 @@
-import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
+import usePersistStore from '@store/persist';
+import { NoDataFound } from '@components/UI/NoDataFound';
 import WatchLater from './WatchLater';
 import History from './History';
 import { NextSeo } from 'next-seo';
-import { APP } from '@app/utils/constants';
+import { APP } from '@utils/constants';
 
 function Library() {
     const isLoggedIn = usePersistStore((state) => state.isLoggedIn)

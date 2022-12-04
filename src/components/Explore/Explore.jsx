@@ -1,15 +1,15 @@
-import VideoCard from '@app/components/Common/Cards/Video'
-import { FetchInfiniteLatestFeed } from '@app/data/videos';
+import VideoCard from '@components/Common/Cards/Video'
+import { FetchInfiniteLatestFeed } from '@data/videos';
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
-import Custom500 from '@app/pages/404';
-import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
+import Custom500 from '@pages/404';
+import usePersistStore from '@store/persist';
+import { NoDataFound } from '@components/UI/NoDataFound';
 import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
 import { Loader2 } from '../UI/Loader';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import { APP } from '@app/utils/constants';
+import { APP } from '@utils/constants';
 
 function Explore() {
     const { user, isLoggedIn } = usePersistStore();

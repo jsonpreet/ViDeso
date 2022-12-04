@@ -1,12 +1,12 @@
-import VideoCard from '@app/components/Common/Cards/Video'
-import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
+import VideoCard from '@components/Common/Cards/Video'
+import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
 import { useInView } from 'react-intersection-observer'
 import { useEffect, useState } from 'react';
-import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
+import usePersistStore from '@store/persist';
+import { NoDataFound } from '@components/UI/NoDataFound';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import logger from '@app/utils/logger';
-import { getFeed } from '@app/data/history';
+import logger from '@utils/logger';
+import { getFeed } from '@data/history';
 
 
 const WatchedVideos = () => {

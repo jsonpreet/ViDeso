@@ -1,7 +1,7 @@
-import usePersistStore from '@app/store/persist';
+import usePersistStore from '@store/persist';
 import dynamic from "next/dynamic";
 import { Suspense } from 'react';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
+import { NoDataFound } from '@components/UI/NoDataFound';
 import FullPageLoader from '../UI/FullPageLoader';
 import { NextSeo } from 'next-seo';
 // import Timeline from './Timeline';

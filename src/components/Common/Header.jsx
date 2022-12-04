@@ -4,7 +4,7 @@ import { Search } from '@components/Search'
 import { APP } from '@utils/constants'
 import Image from 'next/image'
 import ThemeSwitch from './ThemeSwitch'
-import usePersistStore from '@app/store/persist'
+import usePersistStore from '@store/persist'
 import { NotificationMenu, NewVideoMenu, UserMenu } from './Menu'
 import { useState } from 'react'
 

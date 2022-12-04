@@ -1,10 +1,11 @@
-import { LinkifyOptions } from '@app/utils/functions/getLinkifyOptions'
+import { LinkifyOptions } from '@utils/functions/getLinkifyOptions'
 import Linkify from 'linkify-react'
 import "linkify-plugin-hashtag"
 import "linkify-plugin-mention"
 import { useEffect, useState } from 'react'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
-import { timeNow } from '@app/utils/functions'
+import { timeNow } from '@utils/functions'
+import VideoMeta from './VideoMeta'
 
 const AboutChannel = ({views, video }) => {
   const channel = video.ProfileEntryResponse
@@ -24,7 +25,8 @@ const AboutChannel = ({views, video }) => {
         <div className='text-[14px] flex space-x-1 items-center font-medium mb-3'>
           <span>{views > 1 ? `${views} views` : `${views} view`}</span>
           <span className='middot'></span>
-          <span>{timeNow(video.TimestampNanos)}</span>
+          {/* <span>{timeNow(video.TimestampNanos)}</span> */}
+          <VideoMeta video={video} />
         </div>
         {video.Body !== null && (
           <div className="text-sm md:text-sm">

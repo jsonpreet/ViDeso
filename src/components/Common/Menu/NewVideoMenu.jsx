@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { RiVideoAddLine } from 'react-icons/ri'
 import DropMenu, { NextLink } from '../../UI/DropMenu'
 import { TfiPencilAlt, TfiVideoCamera } from "react-icons/tfi";
-import usePersistStore from '@app/store/persist';
+import usePersistStore from '@store/persist';
 
 function NewVideoMenu() {
     const { query } = useRouter()

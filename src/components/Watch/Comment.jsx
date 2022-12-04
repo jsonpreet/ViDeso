@@ -1,6 +1,6 @@
-import { timeNow } from '@app/utils/functions'
-import { LinkifyOptions } from '@app/utils/functions/getLinkifyOptions'
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture'
+import { timeNow } from '@utils/functions'
+import { LinkifyOptions } from '@utils/functions/getLinkifyOptions'
+import { getProfilePicture } from '@utils/functions/getProfilePicture'
 import clsx from 'clsx'
 import Linkify from 'linkify-react'
 import Link from 'next/link'
@@ -11,42 +11,20 @@ import { AiOutlinePlayCircle } from 'react-icons/ai'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 import IsVerified from '../Common/IsVerified'
 import Reactions from './Reactions'
-import { getProfileName } from '@app/utils/functions/getProfileName'
-
-// const CommentOptions = dynamic(() => import('./CommentOptions'))
-// const Reactions = dynamic(() => import('./Reactions'))
-
-
-const VideoComment = ({ comment }) => {
-  return (
-    <div className="my-2 py-3 px-4 border dark:border-gray-700 rounded-xl">
-      <Link
-        href={`/watch/${comment.PostHashHex}`}
-        className="flex items-center space-x-2.5"
-      >
-        <AiOutlinePlayCircle className="w-5 h-5" />
-        <span>Watch Video</span>
-      </Link>
-    </div>
-  )
-}
+import { getProfileName } from '@utils/functions/getProfileName'
+import VideoMeta from './VideoMeta'
 
 const Comment = ({ comment }) => {
     const [clamped, setClamped] = useState(false)
     const [showMore, setShowMore] = useState(false)
-    const [showReport, setShowReport] = useState(false)
     const userProfile = comment.ProfileEntryResponse;
 
     useEffect(() => {
-        if (comment.Body.trim().length > 200) {
+        if (comment.Body.trim().length > 300) {
             setClamped(true)
             setShowMore(true)
         }
     }, [comment])
-
-    // const getIsVideoComment = () => {
-    //     return comment.metadata.mainContentFocus === PublicationMainFocus.Video
-    // }
 
     return (
         <div className="flex items-start justify-between">
@@ -58,7 +36,7 @@ const Comment = ({ comment }) => {
                 <img
                   className="w-9 h-9 rounded-full"
                   src={getProfilePicture(userProfile)}
-                  alt={`${getProfileName(userProfile)} Picture`}
+                  alt={getProfileName(userProfile)}
                   draggable={false}
                 />
                 </Link>
@@ -79,8 +57,8 @@ const Comment = ({ comment }) => {
                     </span>
                     <div
                         className={clsx(
-                        'opacity-80 text-base overflow-hidden break-words',
-                        clamped ? 'line-clamp-2' : ''
+                        'opacity-80 text-sm overflow-hidden break-words',
+                        clamped ? 'line-clamp-3' : ''
                         )}
                     >
                         {comment.IsHidden ? (
@@ -89,7 +67,7 @@ const Comment = ({ comment }) => {
                         </span>
                         ) : 
                         <Linkify options={LinkifyOptions}>
-                            {clamped ? comment.Body.trim().substring(0, 200) : comment.Body}
+                            {clamped ? comment.Body.trim().substring(0, 300) : comment.Body}
                         </Linkify>
                         }
                     </div>
@@ -112,18 +90,10 @@ const Comment = ({ comment }) => {
                         </button>
                         </div>
                     )}
-                    <div className="mt-1">
+                    <div className="mt-1 flex items-center space-x-1">
                         <Reactions iconSize={14} showTipButton={false} showButton={false} video={comment} />
                     </div>
                 </div>
-            </div>
-            <div>
-                {/* <ReportModal
-                    video={comment}
-                    show={showReport}
-                    setShowReport={setShowReport}
-                />
-                <CommentOptions comment={comment} setShowReport={setShowReport} /> */}
             </div>
         </div>
     )

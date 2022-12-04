@@ -6,9 +6,9 @@ import { Button } from '../UI/Button'
 import Reactions from './Reactions'
 import { BsThreeDots } from 'react-icons/bs'
 import DropMenu from '../UI/DropMenu'
-import usePersistStore from '@app/store/persist'
-import { APP } from '@app/utils/constants'
-import Tooltip from '@app/components/UI/Tooltip'
+import usePersistStore from '@store/persist'
+import { APP } from '@utils/constants'
+import Tooltip from '@components/UI/Tooltip'
 import { isBrowser } from 'react-device-detect'
 import Carousel from "react-multi-carousel"
 

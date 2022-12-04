@@ -1,5 +1,5 @@
-import usePersistStore from '@app/store/persist'
-import Modal from '@app/components/UI/Modal'
+import usePersistStore from '@store/persist'
+import Modal from '@components/UI/Modal'
 import { useState } from 'react'
 import { Button } from '../UI/Button'
 import InputMentions from '../UI/InputMentions'

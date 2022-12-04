@@ -1,19 +1,19 @@
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
+import { getProfilePicture } from '@utils/functions/getProfilePicture';
 import ChannelLinks from './Links';
 import Tooltip from '../UI/Tooltip';
 import IsVerified from '../Common/IsVerified';
 import { useEffect, useRef, useState } from 'react';
 import Deso from 'deso-protocol';
-import { DESO_CONFIG } from '@app/utils/constants';
-import usePersistStore from '@app/store/persist';
+import { DESO_CONFIG } from '@utils/constants';
+import usePersistStore from '@store/persist';
 import toast from 'react-hot-toast';
-import { formatNumber } from '@app/utils/functions';
-import { getCoverPicture } from '@app/utils/functions/getCoverPicture';
+import { formatNumber } from '@utils/functions';
+import { getCoverPicture } from '@utils/functions/getCoverPicture';
 import { Button } from '../UI/Button';
 import Link from 'next/link';
-import logger from '@app/utils/logger';
+import logger from '@utils/logger';
 import party from "party-js"
-import { getProfileName } from '@app/utils/functions/getProfileName';
+import { getProfileName } from '@utils/functions/getProfileName';
 
 function ChannelInfo({ following, followers, channel }) {
     const cover = getCoverPicture(channel);

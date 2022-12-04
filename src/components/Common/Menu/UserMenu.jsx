@@ -1,4 +1,4 @@
-import usePersistStore from '@app/store/persist';
+import usePersistStore from '@store/persist';
 import toast from 'react-hot-toast'
 import Deso from 'deso-protocol'
 import { useEffect, useState } from 'react'
@@ -9,13 +9,13 @@ import DropMenu, { NextLink } from '../../UI/DropMenu';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { HiOutlineCog } from 'react-icons/hi';
 import { MdExitToApp } from 'react-icons/md';
-import { SETTINGS } from '@app/utils/paths';
-import { BASE_URI, DESO_CONFIG } from '@app/utils/constants';
+import { SETTINGS } from '@utils/paths';
+import { BASE_URI, DESO_CONFIG } from '@utils/constants';
 import IsVerified from '../IsVerified';
 import ThemeSwitch from '../ThemeSwitch';
 import { useRouter } from 'next/router';
-import { getProfileName } from '@app/utils/functions/getProfileName';
-import { getProfilePicture } from '@app/utils/functions/getProfilePicture';
+import { getProfileName } from '@utils/functions/getProfileName';
+import { getProfilePicture } from '@utils/functions/getProfilePicture';
 
 function UserMenu() {
     const router = useRouter()

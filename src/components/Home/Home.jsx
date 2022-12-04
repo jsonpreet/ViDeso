@@ -1,4 +1,4 @@
-import usePersistStore from '@app/store/persist';
+import usePersistStore from '@store/persist';
 import { useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import { Button } from '../UI/Button';

@@ -1,10 +1,10 @@
-import VideoCard from '@app/components/Common/Cards/Video'
-import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
+import VideoCard from '@components/Common/Cards/Video'
+import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react';
-import { FetchInfiniteFollowingFeed } from '@app/data/feed';
-import usePersistStore from '@app/store/persist';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
+import { FetchInfiniteFollowingFeed } from '@data/feed';
+import usePersistStore from '@store/persist';
+import { NoDataFound } from '@components/UI/NoDataFound';
 import { Loader2 } from '../UI/Loader';
 
 

@@ -1,4 +1,4 @@
-import { getProfileExtraData } from '@app/utils/functions/getProfileExtraData';
+import { getProfileExtraData } from '@utils/functions/getProfileExtraData';
 import Link from 'next/link'
 import { FaDiscord, FaExternalLinkSquareAlt, FaGithub, FaGlobe, FaInstagram, FaLinkedin, FaLinkedinIn, FaTelegram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { HiOutlineGlobe } from 'react-icons/hi'

@@ -5,8 +5,8 @@ import { useState } from 'react'
 import Linkify from 'linkify-react'
 import "linkify-plugin-hashtag"
 import "linkify-plugin-mention"
-import { LinkifyOptions } from '@app/utils/functions/getLinkifyOptions'
-import { getVideoTitle } from '@app/utils/functions/getVideoTitle'
+import { LinkifyOptions } from '@utils/functions/getLinkifyOptions'
+import { getVideoTitle } from '@utils/functions/getVideoTitle'
 import VideoActions from './VideoActions'
 import ChannelInfo from './ChannelInfo'
 

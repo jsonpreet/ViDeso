@@ -1,26 +1,21 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useTheme } from 'next-themes'
 import { FiHome } from 'react-icons/fi'
 import {
   MdOutlineSubscriptions,
   MdOutlineVideoLibrary,
-  MdSlowMotionVideo,
   MdHistory,
-  MdOutlineFeedback
 } from 'react-icons/md'
 import { SHORTS, HISTORY, FEED, HOME, LIBRARY, STORI } from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
-import { APP } from '@app/utils/constants'
+import { APP } from '@utils/constants'
 import { useState } from 'react'
 import { BsChevronDown, BsChevronUp, BsShieldExclamation } from 'react-icons/bs'
 import SimpleBar from 'simplebar-react';
 import dynamic from 'next/dynamic'
-
-const SidebarLoginMessage = dynamic(() => import('./SidebarLoginMessage'), { ssr: false })
 
 const Sidebar = ({isSidebarCollapsed}) => {
   const router = useRouter()
@@ -64,20 +59,6 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   <p className={`flex ml-6`}>Subscriptions</p>
                 </div>
               </Link>
-              {/* <Link
-                href={STORI}
-                className={clsx(
-                  'rounded-lg px-3 py-2 group hover-primary',
-                  {
-                    'active-primary font-bold ': isActivePath(STORI) || router.pathname === '/stori' || router.pathname === '/stori/[id]',
-                  },
-                )}
-              >
-                <div className={`flex items-center`}>
-                  <MdSlowMotionVideo size={21} />
-                  <p className={`flex ml-6`}>Stori</p>
-                </div>
-              </Link> */}
               <Link
                 href={LIBRARY}
                 className={clsx(
@@ -107,8 +88,6 @@ const Sidebar = ({isSidebarCollapsed}) => {
                 </div>
               </Link>
             </div>
-            {/* <SidebarLoginMessage /> */}
-            
               <>
                 <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
                 <div className="flex flex-col w-full mb-3 px-3">

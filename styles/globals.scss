@@ -371,7 +371,7 @@ vm-player video.sc-vm-file {
   }
 }
 
-.input-mentions-single textarea, .input-mentions-textarea textarea {
+.input-mentions-single textarea, .input-mentions-textarea textarea, .input-mentions-textarea-small textarea {
   width: 100%;
   resize: vertical;
   border-radius:0.375rem;
@@ -386,26 +386,31 @@ vm-player video.sc-vm-file {
 }
 
 .dark {
-  .input-mentions-single textarea, .input-mentions-textarea textarea {
+  .input-mentions-single textarea, .input-mentions-textarea textarea, .input-mentions-textarea-small textarea {
     border-color: rgb(39 39 42);
     background-color: #0f0f0f!important;
   }
 }
 
-.input-mentions-single, .input-mentions-textarea {
+.input-mentions-single, .input-mentions-textarea, .input-mentions-textarea-small {
   width: 100%;
   font-size: .875rem;
   line-height: 1.25rem;
 }
+
 .input-mentions-single {
   min-height: 42px;
 }
 
 .input-mentions-textarea{
-  // min-height:7rem
+  min-height:7rem
 }
 
-.input-mentions-single__suggestions, .input-mentions-textarea__suggestions{
+.input-mentions-textarea-small{
+  min-height: 2.5rem;
+}
+
+.input-mentions-single__suggestions, .input-mentions-textarea__suggestions, .input-mentions-textarea-small__suggestions{
     margin-top:2rem!important;
     width:16rem;
     border-radius:0.5rem;
@@ -417,7 +422,7 @@ vm-player video.sc-vm-file {
     overflow-y: scroll;
     max-height: 300px;
 }
-.dark .input-mentions-single__suggestions,.dark .input-mentions-textarea__suggestions{
+.dark .input-mentions-single__suggestions,.dark .input-mentions-textarea__suggestions, .dark .input-mentions-textarea-small__suggestions{
   background-color:#1b1b1b!important
 }
 

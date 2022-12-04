@@ -1,15 +1,9 @@
-import { DESO_CONFIG } from '@app/utils/constants'
-import { getThumbDuration } from '@app/utils/functions'
-import { getVideoThumbnail } from '@app/utils/functions/getVideoThumbnail'
-import { getPlaybackIdFromUrl } from '@app/utils/functions/getVideoUrl'
-import logger from '@app/utils/logger'
+import { getVideoThumbnail } from '@utils/functions/getVideoThumbnail'
+import { getPlaybackIdFromUrl } from '@utils/functions/getVideoUrl'
 import axios from 'axios'
-import Deso from 'deso-protocol'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-cool-inview'
-import Hlsjs from 'hls.js';
-import { Hls, Media, MediaVisibility } from '@vidstack/player-react';
 
 import BottomOverlay from './BottomOverlay'
 import StoriActions from './StoriActions'

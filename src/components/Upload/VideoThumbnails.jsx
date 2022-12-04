@@ -1,16 +1,15 @@
-import logger from '@app/utils/logger'
-import ThumbnailsShimmer from '@app/components/Shimmers/ThumbnailsShimmer'
-import { Loader } from '@app/components/UI/Loader'
+import logger from '@utils/logger'
+import ThumbnailsShimmer from '@components/Shimmers/ThumbnailsShimmer'
+import { Loader } from '@components/UI/Loader'
 import clsx from 'clsx'
 import { BiImageAdd } from 'react-icons/bi'
-import { generateVideoThumbnails } from '@app/utils/functions/generateVideoThumbnails'
-import { getIsNSFW } from '@app/utils/functions/getIsNSFW'
-import { getFileFromDataURL } from '@app/utils/functions/getFileFromDataURL'
-import useAppStore from '@app/store/app'
+import { generateVideoThumbnails } from '@utils/functions/generateVideoThumbnails'
+import { getFileFromDataURL } from '@utils/functions/getFileFromDataURL'
+import useAppStore from '@store/app'
 import { useEffect, useState } from 'react'
 import Deso from 'deso-protocol';
-import { UploadImage } from '@app/data/image'
-import usePersistStore from '@app/store/persist'
+import { UploadImage } from '@data/image'
+import usePersistStore from '@store/persist'
 
 const DEFAULT_THUMBNAIL_INDEX = 0
 export const THUMBNAIL_GENERATE_COUNT = 3

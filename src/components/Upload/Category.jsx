@@ -1,5 +1,5 @@
-import { CREATOR_VIDEO_CATEGORIES } from '@app/data/categories'
-import useAppStore from '@app/store/app'
+import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
+import useAppStore from '@store/app'
 import { Listbox, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { BsCheck } from 'react-icons/bs'

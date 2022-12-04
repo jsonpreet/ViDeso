@@ -2,19 +2,19 @@ import clsx from 'clsx';
 import { Suspense, useEffect, useState } from 'react';
 import dynamic from "next/dynamic";
 import { useRouter } from 'next/router';
-import Custom404 from '@app/pages/500';
-import { FetchProfile } from '@app/data/channel';
-import MetaTags from '@app/components/Common/MetaTags'
-import ChannelShimmer from '@app/components/Shimmers/ChannelShimmer';
-import { Loader2 } from '@app/components/UI/Loader';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
+import Custom404 from '@pages/500';
+import { FetchProfile } from '@data/channel';
+import MetaTags from '@components/Common/MetaTags'
+import ChannelShimmer from '@components/Shimmers/ChannelShimmer';
+import { Loader2 } from '@components/UI/Loader';
+import { NoDataFound } from '@components/UI/NoDataFound';
 import ChannelInfo from './Info';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import usePersistStore from '@app/store/persist';
+import usePersistStore from '@store/persist';
 import Deso from 'deso-protocol';
-import { DESO_CONFIG } from '@app/utils/constants';
-import logger from '@app/utils/logger';
+import { DESO_CONFIG } from '@utils/constants';
+import logger from '@utils/logger';
 import { BsThreeDots } from 'react-icons/bs';
 import { Button } from '../UI/Button';
 import MoreTabsModal from '../Common/MoreTabsModal';

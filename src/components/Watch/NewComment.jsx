@@ -1,148 +1,93 @@
-import { Button } from '@app/components/UI/Button'
-import InputMentions from '@app/components/UI/InputMentions'
-import React, { FC, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { v4 as uuidv4 } from 'uuid'
-import { z } from 'zod'
+import { getProfilePicture } from '@utils/functions/getProfilePicture'
+import { Button } from '@components/UI/Button'
+import { useEffect, useState } from 'react'
+import InputMentions from '../UI/InputMentions'
+import { getProfileName } from '@utils/functions/getProfileName'
+import usePersistStore from '@store/persist'
+import { toast } from 'react-hot-toast'
+import { DESO_CONFIG } from '@utils/constants'
+import Deso from 'deso-protocol'
 
-const formSchema = z.object({
-  comment: z
-    .string({ required_error: 'Enter valid comment' })
-    .trim()
-    .min(1, { message: 'Enter valid comment' })
-    .max(5000, { message: 'Comment should not exceed 5000 characters' })
-})
 
-const NewComment = ({ video, refetchComments }) => {
+const NewComment = ({ video, refetch }) => {
+    const { isLoggedIn, user } = usePersistStore()
     const [loading, setLoading] = useState(false)
-    const [buttonText, setButtonText] = useState('Comment')
-    const selectedChannel = useAppStore((state) => state.selectedChannel)
-    const selectedChannelId = usePersistStore((state) => state.selectedChannelId)
-    const userSigNonce = useAppStore((state) => state.userSigNonce)
-    const setUserSigNonce = useAppStore((state) => state.setUserSigNonce)
+    const [showButtons, setShowButtons] = useState(false)
+    const [comment, setComment] = useState('')
+    const channel = video.ProfileEntryResponse
 
-    const {
-        clearErrors,
-        handleSubmit,
-        formState: { errors },
-        reset,
-        watch,
-        setValue
-    } = useForm({
-        defaultValues: {
-        comment: ''
-        },
-        resolver: zodResolver(formSchema)
-    })
 
-    const onError = (error) => {
-        toast.error(error?.data?.message ?? error?.message ?? ERROR_MESSAGE)
-        setButtonText('Comment')
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        if (indexed) {
-            setLoading(false)
-            refetchComments()
-            setButtonText('Comment')
-            reset()
-            toast.success('Commented successfully.')
+    const submitComment = async () => {
+        setLoading(true);
+        const deso = new Deso(DESO_CONFIG)
+        if (comment.trim().length > 0) {
+            const request = {
+                BodyObj: {
+                    Body: comment,
+                    ImageURLs: [],
+                },
+                ParentStakeID: video.PostHashHex,
+                UpdaterPublicKeyBase58Check: user.profile.PublicKeyBase58Check,
+            };
+            try {
+                const response = await deso.posts.submitPost(request);
+                if (response && response.TxnHashHex) {
+                    refetch()
+                }
+            } catch (error) {
+                console.log(error);
+                setLoading(false);
+            }
+            finally {
+                setComment('');
+                setLoading(false);
+                setShowButtons(false);
+                toast.success('Congratulations! Comment Posted.');
+            }
+        } else {
+            setLoading(false);
+            toast.error('Please write something to post.');
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [indexed])
-
-    const submitComment = async (data) => {
-        // try {
-        //     setButtonText('Uploading...')
-        //     setLoading(true)
-
-        //     const textNftImageUrl = await getTextNftUrl(
-        //         trimify(data.comment),
-        //         selectedChannel?.handle,
-        //         new Date().toLocaleString()
-        //     )
-
-        //     const { url } = await uploadToAr({
-        //         version: '2.0.0',
-        //         metadata_id: uuidv4(),
-        //         description: trimify(data.comment),
-        //         content: trimify(data.comment),
-        //         locale: getUserLocale(),
-        //         mainContentFocus: PublicationMainFocus.TextOnly,
-        //         external_url: `${LENSTUBE_URL}/watch/${video?.id}`,
-        //         image: textNftImageUrl,
-        //         imageMimeType: 'image/svg+xml',
-        //         name: `${selectedChannel?.handle}'s comment on video ${video.metadata.name}`,
-        //         attributes: [
-        //         {
-        //             displayType: PublicationMetadataDisplayTypes.String,
-        //             traitType: 'publication',
-        //             value: 'comment'
-        //         },
-        //         {
-        //             displayType: PublicationMetadataDisplayTypes.String,
-        //             traitType: 'app',
-        //             value: LENSTUBE_APP_ID
-        //         }
-        //         ],
-        //         media: [],
-        //         appId: LENSTUBE_APP_ID
-        //     })
-        //     setButtonText('Commenting...')
-        //     const request = {
-        //         profileId: selectedChannel?.id,
-        //         publicationId: video?.id,
-        //         contentURI: url,
-        //         collectModule: {
-        //         freeCollectModule: {
-        //             followerOnly: false
-        //         }
-        //         },
-        //         referenceModule: {
-        //         followerOnlyReferenceModule: false
-        //         }
-        //     }
-        //     const canUseDispatcher = selectedChannel?.dispatcher?.canUseRelay
-        //     if (!canUseDispatcher) {
-        //         return signTypedData(request)
-        //     }
-        //     await createViaDispatcher(request)
-        // } catch (error) {
-        //     logger.error('[Error Store & Post Comment]', error)
-        // }
     }
 
-    if (!selectedChannel || !selectedChannelId) return null
+    const cancel = () => {
+        setShowButtons(false)
+        setComment('')
+    }
+
+    const onFocus = (e) => {
+        setShowButtons(true)
+    }
 
     return (
-        <div className="my-1">
-            <form
-                onSubmit={handleSubmit(submitComment)}
-                className="flex items-start mb-2 space-x-1 md:space-x-3"
-            >
-                <div className="flex-none">
+        <div className="mt-1 mb-5 flex space-x-1 md:space-x-3">
+            <div className="flex-none">
                 <img
-                    src={getProfilePicture(selectedChannel, 'avatar')}
-                    className="w-8 h-8 md:w-9 md:h-9 rounded-xl"
-                    draggable={false}
-                    alt="channel picture"
+                    src={getProfilePicture(user.profile)}
+                    alt={getProfileName(user.profile)}
+                    className="w-8 h-8 md:w-9 md:h-9 rounded-full"
                 />
+            </div>
+            <div className="flex flex-col flex-1 space-y-1 md:space-y-3">
+                <div>
+                    <InputMentions
+                        placeholder="Tell about video (type @ to mention a channel) or add #Hashtags"
+                        autoComplete="off"
+                        value={comment}
+                        onFocus={onFocus}
+                        onContentChange={(value) => {
+                            setComment(value)
+                        }}
+                        mentionsSelector="input-mentions-textarea-small"
+                    />
                 </div>
-                {/* <InputMentions
-                placeholder="How's this video?"
-                autoComplete="off"
-                validationError={errors.comment?.message}
-                value={watch('comment')}
-                onContentChange={(value) => {
-                    setValue('comment', value)
-                    clearErrors('comment')
-                }}
-                mentionsSelector="input-mentions-single"
-                /> */}
-                <Button disabled={loading}>{buttonText}</Button>
-            </form>
+                {showButtons ?
+                    <div className='flex-1 flex justify-end space-x-3'>
+                        <Button variant='light' onClick={cancel} disabled={loading}>Cancel</Button>
+                        <Button onClick={submitComment} disabled={loading}>Comment</Button>
+                    </div>
+                : null}    
+            </div>
         </div>
     )
 }

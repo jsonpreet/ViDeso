@@ -1,4 +1,4 @@
-import { APP } from '@app/utils/constants';
+import { APP } from '@utils/constants';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'

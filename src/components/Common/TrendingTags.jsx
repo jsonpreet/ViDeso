@@ -1,4 +1,4 @@
-import { FetchTrendingTags } from '@app/data/tags';
+import { FetchTrendingTags } from '@data/tags';
 import Link from 'next/link';
 import React, { useState } from 'react'
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
