@@ -43,16 +43,17 @@ function UserMenu() {
                     setLoggedIn(true);
                     setLoading(false)
                 } catch (error) {
-                    toast.error(error);
+                    toast.error(error.message);
                     console.log(error);
                     setLoading(false)
+
                 }
             } else {
                 console.log(response);
                 setLoading(false)
             }
         } catch (error) {
-            toast.error(error);
+            toast.error(error.message);
             console.log(error);
             setLoading(false)
         }
