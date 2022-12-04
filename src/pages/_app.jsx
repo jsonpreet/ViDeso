@@ -12,6 +12,8 @@ import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import "react-multi-carousel/lib/styles.css";
 import '@styles/globals.scss'
 import { DefaultSeo } from 'next-seo';
+import Head from 'next/head';
+import VideoMetaTags from '@app/components/Common/VideoMetaTags';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -28,7 +30,7 @@ function MyApp({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient(config))
   return (
     <>
-      
+      <VideoMetaTags/>
       <ThemeProvider enableSystem={false} attribute="class">
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>

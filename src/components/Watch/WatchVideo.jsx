@@ -154,26 +154,6 @@ const WatchVideo = () => {
                     ],
                 }}
             />
-            <Head>
-                <link
-                    rel="iframely player"
-                    type="text/html"
-                    href={`${APP.EMBED_URL}/${router.query?.id}`}
-                    media="(aspect-ratio: 1280/720)"
-                />
-                <link
-                    rel="alternate"
-                    type="text/xml+oembed"
-                    href={`${APP.API_URL}/oembed?format=xml&id=${router.query?.id}`}
-                    title={video ? getVideoTitle(video) : 'Watch'}
-                />
-                <link
-                    rel="alternate"
-                    type="application/json+oembed"
-                    href={`${APP.API_URL}/oembed?format=json&id=${router.query?.id}`}
-                    title={video ? getVideoTitle(video) : 'Watch'}
-                />
-            </Head>
             {isFetched && !loading && !isError && videoData && video ? (
                 <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
