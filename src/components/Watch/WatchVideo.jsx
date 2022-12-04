@@ -141,7 +141,7 @@ const WatchVideo = () => {
             <NextSeo
                 title={video ? getVideoTitle(video) : 'Watch'}
                 description={video ? getVideoTitle(video) : 'Watch'}
-                canonical={`${APP.URL}/watch/${video.PostHashHex}`}
+                canonical={`${APP.URL}/watch/${router.asPath}`}
                 openGraph={{
                     title: video ? getVideoTitle(video) : 'Watch',
                     description: video ? getVideoTitle(video) : 'Watch',
