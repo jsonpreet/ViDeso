@@ -4,14 +4,10 @@ import { formatNumber } from '@utils/functions'
 import { Button } from '@components/UI/Button'
 import clsx from 'clsx'
 import Deso from 'deso-protocol'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
-import party from "party-js"
 import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
-import { DESO_CONFIG } from '@utils/constants'
-import Tooltip from '../UI/Tooltip'
 import logger from '@utils/logger'
-import { isBrowser } from 'react-device-detect';
 import TipModal from '../Common/TipModal'
 import { BiDollar } from 'react-icons/bi'
 
