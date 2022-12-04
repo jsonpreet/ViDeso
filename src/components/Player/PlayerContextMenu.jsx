@@ -5,9 +5,8 @@ import useOutsideClick from '@app/utils/hooks/useOutsideClick'
 import { useRouter } from 'next/router'
 import { forwardRef, useRef } from 'react'
 import toast from 'react-hot-toast'
-import { AiOutlineLink } from 'react-icons/ai'
-import { BiCheck } from 'react-icons/bi'
-import { MdOutlineLoop } from 'react-icons/md'
+import { BiCheck, BiRepost } from 'react-icons/bi'
+import { BsLink, BsCode } from "react-icons/bs";
 
 const PlayerContextMenu = forwardRef(({ position, hideContextMenu, isVideoLoop, setIsVideoLoop }, ref) => {
     const { query } = useRouter()
@@ -30,6 +29,12 @@ const PlayerContextMenu = forwardRef(({ position, hideContextMenu, isVideoLoop, 
       hideContextMenu()
     }
 
+    const onCopyVideoEmbed = async () => {
+      await copy(`${APP.EMBED_URL}/${query.id}`)
+      toast.success('Video embed code copied')
+      hideContextMenu()
+    }
+
     const onCopyAtCurrentTime = async () => {
       const { current } = ref
       if (!current) return
@@ -38,7 +43,6 @@ const PlayerContextMenu = forwardRef(({ position, hideContextMenu, isVideoLoop, 
       toast.success(`Video link copied`)
       hideContextMenu()
   }
-  console.log(position);
 
     return (
       <div
@@ -47,35 +51,48 @@ const PlayerContextMenu = forwardRef(({ position, hideContextMenu, isVideoLoop, 
         ref={contextMenuRef}
       >
         <div
-          className="p-3 cursor-pointer hover:bg-gray-700 bg-opacity-70"
-          onClick={toggleLoop}
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <MdOutlineLoop />
-              <p className="flex-none">Loop</p>
+            className="px-3 py-2 cursor-pointer hover:bg-gray-700"
+            onClick={toggleLoop}
+            role="button"
+            >
+                <div className="flex items-center justify-between">
+                    <div className="flex text-[13px] font-semibold items-center space-x-2">
+                        <BiRepost size={20} />
+                        <p className="flex-none">Loop</p>
+                    </div>
+                    {isVideoLoop && <BiCheck size={20} />}
+                </div>
             </div>
-            {isVideoLoop && <BiCheck className="text-lg" />}
-          </div>
-        </div>
-        <div
-          className="p-3 cursor-pointer hover:bg-gray-700 bg-opacity-70"
-          onClick={onCopyVideoUrl}
-        >
-          <div className="flex items-center space-x-2">
-            <AiOutlineLink />
-            <p className="flex-none">Copy video URL</p>
-          </div>
-        </div>
-        <div
-          className="p-3 cursor-pointer hover:bg-gray-700 bg-opacity-70"
-          onClick={onCopyAtCurrentTime}
-        >
-          <div className="flex items-center space-x-2">
-            <AiOutlineLink />
-            <p className="flex-none">Copy video URL at current time</p>
-          </div>
-        </div>
+            <div
+            className="px-3 py-2 cursor-pointer hover:bg-gray-700"
+            onClick={onCopyVideoUrl}
+            role="button"
+            >
+                <div className="flex text-[13px] font-semibold items-center space-x-2">
+                    <BsLink size={20} />
+                    <p className="flex-none">Copy video URL</p>
+                </div>
+            </div>
+            <div
+            className="px-3 py-2 cursor-pointer hover:bg-gray-700"
+            onClick={onCopyAtCurrentTime}
+            role="button"
+            >
+                <div className="flex text-[13px] font-semibold items-center space-x-2">
+                    <BsLink size={20} />
+                    <p className="flex-none">Copy video URL at current time</p>
+                </div>
+            </div>
+            <div
+            className="px-3 py-2 cursor-pointer hover:bg-gray-700"
+            onClick={onCopyVideoEmbed}
+            role="button"
+            >
+                <div className="flex text-[13px] font-semibold items-center space-x-2">
+                    <BsCode size={20} />
+                    <p className="flex-none">Copy embed code</p>
+                </div>
+            </div>
       </div>
     )
   }

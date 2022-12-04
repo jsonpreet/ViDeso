@@ -9,6 +9,8 @@ export const ALLOWED_VIDEO_TYPES = [
 export const APP = {
   Name: 'Videso',
   URL: 'https://videso.xyz',
+  EMBED_URL: 'https://embed.videos.xyz',
+  API_URL: 'https://api.videos.xyz',
   Description: 'Videso is a decentralized video-sharing social media platform built with DeSo.',
   Twitter: 'VidesoApp',
   PublicKeyBase58Check: 'BC1YLiHYuaqQc1r5UFvJ3G8eMYawk693wVGiTHmBQtr9DK8NQXt14oJ',

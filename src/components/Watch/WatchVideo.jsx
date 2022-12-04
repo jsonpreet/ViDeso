@@ -21,10 +21,10 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { APP } from '@app/utils/constants'
 import { getThumbDuration } from '@app/utils/functions'
 import { NextSeo } from 'next-seo'
+import Head from 'next/head'
 
 const WatchVideo = () => {
     const router = useRouter()
-    const { id, t } = router.query
     const supabase = useSupabaseClient()
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
     const setVideoWatchTime = useAppStore((state) => state.setVideoWatchTime)
@@ -154,6 +154,26 @@ const WatchVideo = () => {
                     ],
                 }}
             />
+            <Head>
+                <link
+                    rel="iframely player"
+                    type="text/html"
+                    href={`${APP.EMBED_URL}/${router.query?.id}`}
+                    media="(aspect-ratio: 1280/720)"
+                />
+                <link
+                    rel="alternate"
+                    type="text/xml+oembed"
+                    href={`${APP.API_URL}/oembed?format=xml&id=${router.query?.id}`}
+                    title={video ? getVideoTitle(video) : 'Watch'}
+                />
+                <link
+                    rel="alternate"
+                    type="application/json+oembed"
+                    href={`${APP.API_URL}/oembed?format=json&id=${router.query?.id}`}
+                    title={video ? getVideoTitle(video) : 'Watch'}
+                />
+            </Head>
             {isFetched && !loading && !isError && videoData && video ? (
                 <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
