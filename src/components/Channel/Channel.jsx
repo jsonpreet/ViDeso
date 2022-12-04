@@ -24,14 +24,6 @@ const ChannelVideos = dynamic(() => import("./Tabs/Videos"), {
   suspense: true,
 });
 
-const Stori = dynamic(() => import("./Tabs/Stori"), {
-  suspense: true,
-});
-
-const Channels = dynamic(() => import("./Tabs/Channels"), {
-  suspense: true,
-});
-
 const About = dynamic(() => import("./Tabs/About"), {
   suspense: true,
 });
@@ -259,17 +251,6 @@ const Channel = () => {
                             {routeTab === 'videos' && 
                                 <Suspense fallback={<Loader />}>
                                     <ChannelVideos channel={channel} />
-                                </Suspense>
-                            }
-                            
-                            {routeTab === 'stori' &&
-                                <Suspense fallback={<Loader />}>
-                                    <Stori channel={channel} />
-                                </Suspense>
-                            }
-                            {routeTab === 'channels' &&
-                                <Suspense fallback={<Loader/>}>
-                                    <Channels channel={channel} />
                                 </Suspense>
                             }
                             {routeTab === 'about' &&
