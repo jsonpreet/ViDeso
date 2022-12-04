@@ -12,7 +12,7 @@ import {
 } from 'react-icons/md'
 import { SHORTS, HISTORY, FEED, HOME, LIBRARY, STORI } from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
-import { FaTwitter } from "react-icons/fa";
+import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
 import { APP } from '@app/utils/constants'
 import { useState } from 'react'
@@ -175,15 +175,15 @@ const Sidebar = ({isSidebarCollapsed}) => {
                       <p className='ml-6'>DiamondApp</p>
                     </div>
                   </a>
-                  {/* <a
-                    href='#' rel="noreferrer"
+                  <a
+                    href='https://discord.gg/8T5RUrsP6W' rel="noreferrer"
                     className={'rounded-lg px-3 py-2 group hover-primary'}
                   >
                     <div className="flex items-center">
-                      <MdOutlineFeedback size={21} />
-                      <p className='ml-6'>Send Feedback</p>
+                      <FaDiscord size={21} />
+                      <p className='ml-6'>Discord</p>
                     </div>
-                  </a> */}
+                  </a>
                   <a
                     href='#' rel="noreferrer"
                     className={'rounded-lg px-3 py-2 group hover-primary'}

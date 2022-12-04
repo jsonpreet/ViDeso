@@ -145,7 +145,7 @@ const WatchVideo = () => {
                 openGraph={{
                     title: video ? getVideoTitle(video) : 'Watch',
                     description: video ? getVideoTitle(video) : 'Watch',
-                    url: `${APP.URL}/watch/${video.PostHashHex}`,
+                    url: `${APP.URL}/watch/${router.asPath}`,
                     images: [
                         {
                             url: video ? defaultThumbnailUrl : '',
