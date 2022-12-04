@@ -23,6 +23,7 @@ import { getThumbDuration } from '@utils/functions'
 import { NextSeo } from 'next-seo'
 
 const WatchVideo = (props) => {
+    const {isError, video } = props
     const router = useRouter()
     const supabase = useSupabaseClient()
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
@@ -37,13 +38,8 @@ const WatchVideo = (props) => {
     const [loading, setLoading] = useState(true)
     const [posthash, setPosthash] = useState('')
 
-    const { isLoading, isError, error, isFetched, data: video } = useQuery([['single-post', router?.query.id], { id: router?.query.id, reader: reader }], getSinglePost, { enabled: !!router?.query.id, initialData: props.video })
-
     useEffect(() => {
         const { id, t } = router.query
-        if (id) {
-            setPosthash(id)
-        }
         if (t) {
             setVideoWatchTime(Number(t))
         }
@@ -82,13 +78,13 @@ const WatchVideo = (props) => {
                 console.error(video.PostHashHex, 'thumbnail', error);
             }
         }
-        if (video && isFetched) {
+        if (video && !isError) {
             addToRecentlyWatched(video)
             getVideo()
             getViews()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [router, video, isFetched, addToRecentlyWatched])
+    }, [router, video, isError, addToRecentlyWatched])
 
     function getViews() {
         supabase.from('views').select('*', { count: 'exact' }).eq('posthash', video.PostHashHex).then((res) => {
@@ -100,7 +96,7 @@ const WatchVideo = (props) => {
     }
     
     useEffect(() => {
-        if (isLoggedIn && video && video.VideoURLs !== null) {
+        if (isLoggedIn && video) {
             async function addToHistory() {
                 try {
                     const { data: post, error } = await supabase.from('history').select('*').eq('posthash', video.PostHashHex).eq('user', reader);
@@ -129,7 +125,7 @@ const WatchVideo = (props) => {
         return <Custom500 />
     }
 
-    if (isFetched && !video) {
+    if (!video) {
         return <Custom404 />
     }
 
@@ -153,7 +149,7 @@ const WatchVideo = (props) => {
                     ],
                 }}
             />
-            {isFetched && !loading && !isError && videoData && video ? (
+            {!loading && !isError && videoData && video ? (
                 <div className="w-full flex md:flex-row flex-col">
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
                         <Video views={views} videoData={videoData} video={video} poster={thumbnailUrl} />
