@@ -21,7 +21,6 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { APP } from '@utils/constants'
 import { getThumbDuration } from '@utils/functions'
 import { NextSeo } from 'next-seo'
-import Head from 'next/head'
 
 const WatchVideo = () => {
     const router = useRouter()
@@ -38,7 +37,7 @@ const WatchVideo = () => {
     const [loading, setLoading] = useState(true)
     const [posthash, setPosthash] = useState('')
 
-    const { isLoading, isError, error, isFetched, data: video } = useQuery([['single-post', posthash], { id: posthash, reader: reader }], getSinglePost, { enabled: !!posthash, })
+    const { isLoading, isError, error, isFetched, data: video } = useQuery([['single-post', router?.query.id], { id: router?.query.id, reader: reader }], getSinglePost, { enabled: !!router?.query.id, })
 
     useEffect(() => {
         const { id, t } = router.query
