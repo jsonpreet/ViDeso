@@ -22,7 +22,7 @@ import { APP } from '@utils/constants'
 import { getThumbDuration } from '@utils/functions'
 import { NextSeo } from 'next-seo'
 
-const WatchVideo = () => {
+const WatchVideo = (props) => {
     const router = useRouter()
     const supabase = useSupabaseClient()
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
@@ -37,7 +37,7 @@ const WatchVideo = () => {
     const [loading, setLoading] = useState(true)
     const [posthash, setPosthash] = useState('')
 
-    const { isLoading, isError, error, isFetched, data: video } = useQuery([['single-post', router?.query.id], { id: router?.query.id, reader: reader }], getSinglePost, { enabled: !!router?.query.id, })
+    const { isLoading, isError, error, isFetched, data: video } = useQuery([['single-post', router?.query.id], { id: router?.query.id, reader: reader }], getSinglePost, { enabled: !!router?.query.id, initialData: props.video })
 
     useEffect(() => {
         const { id, t } = router.query
