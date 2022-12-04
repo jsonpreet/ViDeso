@@ -57,12 +57,12 @@ const Comment = ({ comment }) => {
                     </span>
                     <div
                         className={clsx(
-                        'opacity-80 text-sm overflow-hidden break-words',
+                        'text-sm overflow-hidden break-words',
                         clamped ? 'line-clamp-3' : ''
                         )}
                     >
                         {comment.IsHidden ? (
-                        <span className="text-xs italic opacity-80">
+                        <span className="text-xs italic">
                             Comment deleted by user!
                         </span>
                         ) : 
@@ -76,7 +76,7 @@ const Comment = ({ comment }) => {
                         <button
                             type="button"
                             onClick={() => setClamped(!clamped)}
-                            className="flex items-center mt-2 text-xs outline-none hover:opacity-100 opacity-60"
+                            className="flex items-center mt-2 text-xs outline-none"
                         >
                             {clamped ? (
                             <>
