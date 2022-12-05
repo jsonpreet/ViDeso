@@ -3,24 +3,15 @@ import { toastOptions } from '@utils/functions'
 import Head from 'next/head'
 import { useTheme } from 'next-themes'
 import { Toaster } from 'react-hot-toast'
-//import Header from './Header'
 import Sidebar from './Sidebar'
 import dynamic from 'next/dynamic'
-//import MobileMenu from './Menu/MobileMenu'
 import { useState } from 'react'
 
-
-
 const MobileMenu = dynamic(() => import('./Menu/MobileMenu'), { ssr: false })
-
 const Header = dynamic(() => import('./Header'), { ssr: false })
-//const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false }) md:min-h-screen  h-full md:h-screen
-
 const Layout = ({ children }) => {
     const { theme } = useTheme()
     const [isSidebarCollapsed, setSidebarCollapsed] = useState(false)
-
-
     return (
         <>
             <Head>
@@ -30,7 +21,7 @@ const Layout = ({ children }) => {
                 position="bottom-right"
                 toastOptions={toastOptions}
             />
-            <div className=' flex'>
+            <div className='flex'>
                 <div className='hidden bg-primary fixed top-0 left-0 md:flex md:flex-shrink-0'>
                     <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
                 </div>

@@ -6,14 +6,13 @@ import { Devtools } from '@app/components/DevTools';
 import { DEFAULT_SEO, queryConfig, queryConfigAuto } from '@app/utils/constants';
 import { useRouter } from 'next/router';
 import Layout from '@app/components/Common/Layout';
-import '@vidstack/player/hydrate.js';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import { DefaultSeo } from 'next-seo';
+import VideoMetaTags from '@app/components/Common/VideoMetaTags';
 import "react-multi-carousel/lib/styles.css";
 import '@styles/globals.scss'
-import { DefaultSeo } from 'next-seo';
-import Head from 'next/head';
-import VideoMetaTags from '@app/components/Common/VideoMetaTags';
+import '@vidstack/player/hydrate.js';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
