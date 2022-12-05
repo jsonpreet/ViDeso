@@ -1,3 +1,3 @@
-import { Stori } from '@app/components/Stori'
+import { Stori } from '@components/Stori'
 
 export default Stori;

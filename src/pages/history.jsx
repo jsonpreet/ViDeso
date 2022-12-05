@@ -1,3 +1,3 @@
-import { History } from "@app/components/History";
+import { History } from "@components/History";
 
 export default History

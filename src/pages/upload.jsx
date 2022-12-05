@@ -1,3 +1,3 @@
-import { Upload } from "@app/components/Upload";
+import { Upload } from "@components/Upload";
 
 export default Upload

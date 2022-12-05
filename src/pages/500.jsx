@@ -1,5 +1,5 @@
 import { HOME } from '@utils/paths'
-import { Button } from '@app/components/UI/Button'
+import { Button } from '@components/UI/Button'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'

@@ -7,21 +7,20 @@ import {
   MdOutlineVideoLibrary,
   MdHistory,
 } from 'react-icons/md'
-import { SHORTS, HISTORY, FEED, HOME, LIBRARY, STORI } from '@utils/paths'
+import { HISTORY, FEED, HOME, LIBRARY, PRIVACY, ABOUT } from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
 import { APP } from '@utils/constants'
 import { useState } from 'react'
-import { BsChevronDown, BsChevronUp, BsShieldExclamation } from 'react-icons/bs'
+import { BsChevronDown, BsChevronUp, BsInfoSquare, BsShieldExclamation } from 'react-icons/bs'
 import SimpleBar from 'simplebar-react';
-import dynamic from 'next/dynamic'
 import AlertBox from '../UI/AlertBox'
 
 const Sidebar = ({isSidebarCollapsed}) => {
   const router = useRouter()
   const [showMore, setShowMore] = useState(false)
-  const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 9;
+  const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 6;
 
 
   const isActivePath = (path) => router.pathname === path
@@ -39,8 +38,8 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   {
                     'active-primary font-bold ': isActivePath(HOME),
                   },
-                )}
-              >
+                  )}
+                >
                 <div className={`flex items-center`}>
                   <FiHome size={21} />
                    <p className={`flex ml-6`}>Home</p>
@@ -165,15 +164,34 @@ const Sidebar = ({isSidebarCollapsed}) => {
                   <p className='ml-6'>Discord</p>
                 </div>
               </a>
-              <a
-                href='#' rel="noreferrer"
-                className={'rounded-lg px-3 py-2 group hover-primary'}
+              <Link
+                href={ABOUT}
+                className={clsx(
+                  'rounded-lg px-3 py-2 group hover-primary',
+                  {
+                    'active-primary font-bold ': isActivePath(ABOUT),
+                  },
+                  )}
+              >
+                <div className="flex items-center">
+                  <BsInfoSquare size={21} />
+                  <p className='ml-6'>About</p>
+                </div>
+              </Link>
+              <Link
+                href={PRIVACY}
+                className={clsx(
+                  'rounded-lg px-3 py-2 group hover-primary',
+                  {
+                    'active-primary font-bold ': isActivePath(PRIVACY),
+                  },
+                  )}
               >
                 <div className="flex items-center">
                   <BsShieldExclamation size={21} />
                   <p className='ml-6'>Privacy</p>
                 </div>
-              </a>
+              </Link>
             </div>
             <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
             <div className='flex w-full px-3 text-sm text-primary space-x-1'>
