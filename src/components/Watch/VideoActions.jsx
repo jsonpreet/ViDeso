@@ -36,7 +36,7 @@ const VideoActions = ({ video }) => {
     return (
         <>
             <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
-            <div className="flex items-center md:justify-end mt-4 space-x-2.5 md:space-x-4 md:mt-0">
+            <div className="flex items-center md:justify-end mt-4 space-x-2 md:space-x-4 md:mt-0">
                 {/* <Carousel
                     swipeable={true}
                     draggable={true}

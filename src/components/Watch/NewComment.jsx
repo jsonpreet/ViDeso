@@ -60,15 +60,15 @@ const NewComment = ({ video, refetch }) => {
     }
 
     return (
-        <div className="mt-1 mb-5 flex space-x-1 md:space-x-3">
+        <div className="mt-1 mb-5 flex space-x-3">
             <div className="flex-none">
                 <img
                     src={getProfilePicture(user.profile)}
                     alt={getProfileName(user.profile)}
-                    className="w-8 h-8 md:w-9 md:h-9 rounded-full"
+                    className="w-9 h-9 rounded-full"
                 />
             </div>
-            <div className="flex flex-col flex-1 space-y-1 md:space-y-3">
+            <div className="flex flex-col flex-1 space-y-2 md:space-y-3">
                 <div>
                     <InputMentions
                         placeholder="Tell about video (type @ to mention a channel) or add #Hashtags"
@@ -78,11 +78,11 @@ const NewComment = ({ video, refetch }) => {
                         onContentChange={(value) => {
                             setComment(value)
                         }}
-                        mentionsSelector="input-mentions-textarea-small"
+                        mentionsSelector="input-mentions-textarea-small h-20 md:h-10"
                     />
                 </div>
                 {showButtons ?
-                    <div className='flex-1 flex justify-end space-x-3'>
+                    <div className='flex justify-end space-x-3'>
                         <Button variant='light' onClick={cancel} disabled={loading}>Cancel</Button>
                         <Button onClick={submitComment} disabled={loading}>Comment</Button>
                     </div>

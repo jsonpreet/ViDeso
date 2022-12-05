@@ -60,12 +60,12 @@ const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = 
     return (
         <>
             <TipModal diamondBestowed={diamondBestowed} setDiamondBestowed={setDiamondBestowed} show={showTip} setShowTip={setShowTip} video={video} />
-            <div className='flex items-center justify-end space-x-2.5 md:space-x-4'>
+            <div className='flex items-center justify-end space-x-2 md:space-x-4'>
                 <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={() => { likeVideo(liked) }}>
                     <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 space-x-2 outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': liked
                     },
-                        { 'space-x-3': showButton },
+                        { 'space-x-1.5 md:space-x-3': showButton },
                         { 'mt-1.5': !showButton }
                     )}>
                         {liked ? <FaThumbsUp size={iconSize}
@@ -97,7 +97,7 @@ const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = 
                         <span className={clsx('flex items-center group-hover:text-brand2-500 dark:group-hover:text-brand2-400 space-x-2 outline-none', {
                             'text-brand2-500 dark:text-brand2-400 font-semibold': diamondBestowed > 0
                         },
-                            { 'space-x-1': showButton },
+                            { 'space-x-1.5 md:space-x-3': showButton },
                             { 'mt-1.5': !showButton }
                         )}>
                             <BiDollar size={18} />
