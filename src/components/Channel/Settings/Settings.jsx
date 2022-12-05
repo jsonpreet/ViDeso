@@ -246,22 +246,21 @@ function Settings() {
         }
         try {
             const response = await deso.social.updateProfile(profileReq);
-            if (response.TransactionHex !== undefined) {
-                try {
-                    const profile = await deso.user.getSingleProfile({PublicKeyBase58Check: user.profile.PublicKeyBase58Check});
-                    if(profile && profile.Profile !== undefined) {
-                        setUser({ profile: profile.Profile });
-                        party.confetti(rootRef.current, {
-                            count: party.variation.range(100, 2000),
-                            size: party.variation.range(0.2, 1.5),
-                        });
-                    }
-                } catch (error) {
-                    toast.error("Something went wrong");
-                    console.log(error);
-                } finally {
+            if (response && response.TransactionHex !== null) {
+                const profile = await deso.user.getSingleProfile({PublicKeyBase58Check: user.profile.PublicKeyBase58Check});
+                if(profile && profile.Profile !== undefined) {
+                    setUser({ profile: profile.Profile });
+                    party.confetti(rootRef.current, {
+                        count: party.variation.range(100, 2000),
+                        size: party.variation.range(0.2, 1.5),
+                    });
+                    toast.success("Channel Updated!");
                     setLoading(false);
+                } else {
+                    toast.error("Something went wrong");
                 }
+            } else {
+                toast.error("Something went wrong");
             }
         } catch (error) {
             console.log(error);
