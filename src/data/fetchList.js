@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const fetchAllPosts = async (reader, list) => {
-    let url = 'https://green.post2earndao.com/api/v0/get-posts-hashhexlist'
+    let url = 'https://node.deso.org/api/v0/get-posts-hashhexlist'
     const response = await axios.post(url, {
         PostsHashHexList: list,
         ReaderPublicKeyBase58Check: reader,
