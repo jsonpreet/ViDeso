@@ -367,6 +367,11 @@ vm-player video.sc-vm-file {
 }
 .custom-slider.value-5 {
   .rs-slider-handle::before {
+    background-color: #c5278a;
+  }
+}
+.custom-slider.value-6 {
+  .rs-slider-handle::before {
     margin-left:-28px;
   }
 }
@@ -461,6 +466,10 @@ vm-player video.sc-vm-file {
 //   position: absolute;
 //   left: 0;
 // }
+
+.react-multiple-carousel__arrow {
+	z-index: 1!important;
+}
 
 
 .media-buffering-container {

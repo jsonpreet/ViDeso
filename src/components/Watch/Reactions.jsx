@@ -10,16 +10,20 @@ import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
 import logger from '@utils/logger'
 import TipModal from '../Common/TipModal'
 import { BiDollar } from 'react-icons/bi'
+import { IoDiamondOutline } from 'react-icons/io5'
+import DiamondModal from '../Common/DiamondsModal'
+import Carousel from "react-multi-carousel"
 
-const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = false, showButton = true}) => {
+const Reactions = ({ video, iconSize = '21', showTipButton = false, showDiamondButton = true, isVertical = false, showButton = true}) => {
     const {isLoggedIn, user } = usePersistStore()
-    const selectedChannel = useAppStore((state) => state.selectedChannel)
     const [liking, setLiking] = useState(false)
-    const [postReader, setPostReader] = useState()
     const [liked, setLiked] = useState(video.PostEntryReaderState.LikedByReader)
     const [diamondBestowed, setDiamondBestowed] = useState(video.PostEntryReaderState.DiamondLevelBestowed)
+    const [diamonds, setDiamonds] = useState(video.DiamondCount)
     const [likes, setLikes] = useState(video.LikeCount);
     const [showTip, setShowTip] = useState(false)
+    const [showDiamond, setShowDiamond] = useState(false)
+
 
     const likeVideo = async (isLiked) => {
         if (!isLoggedIn) {
@@ -56,11 +60,36 @@ const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = 
         setShowTip(!showTip)
     }
 
+    const showDiamondModal = () => {
+        if (!isLoggedIn) {
+            return toast.error('You must be logged in!')
+        } 
+        setShowDiamond(!showDiamond)
+    }
+    const responsive = {
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 4,
+            slidesToSlide: 4 // optional, default to 1.
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 3,
+            slidesToSlide: 2 // optional, default to 1.
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 3,
+            slidesToSlide: 2 // optional, default to 1.
+        }
+    };
+
 
     return (
         <>
-            <TipModal diamondBestowed={diamondBestowed} setDiamondBestowed={setDiamondBestowed} show={showTip} setShowTip={setShowTip} video={video} />
-            <div className='flex items-center justify-end space-x-2 md:space-x-4'>
+            <TipModal show={showTip} setShowTip={setShowTip} video={video} />
+            <DiamondModal setDiamonds={setDiamonds} diamonds={diamonds} diamondBestowed={diamondBestowed} setDiamondBestowed={setDiamondBestowed} show={showDiamond} setShowTip={setShowDiamond} video={video} />
+            <div className='flex space-x-2 md:space-x-4'>
                 <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={() => { likeVideo(liked) }}>
                     <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 space-x-2 outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': liked
@@ -92,11 +121,23 @@ const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = 
                     </span>
                 </Button>
                 
-                {showTipButton ?
-                    <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={showTipModal}>
+                {showDiamondButton ?
+                    <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={showDiamondModal}>
                         <span className={clsx('flex items-center group-hover:text-brand2-500 dark:group-hover:text-brand2-400 space-x-2 outline-none', {
                             'text-brand2-500 dark:text-brand2-400 font-semibold': diamondBestowed > 0
                         },
+                            { 'space-x-1.5 md:space-x-3': showButton },
+                            { 'mt-1.5': !showButton }
+                        )}>
+                            <IoDiamondOutline size={iconSize} />
+                            <span>{formatNumber(diamonds)}</span>
+                        </span>
+                    </Button>
+                :null }
+                
+                {showTipButton ?
+                    <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={showTipModal}>
+                        <span className={clsx('flex items-center group-hover:text-brand2-500 dark:group-hover:text-brand2-400 space-x-2 outline-none',
                             { 'space-x-1.5 md:space-x-3': showButton },
                             { 'mt-1.5': !showButton }
                         )}>
@@ -104,7 +145,7 @@ const Reactions = ({ video, iconSize = '21', showTipButton = true, isVertical = 
                             <span>Tip</span>
                         </span>
                     </Button>
-                :null }
+                    : null}
             </div>
         </>
     )

@@ -12,39 +12,56 @@ import { Slider } from 'rsuite'
 import { Button } from '../UI/Button'
 import logger from '@utils/logger'
 
-const TipModal = ({ diamondBestowed, setDiamondBestowed, rootRef, show, setShowTip, video }) => {
+const DiamondModal = ({ diamonds, setDiamonds, diamondBestowed, setDiamondBestowed, rootRef, show, setShowTip, video }) => {
     const { user, isLoggedIn } = usePersistStore()
-    const [diamonds, setDiamonds] = useState(0);
+    const [diamondLevels, setDiamondLevels] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [deso, setDeso] = useState(null)
+    const [exchange, setExchange] = useState(null)
     const [value, setValue] = useState(diamondBestowed+1);
     const tip = false;
-    const labels = ['1', '2', '3', '4', '5'];
+    const labels = ['1', '2', '3', '4', '5', '6', '7'];
 
     useEffect(() => {
-        async function getState() {
-            const deso = new Deso(DESO_CONFIG)
-            const request = {
-                "PublicKeyBase58Check": "BC1YLheA3NepQ8Zohcf5ApY6sYQee9aPJCPY6m3u6XxCL57Asix5peY"
-            };
-            const state = await deso.metaData.getAppState(request);
-            setDiamonds(state.DiamondLevelMap)
+        const deso = new Deso()
+        setDeso(deso)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+
+    useEffect(() => {
+        if (deso) {
+            getExchange();
+            getState();
         }
-        getState();
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [deso])
+
+    const getState = async() => {
+        const request = {
+            "PublicKeyBase58Check": "BC1YLheA3NepQ8Zohcf5ApY6sYQee9aPJCPY6m3u6XxCL57Asix5peY"
+        };
+        const state = await deso.metaData.getAppState(request);
+        setDiamondLevels(state.DiamondLevelMap)
+    }
+    const getExchange = async() => {
+        const response = await deso.metaData.getExchangeRate();
+        setExchange(response)
+    }
     
     function diamondPrice(diamond) {
-        const desoNanos = diamonds[diamond+1]
+        const desoNanos = diamondLevels[diamond]
         const val = nanosToUSDNumber(desoNanos);
+        const exchangeRate = exchange?.USDCentsPerDeSoCoinbase / 100
+        const diamondCost = val * exchangeRate;
         if (val < 1) {
-            return formatUSD(Math.max(val, 0.01), 2);
+            return formatUSD(Math.max(diamondCost, 0.01), 2);
         }
-        return abbreviateNumber(val, 0, true);
+        return abbreviateNumber(diamondCost, 0, true);
     }
 
     const sendDiamonds = async () => {
         setLoading(true);
         try {
-            const deso = new Deso()
             const request = {
                 ReceiverPublicKeyBase58Check: video.ProfileEntryResponse.PublicKeyBase58Check,
                 SenderPublicKeyBase58Check: user.profile.PublicKeyBase58Check,
@@ -58,6 +75,7 @@ const TipModal = ({ diamondBestowed, setDiamondBestowed, rootRef, show, setShowT
                 setDiamondBestowed(value)
                 setLoading(false);
                 setShowTip(false);
+                setDiamonds(diamonds + value)
             } else {
                 console.log(response)
                 logger.error('error', response);
@@ -66,7 +84,6 @@ const TipModal = ({ diamondBestowed, setDiamondBestowed, rootRef, show, setShowT
         } catch (error) {
             console.log(error)
             logger.error('error', error.message);
-            
         }
     }
 
@@ -127,7 +144,7 @@ const TipModal = ({ diamondBestowed, setDiamondBestowed, rootRef, show, setShowT
                             tooltip={false}
                             min={1}
                             step={1}
-                            max={5}
+                            max={6}
                             graduated
                             progress
                         />
@@ -177,4 +194,4 @@ const TipModal = ({ diamondBestowed, setDiamondBestowed, rootRef, show, setShowT
     )
 }
 
-export default TipModal
+export default DiamondModal

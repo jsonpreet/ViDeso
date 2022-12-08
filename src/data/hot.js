@@ -1,8 +1,7 @@
 
-import { BASE_URI } from "@app/utils/constants";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { fetchAllPosts } from "./fetchList";
+import { fetchAllPosts } from "./api";
 
 export const GetHotFeed = async (reader, pageParam = 0, output = 32) => {
     const url = `https://api.searchclout.net/trends/posts/week/${pageParam}?full=1&cache=1&type=video`;

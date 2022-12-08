@@ -1,4 +1,4 @@
-import { BASE_URI } from "@app/utils/constants";
+import { BASE_NODE_URI, BASE_URI } from "@utils/constants";
 import axios from "axios";
 
 
@@ -19,3 +19,16 @@ export const getSinglePost = async (id, reader) => {
         }
     }
 }
+
+export const submitPost = async (request) => {
+    const endpoint = 'submit-post';
+    const response = await axios.post(`${BASE_NODE_URI}/${endpoint}`, request);
+    if (response === null) {
+        return null
+    } else {
+        const TransactionHex = response.data.TransactionHex;
+        const { data } = await submitTransaction(TransactionHex)
+        return data;
+    }
+}
+

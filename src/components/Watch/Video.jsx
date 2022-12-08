@@ -38,11 +38,9 @@ const Video = ({ views, videoData, video, poster }) => {
             </h1>
           {/* <VideoMeta video={video} /> */}
         </div>
-        <div className='flex md:flex-row flex-col justify-between md:items-center mt-3'>
+        <div className='flex md:flex-row flex-col overflow-hidden justify-between md:items-center mt-3 flex-shrink-0'>
           <ChannelInfo views={views} channel={userProfile} video={video}/>
-          <div>
-            <VideoActions video={video} />
-          </div>
+          <VideoActions video={video} />
         </div>
       </div>
     </>

@@ -1,3 +1,4 @@
+import { BASE_NODE_URI } from "@utils/constants";
 import axios from "axios";
 
 export const fetchAllPosts = async (reader, list) => {
@@ -11,4 +12,10 @@ export const fetchAllPosts = async (reader, list) => {
         return response.data.PostsFound
     }
     return null;
+}
+
+export const submitTransaction = async (hex) => {
+    const endpoint = 'submit-transaction';
+    const response = await axios.post(`${BASE_NODE_URI}/${endpoint}`, { TransactionHex: hex });
+    return response.data;
 }

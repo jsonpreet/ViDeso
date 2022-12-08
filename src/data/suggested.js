@@ -3,7 +3,7 @@ import usePersistStore from "@app/store/persist";
 import { APP, BASE_URI } from "@app/utils/constants";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { fetchAllPosts } from "./fetchList";
+import { fetchAllPosts } from "./api";
 
 export const GetSuggestedFeed = async (limit, reader, output = 32, seenPosts) => {
     const url = 'https://api-staging.searchclout.net/trends/posts/week/0?full=1&type=video&cache=1';

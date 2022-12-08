@@ -73,6 +73,7 @@ const VideoCard = ({ video, userProfile }) => {
     if (videoData) {
       getThumbnail()
     }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoData, video])
 
   

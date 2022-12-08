@@ -1,6 +1,6 @@
 import { BASE_URI } from "@app/utils/constants";
 import axios from "axios";
-import { fetchAllPosts } from "./fetchList";
+import { fetchAllPosts } from "./api";
 
 export const getFeed = async (data, reader) => {
     const endpoint = 'get-single-post';
