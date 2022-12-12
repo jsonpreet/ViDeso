@@ -1,4 +1,3 @@
-import logger from '@utils/logger'
 import ThumbnailsShimmer from '@components/Shimmers/ThumbnailsShimmer'
 import { Loader } from '@components/UI/Loader'
 import clsx from 'clsx'
@@ -49,14 +48,14 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
             })
             setThumbnails(thumbnails)
         } catch (error) {
-            logger.error('[Error Generate Thumbnails]', error)
+            console.log('[Error Generate Thumbnails]', error)
         }
     }
 
     useEffect(() => {
         if (file)
             generateThumbnails(file).catch((error) =>
-                logger.error('[Error Generate Thumbnails from File]', error)
+                console.log('[Error Generate Thumbnails from File]', error)
             )
             return () => {
                 setSelectedThumbnailIndex(-1)
