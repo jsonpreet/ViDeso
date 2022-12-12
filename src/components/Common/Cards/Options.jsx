@@ -27,12 +27,12 @@ const VideoOptions = ({video, setShowShare, isSuggested = false, showOnHover = t
   const isAlreadyAddedToWatchLater = () => {
     supabase.from('watchlater').select('*').eq('user', reporterID).eq('posthash', video.PostHashHex).then((res) => {
       if (res.data.length > 0) {
-          setAlreadyAddedToWatchLater(true)
+        setAlreadyAddedToWatchLater(true)
       } else {
-          setAlreadyAddedToWatchLater(false)
+        setAlreadyAddedToWatchLater(false)
       }
       if (res.error) {
-          logger.error(video.PostHashHex, 'watched', res.error);
+        console.log(video.PostHashHex, 'watched', res.error);
       }
     })
   }
@@ -40,7 +40,7 @@ const VideoOptions = ({video, setShowShare, isSuggested = false, showOnHover = t
   const addToWatchLater = () => {
     supabase.from('watchlater').insert([{ user: reporterID, posthash: video.PostHashHex }]).then((res) => {
       if (res.error) {
-          logger.error(video.PostHashHex, 'watched', res.error);
+          console.log(video.PostHashHex, 'watched', res.error);
       } else {
           setAlreadyAddedToWatchLater(true)
       }
@@ -50,7 +50,7 @@ const VideoOptions = ({video, setShowShare, isSuggested = false, showOnHover = t
   const removeFromWatchLater = () => {
     supabase.from('watchlater').delete().eq('user', reporterID).eq('posthash', video.PostHashHex).then((res) => {
       if (res.error) {
-          logger.error(video.PostHashHex, 'watched', res.error);
+          console.log(video.PostHashHex, 'watched', res.error);
       } else {
           setAlreadyAddedToWatchLater(false)
       }

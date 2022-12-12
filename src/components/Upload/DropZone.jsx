@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import fileReaderStream from 'filereader-stream'
 import toast from 'react-hot-toast'
 import useDragAndDrop from '@utils/hooks/useDragAndDrop'
-import logger from '@utils/logger'
 import { IoCloudUploadOutline } from 'react-icons/io5'
 import {ALLOWED_VIDEO_TYPES, APP} from '@utils/constants'
 import useAppStore from '@store/app'
@@ -27,7 +26,7 @@ const DropZone = () => {
             }
         } catch (error) {
             toast.error('Error uploading file')
-            logger.error('[Error Upload Video]', error)
+            console.log('[Error Upload Video]', error)
         }
     }
 
@@ -37,8 +36,8 @@ const DropZone = () => {
             toast.error(errorMessage)
             return setFileDropError(errorMessage)
         }
-        if (file.size > 4 * (1024 * 1024 * 1024)) {
-            const errorMessage = 'File is too large. Please choose a file less than 4GB'
+        if (file.size > 1 * (1024 * 1024 * 1024)) {
+            const errorMessage = 'File is too large. Please choose a file less than 1GB'
             toast.error(errorMessage);
             return setFileDropError(errorMessage)
         }
@@ -113,7 +112,7 @@ const DropZone = () => {
                                 </label>
                             </div>
                             <div className='flex flex-col space-y-2'>
-                                <span className="text-xs text-light">Max. File Size Supports 4GB</span>
+                                <span className="text-xs text-light">Max. File Size Supports 1GB</span>
                             </div>
                             {fileDropError && (
                                 <div className="font-medium text-red-500">{fileDropError}</div>

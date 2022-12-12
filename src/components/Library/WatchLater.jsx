@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import usePersistStore from '@store/persist';
 import { NoDataFound } from '@components/UI/NoDataFound';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import logger from '@utils/logger';
 import { getFeed } from '@data/history';
 import VideoCardSmall from '../Common/Cards/SmallCard';
 import Carousel from 'react-multi-carousel';
@@ -60,7 +59,7 @@ const WatchLater = () => {
             } catch (error) {
                 setLoading(false)
                 setError(true)
-                logger.error(`User ${reader} History`, error);
+                console.log(`User ${reader} History`, error);
             }
         }
         getWatchLater()

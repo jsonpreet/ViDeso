@@ -9,10 +9,10 @@ import "linkify-plugin-mention"
 import { useEffect, useState } from 'react'
 import { AiOutlinePlayCircle } from 'react-icons/ai'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
-import IsVerified from '../Common/IsVerified'
-import Reactions from './Reactions'
+import IsVerified from '../../Common/IsVerified'
+import Reactions from '../Reactions'
 import { getProfileName } from '@utils/functions/getProfileName'
-import VideoMeta from './VideoMeta'
+import VideoMeta from '../VideoMeta'
 
 const Comment = ({ comment }) => {
     const [clamped, setClamped] = useState(false)

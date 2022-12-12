@@ -1,7 +1,7 @@
 import { getProfilePicture } from '@utils/functions/getProfilePicture'
 import { Button } from '@components/UI/Button'
 import { useEffect, useState } from 'react'
-import InputMentions from '../UI/InputMentions'
+import InputMentions from '../../UI/InputMentions'
 import { getProfileName } from '@utils/functions/getProfileName'
 import usePersistStore from '@store/persist'
 import { toast } from 'react-hot-toast'
@@ -31,14 +31,13 @@ const NewComment = ({ video, refetch }) => {
             };
             try {
                 const response = await deso.posts.submitPost(request);
-                if (response && response.TxnHashHex) {
-                    refetch()
-                }
+                console.log(response)
             } catch (error) {
                 console.log(error);
                 setLoading(false);
             }
             finally {
+                refetch()
                 setComment('');
                 setLoading(false);
                 setShowButtons(false);

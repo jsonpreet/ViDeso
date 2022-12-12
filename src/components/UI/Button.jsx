@@ -1,10 +1,12 @@
 import clsx from 'clsx'
+import { forwardRef } from 'react'
 import { Loader } from './Loader'
 
 
-export const Button = ({className = '', size = 'md', variant = 'primary', loading, children, icon, ...rest}) => {
+export const Button = forwardRef(function Button( { className = '', size = 'md', variant = 'primary', loading, children, icon, ...rest }, ref ) {
   return (
     <button
+      ref={ref}
       className={clsx(
         'relative inline-block disabled:opacity-50 rounded-full group',
         {
@@ -46,4 +48,4 @@ export const Button = ({className = '', size = 'md', variant = 'primary', loadin
       </span>
     </button>
   )
-}
+})

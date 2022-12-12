@@ -2,8 +2,6 @@ import { AspectRatio, Hls, MuteButton, MediaVisibility, SliderVideo, SliderValue
 import Hlsjs from 'hls.js';
 
 function Player({ source, data, playerRef, poster, ratio, hls: hlsUrl }) {
-    console.log('hlsUrl', hlsUrl)
-    console.log('data', data)
     return (
         <>
             <div>

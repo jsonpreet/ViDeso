@@ -11,7 +11,6 @@ import { formatNumber } from '@utils/functions';
 import { getCoverPicture } from '@utils/functions/getCoverPicture';
 import { Button } from '../UI/Button';
 import Link from 'next/link';
-import logger from '@utils/logger';
 import party from "party-js"
 import { getProfileName } from '@utils/functions/getProfileName';
 
@@ -50,12 +49,12 @@ function ChannelInfo({ following, followers, channel }) {
                 setSubscribing(false)
                 setFollow(!isFollow)
             } else {
-                logger.error(`ChanneInfo: ${channel.Username} Something went wrong!`);
+                console.log(`ChanneInfo: ${channel.Username} Something went wrong!`);
                 toast.error("Something went wrong!");
                 setSubscribing(false)
             }
         }  catch (error) {
-            logger.error(error);
+            console.log(error);
             setSubscribing(false)
             toast.error('Something went wrong');
         }

@@ -4,15 +4,14 @@ import { formatNumber } from '@utils/functions'
 import { Button } from '@components/UI/Button'
 import clsx from 'clsx'
 import Deso from 'deso-protocol'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
-import logger from '@utils/logger'
 import TipModal from '../Common/TipModal'
 import { BiDollar } from 'react-icons/bi'
 import { IoDiamondOutline } from 'react-icons/io5'
 import DiamondModal from '../Common/DiamondsModal'
-import Carousel from "react-multi-carousel"
+import party from "party-js"
 
 const Reactions = ({ video, iconSize = '21', showTipButton = false, showDiamondButton = true, isVertical = false, showButton = true}) => {
     const {isLoggedIn, user } = usePersistStore()
@@ -23,6 +22,7 @@ const Reactions = ({ video, iconSize = '21', showTipButton = false, showDiamondB
     const [likes, setLikes] = useState(video.LikeCount);
     const [showTip, setShowTip] = useState(false)
     const [showDiamond, setShowDiamond] = useState(false)
+    const likeRef = useRef(null)
 
 
     const likeVideo = async (isLiked) => {
@@ -43,10 +43,15 @@ const Reactions = ({ video, iconSize = '21', showTipButton = false, showDiamondB
             if (response && response.TxnHashHex !== null) {
                 setLikes(!isUnlike ? likes + 1 : likes - 1);
                 setLiked(!isUnlike);
+                if (!isLiked) {
+                    party.confetti(likeRef.current, {
+                        count: party.variation.range(50, 100),
+                        size: party.variation.range(0.2, 1.0),
+                    });
+                }
                 setLiking(false)
             }
         } catch (error) {
-            logger.error('error', error);
             console.log('error', error)
             setLiking(false)
             toast.error(`Error: ${error.message}`);
@@ -66,31 +71,13 @@ const Reactions = ({ video, iconSize = '21', showTipButton = false, showDiamondB
         } 
         setShowDiamond(!showDiamond)
     }
-    const responsive = {
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 4,
-            slidesToSlide: 4 // optional, default to 1.
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 3,
-            slidesToSlide: 2 // optional, default to 1.
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 3,
-            slidesToSlide: 2 // optional, default to 1.
-        }
-    };
-
 
     return (
         <>
             <TipModal show={showTip} setShowTip={setShowTip} video={video} />
             <DiamondModal setDiamonds={setDiamonds} diamonds={diamonds} diamondBestowed={diamondBestowed} setDiamondBestowed={setDiamondBestowed} show={showDiamond} setShowTip={setShowDiamond} video={video} />
             <div className='flex space-x-2 md:space-x-4'>
-                <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={() => { likeVideo(liked) }}>
+                <Button ref={likeRef} variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`} onClick={() => { likeVideo(liked) }}>
                     <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 space-x-2 outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': liked
                     },

@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import usePersistStore from '@store/persist';
 import { NoDataFound } from '@components/UI/NoDataFound';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import logger from '@utils/logger';
 import { GetHistoryFeed } from '@data/history';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
@@ -41,7 +40,7 @@ const HistoryVideos = ({isLibrary = false}) => {
           setNoDataFound(true)
         }
       } catch (error) {
-        logger.error(`User ${reader} History`, error);
+        console.log(`User ${reader} History`, error);
       }
     }
     getHistory()

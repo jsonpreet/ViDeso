@@ -9,11 +9,11 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BiComment } from 'react-icons/bi'
-import NewComment from './NewComment'
+import New from './New'
 
 const Comment = dynamic(() => import('./Comment'))
 
-const VideoComments = ({ video }) => {
+const Comments = ({ video }) => {
     const {isLoggedIn, user } = usePersistStore((state) => state)
     const [loading, setLoading] = useState(true)
     const userPublicKey = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
@@ -23,13 +23,8 @@ const VideoComments = ({ video }) => {
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [video, userPublicKey])
-
-    const refetchComments = async () => {
-        await fetchData();
-    }
-
     
-    async function fetchData() {
+    const fetchData = async () => {
         const deso = new Deso(DESO_CONFIG);
         try {
             const request = {
@@ -53,10 +48,13 @@ const VideoComments = ({ video }) => {
                 
         } catch (error) {
             console.log(error);
-            logger.error('error', error);
             toast.error("Something went wrong!");
             setLoading(false);
         }
+    }
+
+    const refetchComments = async () => {
+        fetchData();
     }
 
     if (loading) return <CommentsShimmer />
@@ -74,11 +72,9 @@ const VideoComments = ({ video }) => {
                 </h1>
             </div>
             {isLoggedIn ? (
-                <NewComment video={video} refetch={refetchComments} />
+                <New video={video} refetch={refetchComments} />
             ) : null}
-            {post.CommentCount === 0 ? (
-                <NoDataFound text="Be the first to comment." />
-            ) : null}
+            
             {!loading ? (
                 <>
                     <div className=" space-y-4">
@@ -93,4 +89,4 @@ const VideoComments = ({ video }) => {
     )
 }
 
-export default VideoComments
+export default Comments

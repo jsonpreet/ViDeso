@@ -10,7 +10,6 @@ import { Button } from '../UI/Button'
 import party from "party-js"
 import { DESO_CONFIG } from '@utils/constants'
 import Tooltip from '../UI/Tooltip'
-import logger from '@utils/logger'
 import { isBrowser } from 'react-device-detect'
 import { getProfileName } from '@utils/functions/getProfileName'
 
@@ -36,7 +35,7 @@ function ChannelInfo({ views, video, channel }) {
                 setFollowers(response.NumFollowers);
                 setLoading(false);
             } catch (error) {
-                logger.error(error);
+                console.log(error);
                 toast.error("Something went wrong!");
                 setLoading(false);
             }
@@ -49,11 +48,10 @@ function ChannelInfo({ views, video, channel }) {
             };
             try {
                 const response = await deso.social.isFollowingPublicKey(request);
-                setFollow(response.data.IsFollowing);
+                setFollow(response?.data?.IsFollowing);
 
             } catch (error) {
-                logger.error(error);
-                toast.error("Something went wrong!");
+                console.log(error);
             }
         }
         getFollowers()
@@ -91,14 +89,14 @@ function ChannelInfo({ views, video, channel }) {
             }
         }  catch (error) {
             setSubscribing(false)
-            logger.error(error);
+            console.log(error);
             toast.error('Something went wrong');
         }
     }
     
     return (
         <>
-            <div className='flex items-center md:justify-start justify-between space-x-3'>
+            <div className='flex items-center md:justify-start overflow-hidden flex-1 justify-between space-x-3'>
                 <div className='flex space-x-2'>
                     <Link href={`/@${channel.Username}`} className="flex-none">
                         <img
@@ -135,7 +133,7 @@ function ChannelInfo({ views, video, channel }) {
                 </div>
                 <div ref={followRef}>
                     {!follow ?
-                        <Button className={`${subscribing ? `animate-pulse` : ``}`} variant="dark" onClick={() => onFollow(follow)}>
+                        <Button ref={followRef} className={`${subscribing ? `animate-pulse` : ``}`} variant="dark" onClick={() => onFollow(follow)}>
                             <span>Subscribe</span>
                         </Button>
                         :

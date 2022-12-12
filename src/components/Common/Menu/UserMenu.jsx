@@ -31,7 +31,7 @@ function UserMenu() {
     const loginWithDeso = async () => {
         setLoading(true)
         try {
-            const request = 4;
+            const request = 3;
             const response = await deso.identity.login(request);
             if (response) {
                 const request = {

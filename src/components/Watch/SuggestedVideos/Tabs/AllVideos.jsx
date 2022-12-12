@@ -3,7 +3,6 @@ import { GetSuggestedFeed } from '@data/suggested'
 import useAppStore from '@store/app'
 import usePersistStore from '@store/persist'
 import { getShuffleArray } from '@utils/functions/getShuffleArray'
-import logger from '@utils/logger'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -36,7 +35,6 @@ function AllVideos({video, currentVideoId}) {
     );
     if (isError) {
         console.log('error', error)
-        logger.error('error', error);
     }
 
     useEffect(() => {

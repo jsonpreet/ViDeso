@@ -10,7 +10,6 @@ import toast from 'react-hot-toast'
 import { IoDiamondOutline } from 'react-icons/io5'
 import { Slider } from 'rsuite'
 import { Button } from '../UI/Button'
-import logger from '@utils/logger'
 
 const DiamondModal = ({ diamonds, setDiamonds, diamondBestowed, setDiamondBestowed, rootRef, show, setShowTip, video }) => {
     const { user, isLoggedIn } = usePersistStore()
@@ -78,12 +77,10 @@ const DiamondModal = ({ diamonds, setDiamonds, diamondBestowed, setDiamondBestow
                 setDiamonds(diamonds + value)
             } else {
                 console.log(response)
-                logger.error('error', response);
                 toast.error(`Oops! This Amount Diamonds Already Sent`);
             }
         } catch (error) {
             console.log(error)
-            logger.error('error', error.message);
         }
     }
 

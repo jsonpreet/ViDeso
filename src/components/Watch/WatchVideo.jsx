@@ -10,17 +10,17 @@ import axios from 'axios'
 import AboutChannel from './AboutChannel'
 import SuggestedVideos from './SuggestedVideos'
 import Video from './Video'
-import VideoComments from './VideoComments'
 import Deso from 'deso-protocol'
 import { getVideoThumbnail } from '@utils/functions/getVideoThumbnail'
 import { getVideoTitle } from '@utils/functions/getVideoTitle'
 import { getSinglePost } from '@data/videos'
 import { useQuery } from '@tanstack/react-query'
-import logger from '@utils/logger'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { APP } from '@utils/constants'
 import { getThumbDuration } from '@utils/functions'
 import { NextSeo } from 'next-seo'
+import { getVideoStatus } from '@data/api'
+import { Comments } from './Comments'
 
 const WatchVideo = () => {
     const router = useRouter()
@@ -59,10 +59,7 @@ const WatchVideo = () => {
         const deso = new Deso()
         const getVideo = async () => {
             const videoID = getPlaybackIdFromUrl(video);
-            const request = {
-                "videoId": videoID
-            };
-            const videoData = await deso.media.getVideoStatus(request)
+            const videoData = await getVideoStatus(videoID)
             //setVideoData({ id: videoID, data: videoData.data })
             setVideoData({ id: videoID, data: videoData.data, hls: `https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoID}/manifest/video.m3u8` })
             try {
@@ -94,7 +91,7 @@ const WatchVideo = () => {
         supabase.from('views').select('*', { count: 'exact' }).eq('posthash', video.PostHashHex).then((res) => {
             setViews(res.count)
             if (res.error) {
-                logger.error(video.PostHashHex, 'views', res.error);
+                console.log(video.PostHashHex, 'views', res.error);
             }
         })
     }
@@ -111,13 +108,13 @@ const WatchVideo = () => {
 
                         supabase.from('history').insert([request]).then((res) => {
                             if (res.error) {
-                                logger.error(video.PostHashHex, 'watched', res.error);
+                                console.log(video.PostHashHex, 'watched', res.error);
                             }
                         })
                     }
                     
                 } catch (error) {
-                    logger.error(video.PostHashHex, 'watched', error);
+                    console.log(video.PostHashHex, 'watched', error);
                 }
             }
             addToHistory()
@@ -158,7 +155,7 @@ const WatchVideo = () => {
                     <div className="flex md:pr-6 md:flex-1 flex-col space-y-4">
                         <Video views={views} videoData={videoData} video={video} poster={thumbnailUrl} />
                         <AboutChannel views={views} video={video} />
-                        <VideoComments video={video} />
+                        <Comments video={video} />
                     </div>
                     <div className="w-full md:min-w-[300px] md:max-w-[400px]">
                         <SuggestedVideos video={video} currentVideoId={video?.PostHashHex} />

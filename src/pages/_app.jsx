@@ -1,15 +1,17 @@
 import { ThemeProvider } from 'next-themes';
-import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import NextNProgress from 'nextjs-progressbar';
-import { useEffect, useState } from 'react'
-import { Devtools } from '@app/components/DevTools';
-import { DEFAULT_SEO, queryConfig, queryConfigAuto } from '@app/utils/constants';
 import { useRouter } from 'next/router';
-import Layout from '@app/components/Common/Layout';
+import { DefaultSeo } from 'next-seo';
+import NextNProgress from 'nextjs-progressbar';
+import { useEffect, useMemo, useState } from 'react'
+import { Devtools } from '@components/DevTools';
+import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { DEFAULT_SEO, queryConfig, queryConfigAuto } from '@utils/constants';
+import Layout from '@components/Common/Layout';
+import VideoMetaTags from '@components/Common/VideoMetaTags';
+import { LivepeerConfig, createReactClient, studioProvider } from '@livepeer/react';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
-import { DefaultSeo } from 'next-seo';
-import VideoMetaTags from '@app/components/Common/VideoMetaTags';
+
 import "react-multi-carousel/lib/styles.css";
 import '@styles/globals.scss'
 import '@vidstack/player/hydrate.js';
@@ -26,7 +28,17 @@ function MyApp({ Component, pageProps }) {
       setConfig(queryConfigAuto);
     }
   }, [router]);
+
   const [queryClient] = useState(() => new QueryClient(config))
+
+  const livepeerClient = useMemo(() => {
+    return createReactClient({
+      provider: studioProvider({
+        apiKey: process.env.NEXT_PUBLIC_LIVEPEER_KEY,
+      }),
+    });
+  }, []);
+
   return (
     <>
       <VideoMetaTags/>
@@ -38,10 +50,12 @@ function MyApp({ Component, pageProps }) {
               supabaseClient={supabase}
               initialSession={pageProps.initialSession}
             >
-              <DefaultSeo {...DEFAULT_SEO}/>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <LivepeerConfig dehydratedState={pageProps?.dehydratedState} client={livepeerClient}>
+                <DefaultSeo {...DEFAULT_SEO}/>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </LivepeerConfig>
             </SessionContextProvider>
             <Devtools />
           </Hydrate>

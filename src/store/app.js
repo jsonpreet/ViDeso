@@ -18,6 +18,7 @@ export const UPLOADED_VIDEO_FORM_DEFAULTS = {
   thumbnailType: '',
   videoSource: '',
   percent: 0,
+  durationInSeconds: 0,
   isSensitiveContent: false,
   readyToPost: false,
   loading: false,

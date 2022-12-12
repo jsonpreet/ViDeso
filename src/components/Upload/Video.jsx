@@ -20,6 +20,7 @@ function UploadVideo() {
     const onThumbnailUpload = (ipfsUrl, thumbnailType) => {
         setUploadedVideo({ thumbnail: ipfsUrl, thumbnailType })
     }
+    
     return (
         <>
             <div className="flex flex-col w-full">
@@ -41,13 +42,9 @@ function UploadVideo() {
                 
                 {uploadedVideo.percent !== 0 ?
                     <>
-                        
-                            <div className=''>
-                                <ProgressBar progress={uploadedVideo.percent} height={24} />
-                            </div>
+                        <ProgressBar progress={uploadedVideo.percent} height={24} />
                     </>
                     : null
-                    
                 }
                 
                 <div className={`${uploadedVideo.percent === 0 ? `mt-4` : ``}`}>

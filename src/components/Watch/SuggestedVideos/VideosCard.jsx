@@ -17,8 +17,8 @@ import { getProfilePicture } from '@utils/functions/getProfilePicture'
 import { isBrowser } from 'react-device-detect'
 import { getProfileName } from '@utils/functions/getProfileName'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import logger from '@utils/logger'
 import ShareModal from '@components/Common/ShareModal'
+import { getVideoStatus } from '@app/data/api'
 
 const SuggestedVideoCard = ({ video, channel }) => {
     const [showShare, setShowShare] = useState(false)
@@ -32,14 +32,11 @@ const SuggestedVideoCard = ({ video, channel }) => {
     const [views, setViews] = useState(0)
 
     useEffect(() => {
-        const deso = new Deso(DESO_CONFIG)
+        const deso = new Deso()
         const getVideoData = async () => {
             try {
                 const videoID = getPlaybackIdFromUrl(video);
-                const request = {
-                    "videoId": videoID
-                };
-                const videoData = await deso.media.getVideoStatus(request)
+                const videoData = await getVideoStatus(videoID)
                 setVideoData(videoData.data)
                 try {
                     const duration = getThumbDuration(videoData.data.Duration);
@@ -56,7 +53,7 @@ const SuggestedVideoCard = ({ video, channel }) => {
                 }
             } catch (error) {
                 setError(true)
-                logger.error(video.PostHashHex, 'Video Status:', error.message);
+                console.log(video.PostHashHex, 'Video Status:', error.message);
             }
         }
         if (video.VideoURLs[0] !== null) {
@@ -74,7 +71,7 @@ const SuggestedVideoCard = ({ video, channel }) => {
         supabase.from('views').select('*', { count: 'exact' }).eq('posthash', video.PostHashHex).then((res) => {
             setViews(res.count)
             if (res.error) {
-                logger.error(video.PostHashHex, 'views', res.error);
+                console.log(video.PostHashHex, 'views', res.error);
             }
         })
     }

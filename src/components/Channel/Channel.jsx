@@ -13,7 +13,6 @@ import toast from 'react-hot-toast';
 import usePersistStore from '@store/persist';
 import Deso from 'deso-protocol';
 import { APP, DESO_CONFIG } from '@utils/constants';
-import logger from '@utils/logger';
 import { BsThreeDots } from 'react-icons/bs';
 import { Button } from '../UI/Button';
 import MoreTabsModal from '../Common/MoreTabsModal';
@@ -85,7 +84,7 @@ const Channel = () => {
                 setisLoading(false)
                     
             } catch (error) {
-                logger.error(error);
+                console.log(error);
                 toast.error("Something went wrong!");
             }
         }
@@ -101,7 +100,7 @@ const Channel = () => {
                 setisLoading(false)
 
             } catch (error) {
-                logger.error(error);
+                console.log(error);
                 toast.error("Something went wrong!");
             }
         }

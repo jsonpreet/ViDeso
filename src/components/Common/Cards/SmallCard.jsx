@@ -15,11 +15,11 @@ import { getVideoTitle } from '@utils/functions/getVideoTitle'
 import ShareModal from '../ShareModal'
 import { DESO_CONFIG } from '@utils/constants'
 import Tooltip from '@components/UI/Tooltip'
-import logger from '@utils/logger'
 import { isBrowser } from 'react-device-detect'
 import { getProfileName } from '@utils/functions/getProfileName'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import useAppStore from '@store/app'
+import { getVideoStatus } from '@data/api'
 
 
 const VideoCardSmall = ({ video, userProfile }) => {
@@ -34,16 +34,13 @@ const VideoCardSmall = ({ video, userProfile }) => {
 
     useEffect(() => {
         const getVideoData = async () => {
-            const deso = new Deso(DESO_CONFIG)
+            const deso = new Deso()
             try {
                 const videoID = getPlaybackIdFromUrl(video);
-                const request = {
-                    "videoId": videoID
-                };
-                const videoData = await deso.media.getVideoStatus(request)
+                const videoData = await getVideoStatus(videoID)
                 setVideoData(videoData.data)
             } catch (error) {
-                logger.error(video.PostHashHex, error)
+                console.log(video.PostHashHex, error)
             }
         }
         if (video.VideoURLs[0] !== null) {
@@ -67,7 +64,7 @@ const VideoCardSmall = ({ video, userProfile }) => {
                     })
                 }
             } catch (error) {
-                logger.error(video.PostHashHex, error)
+                console.log(video.PostHashHex, error)
             }
         }
         if (videoData) {
@@ -80,7 +77,7 @@ const VideoCardSmall = ({ video, userProfile }) => {
         supabase.from('views').select('*', { count: 'exact' }).eq('posthash', video.PostHashHex).then((res) => {
             setViews(res.count)
             if (res.error) {
-                logger.error(video.PostHashHex, 'views', res.error);
+                console.log(video.PostHashHex, 'views', res.error);
             }
         })
     }

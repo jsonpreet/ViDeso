@@ -5,7 +5,7 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import { FiFlag } from 'react-icons/fi'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 
-const CommentOptions = ({ comment, setShowReport }) => {
+const Options = ({ comment, setShowReport }) => {
     const selectedChannel = useAppStore((state) => state.selectedChannel)
     const router = useRouter()
 
@@ -53,4 +53,4 @@ const CommentOptions = ({ comment, setShowReport }) => {
     )
 }
 
-export default CommentOptions
+export default Options
