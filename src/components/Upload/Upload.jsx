@@ -8,6 +8,7 @@ import UploadForm from './Form'
 import toast from 'react-hot-toast'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useCreateAsset } from '@livepeer/react';
+import { VIDEO_CDN_URL } from '@utils/constants'
 
 function Upload() {
     const {isLoggedIn, user} = usePersistStore()
@@ -45,7 +46,7 @@ function Upload() {
 
     useEffect(() => {
         if (newPostHash !== null) {
-            //saveToDB()
+            saveToDB()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[newPostHash])
@@ -72,7 +73,8 @@ function Upload() {
             setLoading(false);
         }
         if (assets && assets[0] && assets[0].status?.phase === 'ready') {
-            setUploadedVideo({ videoURL: assets[0]?.playbackUrl })
+            const videoURL = `https://livepeer-vod.studio/hls/${assets[0]?.playbackId}/video` //`${VIDEO_CDN_URL}/asset/${assets[0]?.playbackId}/video`
+            setUploadedVideo({ videoURL: videoURL })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, assets])
@@ -80,7 +82,7 @@ function Upload() {
 
     useEffect(() => {
         if (uploadedVideo.readyToPost) {
-            post();
+           // post();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedVideo])

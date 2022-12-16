@@ -62,6 +62,7 @@ export const BASE_NODE_URI = 'https://node.deso.org/api/v0';
 export const BASE_IDENTITY_URI = process.env.NEXT_PUBLIC_NODE_IDENTITY_URL || 'https://identity.deso.org';
 export const EXTERNAL_LINK = process.env.NEXT_PUBLIC_EXTERNAL_URL || 'https://diamondapp.com';
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://videso.xyz';
+export const VIDEO_CDN_URL = 'https://cdn.livepeer.com'
 
 export const DESO_CONFIG = {
   nodeUri: BASE_URI
