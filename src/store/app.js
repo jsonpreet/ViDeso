@@ -14,6 +14,7 @@ export const UPLOADED_VIDEO_FORM_DEFAULTS = {
   language: '',
   tags: [],
   videoData: [],
+  playbackId: null,
   thumbnail: '',
   thumbnailType: '',
   videoSource: '',

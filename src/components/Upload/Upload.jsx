@@ -74,7 +74,7 @@ function Upload() {
         }
         if (assets && assets[0] && assets[0].status?.phase === 'ready') {
             const videoURL = `https://livepeer-vod.studio/hls/${assets[0]?.playbackId}/video` //`${VIDEO_CDN_URL}/asset/${assets[0]?.playbackId}/video`
-            setUploadedVideo({ videoURL: videoURL })
+            setUploadedVideo({ videoURL: videoURL, playbackId: assets[0]?.playbackId })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, assets])
@@ -105,6 +105,7 @@ function Upload() {
                 isNSFWThumbnail: uploadedVideo.isNSFWThumbnail,
                 videoData: uploadedVideo.videoData,
                 videoURL: uploadedVideo.videoURL,
+                playbackId: uploadedVideo.playbackId,
                 isLivePeer: true,
                 Duration: uploadedVideo.durationInSeconds
             }
