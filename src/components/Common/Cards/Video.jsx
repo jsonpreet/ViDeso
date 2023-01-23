@@ -33,7 +33,7 @@ const VideoCard = ({ video, userProfile }) => {
   const [views, setViews] = useState(0)
 
   useEffect(() => {
-    const deso = new Deso(DESO_CONFIG)
+    const deso = new Deso()
     const getVideoData = async () => {
       try {
         const videoID = getPlaybackIdFromUrl(video);
