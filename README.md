@@ -7,3 +7,8 @@ In addition to providing a secure platform for video sharing, Videso also allows
 In the event that we need to make any changes to this privacy policy, we will update it on this page and notify our users through the platform.
 
 Overall, Videso is a unique and exciting platform that offers users a decentralized and secure way to share videos and connect with others. With its focus on user control and rewards, Videso is poised to become a leading destination for video sharing on the DeSo blockchain.
+
+
+## Inspired from LensTube
+
+[Lenstube](https://github.com/lenstube-xyz/lenstube)
