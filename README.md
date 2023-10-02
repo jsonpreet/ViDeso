@@ -1,34 +1,14 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Videso is a decentralized video-sharing social media platform built on top of the DeSo blockchain. This means that Videso is a platform that is not controlled by any central authority, allowing users to have full control over their content and data.
 
-## Getting Started
+With Videso, users can share videos with their friends and followers in a secure and decentralized manner. Since the platform is built on the DeSo blockchain, users can be confident that their data is safe and cannot be accessed or tampered with by any third parties.
 
-First, run the development server:
+In addition to providing a secure platform for video sharing, Videso also allows users to earn rewards for their contributions to the platform. This can include sharing videos, engaging with content, and contributing to the community. These rewards are paid in the form of the platform's native token, which can be used to access additional features and services on the platform.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+In the event that we need to make any changes to this privacy policy, we will update it on this page and notify our users through the platform.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Overall, Videso is a unique and exciting platform that offers users a decentralized and secure way to share videos and connect with others. With its focus on user control and rewards, Videso is poised to become a leading destination for video sharing on the DeSo blockchain.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Inspired from LensTube
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Lenstube](https://github.com/lenstube-xyz/lenstube)
